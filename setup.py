@@ -5,7 +5,7 @@ tag = next(sys_tags())
 
 setup(
     name = 'mindstudio-kpp',
-    version = '1.0.0',
+    version = '26.0.0',
     author =' mskpp',
     author_email = 'mskpp',
     description = 'mskpp',

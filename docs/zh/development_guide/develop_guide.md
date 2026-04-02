@@ -74,7 +74,7 @@ python的UT测试，依赖pytest和coverage工具，可通过执行 ```pip insta
 python build.py test
 ```
 
-输出类似如下跑的用例数和通过用例数相同即表示成功：
+输出类似如下，若跑的用例数和通过用例数相同，即表示成功：
 
 ```text
 [==========] 37 tests from 6 test cases ran. (616 ms total)

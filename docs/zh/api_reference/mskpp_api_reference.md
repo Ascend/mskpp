@@ -381,7 +381,7 @@ from mskpp import mmad, Tensor
 in_x = Tensor("GM", "FP16", [32, 48], format="ND")
 in_y = Tensor("GM", "FP16", [48, 16], format="ND")
 in_z = Tensor("GM", "FP32", [32, 16], format="NC1HWC0")
-out_z = mmad(in_x, in_y, in_z)()
+out_z = mmad(in_x, in_y, in_z)
 ```
 
 **返回值说明**
@@ -422,7 +422,7 @@ ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vadd(ub_x, ub_y, ub_z)()
+out = vadd(ub_x, ub_y, ub_z)
 ```
 
 **返回值说明**
@@ -459,7 +459,7 @@ ub_x, ub_y = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 broadcast_num = 16
 ub_x.load(gm_x)
-out = vbrcb(ub_x, ub_y, broadcast_num)()
+out = vbrcb(ub_x, ub_y, broadcast_num)
 ```
 
 **返回值说明**
@@ -497,7 +497,7 @@ from mskpp import vconv, Tensor
 ub_x, ub_y = Tensor("UB", "FP16"), Tensor("UB")
 gm_x = Tensor("GM")
 ub_x.load(gm_x)
-out = vconv(ub_x, ub_y, "FP32")()
+out = vconv(ub_x, ub_y, "FP32")
 ```
 
 **返回值说明**
@@ -512,7 +512,7 @@ vconv_deq指令抽象。
 
 y = vconv_deq(x, dtype)，vconv_deq表示对输入数据进行量化操作的向量计算。
 
-目前支持转换类型包括：FP16->INT8、INT32>FP16。
+目前支持转换类型包括：FP16->INT8、INT32->FP16。
 
 **接口原型**
 
@@ -535,7 +535,7 @@ from mskpp import vconv_deq, Tensor
 ub_x, ub_y = Tensor("UB", "FP16"), Tensor("UB")
 gm_x = Tensor("GM")
 ub_x.load(gm_x)
-out = vconv_deq(ub_x, ub_y, "FP32")()
+out = vconv_deq(ub_x, ub_y, "FP32")
 ```
 
 **返回值说明**
@@ -573,7 +573,7 @@ from mskpp import vconv_vdeq, Tensor
 ub_x, ub_y = Tensor("UB", "FP16"), Tensor("UB")
 gm_x = Tensor("GM")
 ub_x.load(gm_x)
-out = vconv_vdeq(ub_x, ub_y, "FP32")()
+out = vconv_vdeq(ub_x, ub_y, "FP32")
 ```
 
 **返回值说明**
@@ -612,7 +612,7 @@ class vector_dup(x, y, fill_shape)
 from mskpp import vector_dup, Tensor
 ub_x = Tensor("UB", "FP16", [1], format="ND", is_inited=True)
 ub_y = Tensor("UB")
-out = vector_dup(ub_x, ub_y, [8, 2048])()
+out = vector_dup(ub_x, ub_y, [8, 2048])
 ```
 
 **返回值说明**
@@ -647,7 +647,7 @@ from mskpp import vexp, Tensor
 ub_x = Tensor("UB")
 ub_x.load(gm_x)
 ub_y = Tensor("UB")
-out = vexp(ub_x, ub_y)()
+out = vexp(ub_x, ub_y)
 ```
 
 **返回值说明**
@@ -683,7 +683,7 @@ ub_x = Tensor("UB")
 gm_x = Tensor("GM")
 ub_x.load(gm_x)
 ub_y = Tensor("UB")
-out = vln(ub_x, ub_y)()
+out = vln(ub_x, ub_y)
 ```
 
 **返回值说明**
@@ -720,7 +720,7 @@ ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vmax(ub_x, ub_y, ub_z)()
+out = vmax(ub_x, ub_y, ub_z)
 ```
 
 **返回值说明**
@@ -757,7 +757,7 @@ ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vmul(ub_x, ub_y, ub_z)()
+out = vmul(ub_x, ub_y, ub_z)
 ```
 
 **返回值说明**
@@ -793,7 +793,7 @@ from mskpp import vmuls, Tensor
 ub_x, ub_z = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 ub_x.load(gm_x)
-out = vmuls(ub_x, 5, ub_z)()  //5为y标量的值
+out = vmuls(ub_x, 5, ub_z)  //5为y标量的值
 ```
 
 **返回值说明**
@@ -830,7 +830,7 @@ ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vsub(ub_x, ub_y, ub_z)()
+out = vsub(ub_x, ub_y, ub_z)
 ```
 
 **返回值说明**
@@ -867,7 +867,7 @@ ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vdiv(ub_x, ub_y, ub_z)()
+out = vdiv(ub_x, ub_y, ub_z)
 ```
 
 **返回值说明**
@@ -904,7 +904,7 @@ ub_x, ub_y = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 reduce_num = 16
 ub_x.load(gm_x)
-out = vcadd(ub_x, ub_y, reduce_num)()
+out = vcadd(ub_x, ub_y, reduce_num)
 ```
 
 **约束说明**
@@ -943,7 +943,7 @@ from mskpp import vabs, Tensor
 ub_x, ub_y = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 ub_x.load(gm_x)
-out = vabs(ub_x, ub_y)()
+out = vabs(ub_x, ub_y)
 ```
 
 **返回值说明**
@@ -980,7 +980,7 @@ ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vaddrelu(ub_x, ub_y, ub_z)()
+out = vaddrelu(ub_x, ub_y, ub_z)
 ```
 
 **返回值说明**
@@ -1019,7 +1019,7 @@ ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vaddreluconv(ub_x, ub_y, ub_z)()
+out = vaddreluconv(ub_x, ub_y, ub_z)
 ```
 
 **返回值说明**
@@ -1055,7 +1055,7 @@ from mskpp import vadds, Tensor
 ub_x, ub_z = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 ub_x.load(gm_x)
-out = vadds(ub_x, 5, ub_z)() //5为y标量的值
+out = vadds(ub_x, 5, ub_z) //5为y标量的值
 ```
 
 **返回值说明**
@@ -1092,7 +1092,7 @@ ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vand(ub_x, ub_y, ub_z)()
+out = vand(ub_x, ub_y, ub_z)
 ```
 
 **返回值说明**
@@ -1126,10 +1126,10 @@ vaxpy(x, y, z, if_mix=False)
 
 ```python
 from mskpp import vaxpy, Tensor
-ub_x, ub_z = Tensor("UB"), Tensor("UB")
+ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 ub_x.load(gm_x)
-out = vaxpy(ub_x, ub_y, ub_z)()
+out = vaxpy(ub_x, ub_y, ub_z)
 ```
 
 **返回值说明**
@@ -1166,7 +1166,7 @@ ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM") 
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vbitsort(ub_x, ub_y, ub_z)()
+out = vbitsort(ub_x, ub_y, ub_z)
 ```
 
 **返回值说明**
@@ -1207,7 +1207,7 @@ ub_x, ub_y = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 reduce_num = 16
 ub_x.load(gm_x)
-out = vcgadd(ub_x, ub_y, reduce_num)()
+out = vcgadd(ub_x, ub_y, reduce_num)
 ```
 
 **返回值说明**
@@ -1248,7 +1248,7 @@ ub_x, ub_y = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 reduce_num = 16
 ub_x.load(gm_x)
-out = vcgmax(ub_x, ub_y, reduce_num)()
+out = vcgmax(ub_x, ub_y, reduce_num)
 ```
 
 **返回值说明**
@@ -1289,7 +1289,7 @@ ub_x, ub_y = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 reduce_num = 16
 ub_x.load(gm_x)
-out = vcgmin(ub_x, ub_y, reduce_num)()
+out = vcgmin(ub_x, ub_y, reduce_num)
 ```
 
 **返回值说明**
@@ -1330,7 +1330,7 @@ ub_x, ub_y = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 reduce_num = 16
 ub_x.load(gm_x)
-out = vcmax(ub_x, ub_y, reduce_num)()
+out = vcmax(ub_x, ub_y, reduce_num)
 ```
 
 **返回值说明**
@@ -1371,7 +1371,7 @@ ub_x, ub_y = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 reduce_num = 16
 ub_x.load(gm_x)
-out = vcmin(ub_x, ub_y, reduce_num)()
+out = vcmin(ub_x, ub_y, reduce_num)
 ```
 
 **返回值说明**
@@ -1421,7 +1421,7 @@ ub_x, ub_y = Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vcmp(ub_x, ub_y)()
+out = vcmp(ub_x, ub_y)
 ```
 
 **返回值说明**
@@ -1472,7 +1472,7 @@ ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vcmpv(ub_x, ub_y, ub_z)()
+out = vcmpv(ub_x, ub_y, ub_z)
 ```
 
 **返回值说明**
@@ -1523,7 +1523,7 @@ ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vcmpvs(ub_x, ub_y, ub_z)()
+out = vcmpvs(ub_x, ub_y, ub_z)
 ```
 
 **返回值说明**
@@ -1558,7 +1558,7 @@ from mskpp import vcopy, Tensor
 ub_x, ub_y = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 ub_x.load(gm_x)
-out = vcopy(ub_x, ub_y)()
+out = vcopy(ub_x, ub_y)
 ```
 
 **返回值说明**
@@ -1595,7 +1595,7 @@ ub_x, ub_y = Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vcpadd(ub_x, ub_y, reduce_num)()
+out = vcpadd(ub_x, ub_y, reduce_num)
 ```
 
 **返回值说明**
@@ -1629,7 +1629,7 @@ ub_x, ub_y = Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vgather(ub_x, ub_y)()
+out = vgather(ub_x, ub_y)
 ```
 
 **返回值说明**
@@ -1663,7 +1663,7 @@ ub_x, ub_y = Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vgatherb(ub_x, ub_y)()
+out = vgatherb(ub_x, ub_y)
 ```
 
 **返回值说明**
@@ -1700,7 +1700,7 @@ ub_x, ub_z = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 scalar_y = 5  //5为y标量的值
 ub_x.load(gm_x)
-out = vlrelu(ub_x, scalar_y, ub_z)()
+out = vlrelu(ub_x, scalar_y, ub_z)
 ```
 
 **返回值说明**
@@ -1737,7 +1737,7 @@ ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vmadd(ub_x, ub_y, ub_z)()
+out = vmadd(ub_x, ub_y, ub_z)
 ```
 
 **返回值说明**
@@ -1774,7 +1774,7 @@ ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vmaddrelu(ub_x, ub_y, ub_z)()
+out = vmaddrelu(ub_x, ub_y, ub_z)
 ```
 
 **返回值说明**
@@ -1810,7 +1810,7 @@ from mskpp import vmaxs, Tensor
 ub_x, ub_z = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 ub_x.load(gm_x)
-out = vmaxs(ub_x, 5, ub_z)()
+out = vmaxs(ub_x, 5, ub_z)
 ```
 
 **返回值说明**
@@ -1847,7 +1847,7 @@ ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vmin(ub_x, ub_y, ub_z)()
+out = vmin(ub_x, ub_y, ub_z)
 ```
 
 **返回值说明**
@@ -1883,7 +1883,7 @@ from mskpp import vmins, Tensor
 ub_x, ub_z = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 ub_x.load(gm_x)
-out = vmins(ub_x, 5, ub_z)()  //5为y的标量值
+out = vmins(ub_x, 5, ub_z)  //5为y的标量值
 ```
 
 **返回值说明**
@@ -1896,7 +1896,7 @@ out = vmins(ub_x, 5, ub_z)()  //5为y的标量值
 
 vmla指令抽象。
 
-z = x * y + z， x、y按元素相乘，相乘的结果与z按元素相加，可以通过if_mix将输出的数据类型格式指定为FP32。
+z = x * y + z，x、y按元素相乘后与z按元素相加，可以通过if_mix将输出的数据类型格式指定为FP32。
 
 目前支持：
 
@@ -1933,7 +1933,7 @@ ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vmla(ub_x, ub_y, ub_z)()
+out = vmla(ub_x, ub_y, ub_z)
 ```
 
 **返回值说明**
@@ -1964,11 +1964,11 @@ class vmrgsort(x, y, z)
 
 ```python
 from mskpp import vmrgsort, Tensor
-ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB")
+ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vmrgsort(ub_x, ub_y, ub_z)()
+out = vmrgsort(ub_x, ub_y, ub_z)
 ```
 
 **返回值说明**
@@ -2006,7 +2006,7 @@ ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vmulconv(ub_x, ub_y, ub_z, 'UINT8')()
+out = vmulconv(ub_x, ub_y, ub_z, 'UINT8')
 ```
 
 **返回值说明**
@@ -2041,7 +2041,7 @@ from mskpp import vnot, Tensor
 ub_x, ub_y = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 ub_x.load(gm_x)
-out = vnot(ub_x, ub_y)()
+out = vnot(ub_x, ub_y)
 ```
 
 **约束说明**
@@ -2082,7 +2082,7 @@ ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x,gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vor(ub_x, ub_y, ub_z)()
+out = vor(ub_x, ub_y, ub_z)
 ```
 
 **约束说明**
@@ -2121,7 +2121,7 @@ from mskpp import vrec, Tensor
 ub_x, ub_y = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 ub_x.load(gm_x)
-out=vrec(ub_x, ub_y)()
+out=vrec(ub_x, ub_y)
 ```
 
 **返回值说明**
@@ -2160,7 +2160,7 @@ gm_x, gm_y, gm_z = Tensor("GM"), Tensor("GM"), Tensor("GM")
 reserve_num = 16
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vreduce(ub_x, ub_y, ub_z, reserve_num)()
+out = vreduce(ub_x, ub_y, ub_z, reserve_num)
 gm_z.load(out[0])
 ```
 
@@ -2200,7 +2200,7 @@ gm_x, gm_y, gm_z = Tensor("GM"), Tensor("GM"), Tensor("GM")
 reserve_num = 16
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vreducev2(ub_x, ub_y, ub_z, reserve_num)()
+out = vreducev2(ub_x, ub_y, ub_z, reserve_num)
 gm_z.load(out[0])
 ```
 
@@ -2237,7 +2237,7 @@ ub_x, ub_y = Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vrelu(ub_x, ub_y)()
+out = vrelu(ub_x, ub_y)
 ```
 
 **返回值说明**
@@ -2273,7 +2273,7 @@ ub_x, ub_y = Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vrsqrt(ub_x, ub_y)()
+out = vrsqrt(ub_x, ub_y)
 ```
 
 **返回值说明**
@@ -2310,7 +2310,7 @@ ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vsel(ub_x, ub_y, ub_z)()
+out = vsel(ub_x, ub_y, ub_z)
 ```
 
 **返回值说明**
@@ -2345,7 +2345,7 @@ from mskpp import vshl, Tensor
 ub_x, ub_z = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 ub_x.load(gm_x)
-out = vshl(ub_x, ub_z)()
+out = vshl(ub_x, ub_z)
 ```
 
 **返回值说明**
@@ -2377,10 +2377,11 @@ class vshr(x, y)
 
 ```python
 from mskpp import vshr, Tensor
+ub_x, ub_y = Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vshr(ub_x, ub_y)()
+out = vshr(ub_x, ub_y)
 ```
 
 **返回值说明**
@@ -2412,10 +2413,10 @@ class vsqrt(x, y)
 
 ```python
 from mskpp import vsqrt, Tensor
-ub_x, ub_z = Tensor("UB"), Tensor("UB")
+ub_x, ub_y = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 ub_x.load(gm_x)
-out = vsqrt(ub_x, ub_y)()
+out = vsqrt(ub_x, ub_y)
 ```
 
 **约束说明**
@@ -2437,7 +2438,7 @@ z = vsubrelu(x, y)，x、y按元素相减后再计算relu值。
 **接口原型**
 
 ```python
-class vsubrelu (x, y, z)
+class vsubrelu(x, y, z)
 ```
 
 **参数说明**
@@ -2456,7 +2457,7 @@ ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vsubrelu(ub_x, ub_y, ub_z)()
+out = vsubrelu(ub_x, ub_y, ub_z)
 ```
 
 **返回值说明**
@@ -2495,7 +2496,7 @@ ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vsubreluconv(ub_x, ub_y, ub_z)()
+out = vsubreluconv(ub_x, ub_y, ub_z)
 ```
 
 **返回值说明**
@@ -2513,7 +2514,7 @@ vtranspose指令抽象。
 **接口原型**
 
 ```python
-class vtranspose (x, y)
+class vtranspose(x, y)
 ```
 
 **参数说明**
@@ -2530,7 +2531,7 @@ from mskpp import vtranspose, Tensor
 ub_x, ub_y = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 ub_x.load(gm_x)
-out = vtranspose(ub_x, ub_y)()
+out = vtranspose(ub_x, ub_y)
 ```
 
 **返回值说明**

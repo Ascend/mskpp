@@ -8,13 +8,11 @@ MindStudio工具链是集成到CANN包中发布的，可通过以下方式完成
 
 ### 方式一：依据 CANN 官方文档安装  
 
-请参考<a href="https://www.hiascend.com/document/detail/zh/canncommercial/850/softwareinst" target="_blank">《CANN安装官方文档》</a>，
-按文档逐步安装和配置。
+请参考《[CANN 官方安装指南](https://www.hiascend.com/cann/download)》，按文档逐步完成安装与配置。
 
-### 方式二：使用CANN官方容器镜像   
+### 方式二：使用 CANN 官方容器镜像
 
-请访问<a href="https://www.hiascend.com/developer/ascendhub/detail/17da20d1c2b6493cb38765adeba85884" target="_blank">《CANN官方镜像仓库》</a>，
-按照仓库中的指引完成镜像拉取及容器启动。
+请访问《[CANN 官方镜像仓库](https://www.hiascend.com/developer/ascendhub/detail/17da20d1c2b6493cb38765adeba85884)》，按仓库中的指引完成镜像拉取及容器启动。
 
 <br>  
 
@@ -24,11 +22,11 @@ MindStudio工具链是集成到CANN包中发布的，可通过以下方式完成
 
 ### 环境准备
 
-请按照以下文档进行环境配置：[《算子工具开发环境安装指导》](https://gitcode.com/Ascend/msot/blob/master/docs/zh/common/dev_env_setup.md)。
+请按照以下文档进行环境配置：《[算子工具开发环境安装指导](https://gitcode.com/Ascend/msot/blob/26.0.0/docs/zh/common/dev_env_setup.md)》。
 
-要求构建环境中安装`python3.9`或以上版本才能正常运行。
+要求构建环境中安装`python3.9`及以上版本才能正常运行。
 
-mskpp需要依赖其他python库。通过`pip install -r requirement.txt`一键式安装依赖库。
+mskpp需要依赖其他python库。通过`pip install -r requirements.txt`一键式安装依赖库。
 依赖库列表如下
 
 ```text
@@ -78,7 +76,7 @@ python
 可通过如下命令卸载：
 
 ```shell
-pip uninstall mskpp-xxxxx.whl 
+pip uninstall mindstudio_kpp-xxxxx.whl 
 ```
 
 #### 升级

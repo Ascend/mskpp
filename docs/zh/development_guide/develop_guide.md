@@ -4,13 +4,13 @@
 
 ## 1. 预备知识
 
-请参考[《msKPP 架构设计文档》](./architecture.md)学习代码框架及核心流程。
+请参考《[msKPP 架构设计文档](./architecture.md)》学习代码框架及核心流程。
 
 ## 2. 开发环境准备
 
 - 硬件环境请参见《[昇腾产品形态说明](https://www.hiascend.com/document/detail/zh/AscendFAQ/ProduTech/productform/hardwaredesc_0001.html)》。
 
-- 请按照以下文档进行环境配置：[《算子工具开发环境安装指导》](https://gitcode.com/Ascend/msot/blob/master/docs/zh/common/dev_env_setup.md)。
+- 请按照以下文档进行环境配置：《[算子工具开发环境安装指导](https://gitcode.com/Ascend/msot/blob/26.0.0/docs/zh/common/dev_env_setup.md)》。
 
 - 要求构建环境中安装python3.9或以上版本。
 

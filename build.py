@@ -53,7 +53,12 @@ class BuildManager:
                                           '"test" to run unit tests')
         argument_parser.add_argument('-r', '--revision',
                                      help='Specify Git revision for internal dependent repo.')
+        argument_parser.add_argument('--build-version', type=str, default=None, help='Build version for run/exe/dmg packages')
+        argument_parser.add_argument('--whl-version', type=str, default=None, help='WHL version for Python wheel packages')
         self.parsed_arguments = argument_parser.parse_args()
+        if self.parsed_arguments.whl_version != None:
+            logging.info("--whl-version: %s", self.parsed_arguments.whl_version)
+            os.environ['WHL_VERSION'] = self.parsed_arguments.whl_version
 
     def _execute_command(self, command_sequence, timeout_seconds=36000, cwd=None):
         logging.info("Running: %s", " ".join(command_sequence))

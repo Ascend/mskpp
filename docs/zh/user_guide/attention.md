@@ -1,4 +1,4 @@
-# **MindStudio Kernel Performance Prediction 工具限制与注意事项**
+# MindStudio Kernel Performance Prediction 工具限制与注意事项
 
 - 使用msKPP库实现算子仿真，注意事项包括：
     + 实现模拟算子建模前，需要从msKPP库导入Tensor, Chip, 以及算子实现所必要的指令（统一以小写命名）。

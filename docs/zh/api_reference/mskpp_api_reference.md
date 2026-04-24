@@ -9,10 +9,10 @@ msKPP工具分为基础功能接口和指令接口两种接口类型。基础功
 |接口名称|接口简介|
 |--|--|
 |[基础功能接口](#基础功能接口)|-|
-|[Chip](#Chip)|创建性能建模的芯片平台，初始化芯片各项性能数据。|
-|[Core](#Core)|模拟芯片内部的AI Core。|
-|[Tensor](#Tensor)|算子执行基础数据类型。|
-|[Tensor.load](#Tensor.load)|数据搬运接口，对数据在不同单元搬运进行建模。|
+|[Chip](#chip)|创建性能建模的芯片平台，初始化芯片各项性能数据。|
+|[Core](#core)|模拟芯片内部的AI Core。|
+|[Tensor](#tensor)|算子执行基础数据类型。|
+|[Tensor.load](#tensorload)|数据搬运接口，对数据在不同单元搬运进行建模。|
 |[同步类指令接口](#同步类指令接口)|-|
 |[set_flag](#set_flag)|核内PIPE间同步的指令接口，与wait_flag配套使用。|
 |[wait_flag](#wait_flag)|核内PIPE间同步的指令接口，与set_flag配套使用。|
@@ -77,7 +77,7 @@ msKPP工具分为基础功能接口和指令接口两种接口类型。基础功
 
 ## 基础功能接口
 
-### <h3 id="Chip">Chip</h3>
+### Chip
 
 **功能说明**
 
@@ -120,14 +120,14 @@ with Chip("Ascendxxxyy") as chip:    # Ascendxxxyy需替换为实际使用的处
     chip.enable_metrics()  # 调用该函数即可使能单指令及分PIPE的流水信息，生成搬运流水统计、指令信息统计和指令占比饼图
 ```
 
-> [!NOTE] 说明  
+> [!NOTE]     
 > 非Atlas A3 训练系列产品/Atlas A3 推理系列产品：在安装昇腾AI处理器的服务器执行**npu-smi info**命令进行查询，获取**Chip Name**信息。实际配置值为AscendChip Name，例如**Chip Name**取值为xxxyy，实际配置值为Ascendxxxyy。当Ascendxxxyy为代码样例的路径时，需要配置为ascendxxxyy。
 
 **返回值说明**
 
 无
 
-### <h3 id="Core">Core</h3>
+### Core
 
 **功能说明**
 
@@ -162,7 +162,7 @@ with Core("AIC0") as aic:
 
 无
 
-### <h3 id="Tensor">Tensor</h3>
+### Tensor
 
 **功能说明**
 
@@ -214,7 +214,7 @@ with Core("AIC0") as aic:
 
 无
 
-### <h3 id="Tensor.load">Tensor.load</h3>
+### Tensor.load
 
 **功能说明**
 

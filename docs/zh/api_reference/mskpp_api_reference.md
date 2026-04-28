@@ -1,4 +1,4 @@
-# **MindStudio Kernel Performance Prediction对外接口使用说明**
+# MindStudio Kernel Performance Prediction对外接口使用说明
 
 ## 接口列表
 
@@ -435,7 +435,7 @@ out = vadd(ub_x, ub_y, ub_z)
 
 vbrcb指令抽象。
 
-根据指令的stride将Tensor进行扩维，由于目前msKPP工具的指令体系里并没有stride的概念，需要用户填写如何扩维倍数，并保持输入输出Tensor的shape维度一致。
+根据指令的stride将Tensor进行扩维，由于目前msKPP工具的指令体系里并没有stride的概念，需要用户填写扩维倍数，并保持输入输出Tensor的shape维度一致。
 
 **接口原型**
 
@@ -770,7 +770,7 @@ out = vmul(ub_x, ub_y, ub_z)
 
 vmuls指令抽象。
 
-z = vmuls(x, y)，vmuls求值向量x与标量y的乘积。
+z = vmuls(x, y)，vmuls计算向量x与标量y的乘积。
 
 **接口原型**
 
@@ -793,7 +793,7 @@ from mskpp import vmuls, Tensor
 ub_x, ub_z = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 ub_x.load(gm_x)
-out = vmuls(ub_x, 5, ub_z)  //5为y标量的值
+out = vmuls(ub_x, 5, ub_z)  #5为y标量的值
 ```
 
 **返回值说明**
@@ -1032,7 +1032,7 @@ out = vaddreluconv(ub_x, ub_y, ub_z)
 
 vadds指令抽象。
 
-z = vadds(x, y)，vadds求值向量x与标量y的和。
+z = vadds(x, y)，vadds计算向量x与标量y的和。
 
 **接口原型**
 
@@ -1055,7 +1055,7 @@ from mskpp import vadds, Tensor
 ub_x, ub_z = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 ub_x.load(gm_x)
-out = vadds(ub_x, 5, ub_z) //5为y标量的值
+out = vadds(ub_x, 5, ub_z) #5为y标量的值
 ```
 
 **返回值说明**
@@ -1105,7 +1105,7 @@ out = vand(ub_x, ub_y, ub_z)
 
 vaxpy指令抽象。
 
-z = x * y + z，vaxpy求值向量x与标量y的乘积后加上目标地址z上的和，可以通过if_mix将输出的数据类型格式指定为FP32。
+z = x * y + z，vaxpy计算向量x与标量y的乘积后，再加上目标地址z上的值，可以通过if_mix将输出的数据类型格式指定为FP32。
 
 **接口原型**
 
@@ -1698,7 +1698,7 @@ class vlrelu(x, y, z)
 from mskpp import vlrelu, Tensor
 ub_x, ub_z = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
-scalar_y = 5  //5为y标量的值
+scalar_y = 5   #5为y标量的值
 ub_x.load(gm_x)
 out = vlrelu(ub_x, scalar_y, ub_z)
 ```
@@ -1883,7 +1883,7 @@ from mskpp import vmins, Tensor
 ub_x, ub_z = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 ub_x.load(gm_x)
-out = vmins(ub_x, 5, ub_z)  //5为y的标量值
+out = vmins(ub_x, 5, ub_z)  #5为y的标量值
 ```
 
 **返回值说明**

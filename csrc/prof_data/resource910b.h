@@ -17,6 +17,7 @@
 #ifndef __MSKPP_PROFDATA_RESOURCE_910B1__
 #define __MSKPP_PROFDATA_RESOURCE_910B1__
 
+#include <cstdint>
 #include <vector>
 #include <string>
 #include <map>

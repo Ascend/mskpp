@@ -4,6 +4,7 @@ project(mskpp_c CXX C)
 get_filename_component(ROOT_DIR ${CMAKE_CURRENT_LIST_DIR} ABSOLUTE)
 get_filename_component(THIRD_PARTY_DIR thirdparty ABSOLUTE)
 get_filename_component(MSKPP_CORE_DIR ${ROOT_DIR}/csrc/core ABSOLUTE)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # 检查是否可用 ccache
 find_program(CCACHE_PROGRAM ccache)
@@ -33,7 +34,7 @@ include_directories(${Python_INCLUDE_DIRS})
 if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
     set(CMAKE_INSTALL_PREFIX ${ROOT_DIR}/output CACHE STRING "install prefix" FORCE)
     message(STATUS "No install prefix selected, default to ${CMAKE_INSTALL_PREFIX}")
-endif() 
+endif()
 
 # 提供给测试的插桩，统计测试覆盖率
 if (DEFINED HITEST AND HITEST STREQUAL "ON")

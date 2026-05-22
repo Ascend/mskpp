@@ -83,7 +83,7 @@ def my_vadd(gm_x, gm_y, gm_z):
     gm_z.load(out[0])
 
 if __name__ == '__main__':
-    with Chip("xxx") as chip:  # 格式为Ascendxxxyy，其中xxx为用户实际使用的芯片SoC类型
+    with Chip("xxx") as chip:  # xxx为芯片SoC类型，示例：Ascendxxxyy
         chip.enable_trace()  # 使能算子模拟流水图的功能，生成trace.json文件
         chip.enable_metrics() # 使能单指令及分PIPE的流水信息，生成Instruction_statistic.csv和Pipe_statistic.csv文件
 
@@ -96,7 +96,7 @@ if __name__ == '__main__':
 
 ##### 2.2.1.3 修改如上代码中的芯片类型   
 
-参考《[芯片 SoC 类型获取方法](https://gitcode.com/Ascend/msot/blob/master/docs/zh/quick_start/get_chip_soc_type.md)》获取芯片类型，将 `with Chip("xxx") as chip` 中的 xxx 替换为查询到的芯片类型。
+执行以下命令获取芯片SoC类型：`python3 -c "import acl; print(acl.get_soc_name())"`，将 `with Chip("xxx") as chip` 中的 xxx 替换为查询到的结果。
 
 #### 2.2.2 执行性能建模
 

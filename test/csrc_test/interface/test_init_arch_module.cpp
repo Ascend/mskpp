@@ -30,11 +30,11 @@ protected:
         return func;
     }
 
-    void SetUp() override {
+    static void SetUpTestSuite() {
         Py_Initialize();
     }
 
-    void TearDown() override {
+    static void TearDownTestSuite() {
         Py_Finalize();  // 关闭 Python 解释器
     }
 
@@ -91,12 +91,12 @@ TEST_F(ArchModule, Set_Chip_Fail)
     PyObject *setFunc = GetMethodList(funcName);
     EXPECT_TRUE(setFunc != NULL);
     EXPECT_TRUE(PyCallable_Check(setFunc));
-    EXPECT_EQ(PyObject_CallObject(setFunc, pArgs), Py_None);
+    EXPECT_EQ(PyObject_CallObject(setFunc, pArgs), nullptr); PyErr_Clear();
 
     PyObject *args = PyTuple_New(1);
     PyObject *chipName3 = PyLong_FromLong(123.123);  // chip type
     PyTuple_SetItem(args, 0, chipName3);
-    EXPECT_EQ(PyObject_CallObject(setFunc, args), Py_None);
+    EXPECT_EQ(PyObject_CallObject(setFunc, args), nullptr); PyErr_Clear();
 
     Py_DECREF(pArgs);
     Py_DECREF(setFunc);
@@ -116,17 +116,17 @@ TEST_F(ArchModule, Cal_Duration_Fail)
     PyTuple_SetItem(pArgs, 0, cycle);
     PyTuple_SetItem(pArgs, 1, cycle2);
     PyObject *errArgs = PyObject_CallObject(calDuration, pArgs);
-    EXPECT_EQ(errArgs, Py_None);
+    EXPECT_EQ(errArgs, nullptr); PyErr_Clear();
     Py_DECREF(pArgs);
-    Py_DECREF(errArgs);
+    Py_XDECREF(errArgs);
 
     // 调用cal_duration函数
     PyObject *pArgs2 = PyTuple_New(1);
     PyObject *cycle3 = PyUnicode_FromString("cycle");  // cycle
     PyTuple_SetItem(pArgs2, 0, cycle3);
     PyObject *errFormat = PyObject_CallObject(calDuration, pArgs2);
-    EXPECT_EQ(errFormat, Py_None);
-    Py_DECREF(errFormat);
+    EXPECT_EQ(errFormat, nullptr); PyErr_Clear();
+    Py_XDECREF(errFormat);
     Py_DECREF(pArgs2);
 
     Py_DECREF(calDuration);
@@ -213,14 +213,14 @@ TEST_F(ArchModule, Mte_Is_Valid_Fail)
     PyObject *pArgs = PyTuple_New(1);
     PyObject *src = PyUnicode_FromString("GM");   // src
     PyTuple_SetItem(pArgs, 0, src);
-    EXPECT_EQ(PyObject_CallObject(mteIsValid, pArgs), Py_None);
+    EXPECT_EQ(PyObject_CallObject(mteIsValid, pArgs), nullptr); PyErr_Clear();
 
     PyObject *pArgs0 = PyTuple_New(2);
     PyObject *src0 = PyFloat_FromDouble(64.32);   // src
     PyObject *dst0 = PyFloat_FromDouble(128.1);   // dst
     PyTuple_SetItem(pArgs0, 0, src0);
     PyTuple_SetItem(pArgs0, 1, dst0);
-    EXPECT_EQ(PyObject_CallObject(mteIsValid, pArgs0), Py_None);
+    EXPECT_EQ(PyObject_CallObject(mteIsValid, pArgs0), nullptr); PyErr_Clear();
 
     Py_DECREF(mteIsValid);
     Py_DECREF(pArgs);
@@ -283,16 +283,16 @@ TEST_F(ArchModule, Set_Cache_Hit_Ratio_Fail)
     PyTuple_SetItem(pArgs0, 0, ratio0);
     PyTuple_SetItem(pArgs0, 1, ratio1);
     PyObject *twoArgs = PyObject_CallObject(setFunc, pArgs0);
-    EXPECT_EQ(twoArgs, Py_None);
+    EXPECT_EQ(twoArgs, nullptr); PyErr_Clear();
     Py_DECREF(pArgs0);
-    Py_DECREF(twoArgs);
+    Py_XDECREF(twoArgs);
 
     PyObject *pArgs = PyTuple_New(1);
     PyObject *ratio = PyUnicode_FromString("GM");   // src
     PyTuple_SetItem(pArgs, 0, ratio);
     PyObject *errArgs = PyObject_CallObject(setFunc, pArgs);
     Py_DECREF(pArgs);
-    EXPECT_EQ(errArgs, Py_None);
+    EXPECT_EQ(errArgs, nullptr); PyErr_Clear();
 
     Py_DECREF(setFunc);
 }
@@ -334,8 +334,8 @@ TEST_F(ArchModule, Get_Pipe_By_Io_Fail)
     PyObject *src0 = PyLong_FromLong(1);   // src
     PyTuple_SetItem(pArgs0, 0, src0);
     PyObject *errArgs = PyObject_CallObject(getPipeByIo, pArgs0);
-    EXPECT_EQ(errArgs, Py_None);
-    Py_DECREF(errArgs);
+    EXPECT_EQ(errArgs, nullptr); PyErr_Clear();
+    Py_XDECREF(errArgs);
     Py_DECREF(pArgs0);
 
     // 调用get_pipe_by_io函数，入参类型不对
@@ -345,9 +345,9 @@ TEST_F(ArchModule, Get_Pipe_By_Io_Fail)
     PyTuple_SetItem(pArgs2, 0, src2);
     PyTuple_SetItem(pArgs2, 1, dst2);
     PyObject *falseArgs = PyObject_CallObject(getPipeByIo, pArgs2);
-    EXPECT_EQ(falseArgs, Py_None);
+    EXPECT_EQ(falseArgs, nullptr); PyErr_Clear();
     Py_DECREF(pArgs2);
-    Py_DECREF(falseArgs);
+    Py_XDECREF(falseArgs);
 
     Py_DECREF(getPipeByIo);
 }
@@ -386,26 +386,26 @@ TEST_F(ArchModule, Get_Size_Of_Fail)
     PyObject *dtype1 = PyLong_FromLong(2);  // dtype
     PyTuple_SetItem(pArgs0, 0, dtype0);
     PyTuple_SetItem(pArgs0, 1, dtype1);
-    EXPECT_EQ(PyObject_CallObject(getSizeOf, pArgs0), Py_None);
+    EXPECT_EQ(PyObject_CallObject(getSizeOf, pArgs0), nullptr); PyErr_Clear();
     Py_DECREF(pArgs0);
 
     // 参数类型不对
     PyObject *pArgs = PyTuple_New(1);
     PyObject *dtype = PyLong_FromLong(2);  // dtype
     PyTuple_SetItem(pArgs, 0, dtype);
-    EXPECT_EQ(PyObject_CallObject(getSizeOf, pArgs), Py_None);
+    EXPECT_EQ(PyObject_CallObject(getSizeOf, pArgs), nullptr); PyErr_Clear();
 
     // 参数为空
     PyObject *pArgs2 = PyTuple_New(1);
     PyObject *dtype2 = PyUnicode_FromString("");  // dtype
     PyTuple_SetItem(pArgs2, 0, dtype2);
-    EXPECT_EQ(PyObject_CallObject(getSizeOf, pArgs2), Py_None);
+    EXPECT_EQ(PyObject_CallObject(getSizeOf, pArgs2), nullptr); PyErr_Clear();
 
     // 参数不对
     PyObject *pArgs3 = PyTuple_New(1);
     PyObject *dtype3 = PyUnicode_FromString("dtype");  // dtype
     PyTuple_SetItem(pArgs3, 0, dtype3);
-    EXPECT_EQ(PyObject_CallObject(getSizeOf, pArgs3), Py_None);
+    EXPECT_EQ(PyObject_CallObject(getSizeOf, pArgs3), nullptr); PyErr_Clear();
 
     Py_DECREF(getSizeOf);
     Py_DECREF(pArgs);

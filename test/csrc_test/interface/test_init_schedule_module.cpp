@@ -165,11 +165,11 @@ protected:
         return m;
     }
 
-    void SetUp() override {
+    static void SetUpTestSuite() {
         Py_Initialize();
     }
 
-    void TearDown() override {
+    static void TearDownTestSuite() {
         Py_Finalize();  // 关闭 Python 解释器
     }
 
@@ -305,14 +305,14 @@ TEST_F(ScheduleTest, TaskSchedule_Add_Task_And_Run_Fail)
     PyObject *pArgs0 = PyTuple_New(2);
     PyTuple_SetItem(pArgs0, 0, NULL);
     PyTuple_SetItem(pArgs0, 0, NULL);
-    EXPECT_EQ(PyObject_CallObject(addTask, pArgs0), Py_None);
+    EXPECT_EQ(PyObject_CallObject(addTask, pArgs0), nullptr); PyErr_Clear();
     Py_DECREF(pArgs0);
 
     // 创建函数参数，将空值传入进去
     PyObject *pArgs = PyTuple_New(1);
     PyTuple_SetItem(pArgs, 0, task);
     // 调用函数
-    EXPECT_EQ(PyObject_CallObject(addTask, pArgs), Py_None);
+    EXPECT_EQ(PyObject_CallObject(addTask, pArgs), nullptr); PyErr_Clear();
     Py_DECREF(pInstance);
     Py_DECREF(addTask);
     Py_DECREF(pArgs);
@@ -412,14 +412,14 @@ TEST_F(ScheduleTest, Set_Debug_Mode_Fail)
     PyObject *dtype1 = PyLong_FromLong(2);  // dtype
     PyTuple_SetItem(pArgs0, 0, dtype0);
     PyTuple_SetItem(pArgs0, 0, dtype1);
-    EXPECT_EQ(PyObject_CallObject(setDebugMode, pArgs0), Py_None);
+    EXPECT_EQ(PyObject_CallObject(setDebugMode, pArgs0), nullptr); PyErr_Clear();
     Py_DECREF(pArgs0);
 
     // 参数类型不对
     PyObject *pArgs = PyTuple_New(1);
     PyObject *dtype = PyLong_FromLong(2);  // dtype
     PyTuple_SetItem(pArgs, 0, dtype);
-    EXPECT_EQ(PyObject_CallObject(setDebugMode, pArgs), Py_None);
+    EXPECT_EQ(PyObject_CallObject(setDebugMode, pArgs), nullptr); PyErr_Clear();
 
     Py_DECREF(scheduleClass);
     Py_DECREF(pInstance);

@@ -23,9 +23,8 @@ PyDoc_STRVAR(MSKPP_PROFDATA_METHOD_GET_DOC, "Get estimated data for instructions
 
 #define PYTHON_FUNC_DEFINE_END {nullptr, nullptr, 0, nullptr}
 
-#define PROFDATA_METHOD_GET_DEFINE(func) {"get", static_cast<PyCFunction>(func),                                 \
-    METH_VARARGS, MSKPP_PROFDATA_METHOD_GET_DOC},
-
+#define PROFDATA_METHOD_GET_DEFINE(func) \
+    {"get", static_cast<PyCFunction>(func), METH_VARARGS, MSKPP_PROFDATA_METHOD_GET_DOC},
 
 /**
  * init_profdata_module.cpp中提供了大量的python接口，将各个指令所具有的方法作为一个类对外提供
@@ -36,56 +35,67 @@ PyDoc_STRVAR(MSKPP_PROFDATA_METHOD_GET_DOC, "Get estimated data for instructions
  * 其余类似GetPeak和GetConv函数，虽有部分重复代码，但仅封装一次，暂不使用宏进行封装
  * **/
 
-#define MOV_DATA_REGISTER(instrName)                                                                                  \
-    static PyObject *MSKPP_PROFDATA_##instrName##Register(PyObject *self, PyObject *pstArgs) {                        \
-        const char *src = nullptr; const char *dst = nullptr;                                                         \
-        long dataSize; int transEnable;                                                                               \
-        /* 这里需要使用long接收dataSize */                                                                               \
-        if (!PyArg_ParseTuple(pstArgs, "ssli", &src, &dst, &dataSize, &transEnable)) { Py_RETURN_NONE; }              \
-        auto instrName##Instr = MovFactory::instance()->Create(#instrName);                                           \
-        if (instrName##Instr == nullptr) { Py_RETURN_NONE; }                                                          \
-        return PyFloat_FromDouble(instrName##Instr->Get(std::string(src), std::string(dst), dataSize,                 \
-            (bool)transEnable));                                                                                      \
+#define MOV_DATA_REGISTER(instrName) \
+    static PyObject *MSKPP_PROFDATA_##instrName##Register(PyObject *self, PyObject *pstArgs) { \
+        const char *src = nullptr; \
+        const char *dst = nullptr; \
+        long dataSize; \
+        int transEnable; \
+        /* 这里需要使用long接收dataSize */ \
+        if (!PyArg_ParseTuple(pstArgs, "ssli", &src, &dst, &dataSize, &transEnable)) { \
+            Py_RETURN_NONE; \
+        } \
+        auto instrName##Instr = MovFactory::instance()->Create(#instrName); \
+        if (instrName##Instr == nullptr) { \
+            Py_RETURN_NONE; \
+        } \
+        return PyFloat_FromDouble( \
+            instrName##Instr->Get(std::string(src), std::string(dst), dataSize, (bool)transEnable)); \
     }
 
-#define MMAD_DATA_REGISTER(instrName)                                                          \
-    static PyObject *MSKPP_PROFDATA_##instrName##Register(PyObject *self, PyObject *pstArgs)   \
-    {                                                                                          \
-        long granularity;                                                                      \
-        const char *instrType = nullptr;                                                       \
-        if (!PyArg_ParseTuple(pstArgs, "ls", &granularity, &instrType)) { Py_RETURN_NONE; }    \
-        auto instrName##Instr = MmadFactory::instance()->Create(#instrName);                   \
-        if (instrName##Instr == nullptr) { Py_RETURN_NONE; }                                   \
+#define MMAD_DATA_REGISTER(instrName) \
+    static PyObject *MSKPP_PROFDATA_##instrName##Register(PyObject *self, PyObject *pstArgs) { \
+        long granularity; \
+        const char *instrType = nullptr; \
+        if (!PyArg_ParseTuple(pstArgs, "ls", &granularity, &instrType)) { \
+            Py_RETURN_NONE; \
+        } \
+        auto instrName##Instr = MmadFactory::instance()->Create(#instrName); \
+        if (instrName##Instr == nullptr) { \
+            Py_RETURN_NONE; \
+        } \
         return PyFloat_FromDouble(instrName##Instr->Get(granularity, std::string(instrType))); \
     }
 
-#define VEC_DATA_REGISTER(instrName)                                                           \
-    static PyObject *MSKPP_PROFDATA_##instrName##Register(PyObject *self, PyObject *pstArgs)   \
-    {                                                                                          \
-        long granularity;                                                                      \
-        const char *instrType = nullptr;                                                       \
-        if (!PyArg_ParseTuple(pstArgs, "ls", &granularity, &instrType)) { Py_RETURN_NONE; }    \
-        auto instrName##Instr = VecFactory::instance()->Create(#instrName, #instrName);        \
-        if (instrName##Instr == nullptr) { Py_RETURN_NONE; }                                   \
+#define VEC_DATA_REGISTER(instrName) \
+    static PyObject *MSKPP_PROFDATA_##instrName##Register(PyObject *self, PyObject *pstArgs) { \
+        long granularity; \
+        const char *instrType = nullptr; \
+        if (!PyArg_ParseTuple(pstArgs, "ls", &granularity, &instrType)) { \
+            Py_RETURN_NONE; \
+        } \
+        auto instrName##Instr = VecFactory::instance()->Create(#instrName, #instrName); \
+        if (instrName##Instr == nullptr) { \
+            Py_RETURN_NONE; \
+        } \
         return PyFloat_FromDouble(instrName##Instr->Get(granularity, std::string(instrType))); \
     }
 
 // 调用指令方法
-static PyObject *MSKPP_PROFDATA_MovDataGetPeak(PyObject *self, PyObject *pstArgs)
-{
+static PyObject *MSKPP_PROFDATA_MovDataGetPeak(PyObject *self, PyObject *pstArgs) {
     const char *src = nullptr;
     const char *dst = nullptr;
     if (!PyArg_ParseTuple(pstArgs, "ss", &src, &dst)) {
         PyErr_SetString(PyExc_ValueError, "Invalid Input.");
-        Py_RETURN_NONE;
+        return NULL;
     }
     if (src == nullptr || dst == nullptr) {
         PyErr_SetString(PyExc_ValueError, "src/dst cannot be None.");
-        Py_RETURN_NONE;
+        return NULL;
     }
     if (std::string(src).empty() || std::string(dst).empty()) {
         PyErr_SetString(PyExc_ValueError, "src/dst cannot be empty strings");
-        Py_RETURN_NONE;
+        return NULL;
     }
     auto movInstr = MovFactory::instance()->Create("MOV");
     if (!movInstr) {
@@ -94,22 +104,21 @@ static PyObject *MSKPP_PROFDATA_MovDataGetPeak(PyObject *self, PyObject *pstArgs
     return PyFloat_FromDouble(movInstr->GetPeak(std::string(src), std::string(dst)));
 }
 
-static PyObject *MSKPP_PROFDATA_MovDataGetRepeat(PyObject *self, PyObject *pstArgs)
-{
+static PyObject *MSKPP_PROFDATA_MovDataGetRepeat(PyObject *self, PyObject *pstArgs) {
     const char *src = nullptr;
     const char *dst = nullptr;
     uint32_t repeat;
     if (!PyArg_ParseTuple(pstArgs, "ssi", &src, &dst, &repeat)) {
         PyErr_SetString(PyExc_ValueError, "Invalid Input.");
-        Py_RETURN_NONE;
+        return NULL;
     }
     if (src == nullptr || dst == nullptr) {
         PyErr_SetString(PyExc_ValueError, "src/dst cannot be None.");
-        Py_RETURN_NONE;
+        return NULL;
     }
     if (std::string(src).empty() || std::string(dst).empty()) {
         PyErr_SetString(PyExc_ValueError, "src/dst cannot be empty strings");
-        Py_RETURN_NONE;
+        return NULL;
     }
     auto movInstr = MovFactory::instance()->Create("MOV");
     if (!movInstr) {
@@ -175,234 +184,120 @@ VEC_DATA_REGISTER(VMULCONV)
 VEC_DATA_REGISTER(VGATHER)
 VEC_DATA_REGISTER(VGATHERB)
 
-
 // 将指令方法放入python对象方法列表
 static PyMethodDef g_mmadDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_MMADRegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_MMADRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_movDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_MOVRegister)
-    {"get_peak", static_cast<PyCFunction>(MSKPP_PROFDATA_MovDataGetPeak), METH_VARARGS, nullptr},
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_MOVRegister){
+        "get_peak", static_cast<PyCFunction>(MSKPP_PROFDATA_MovDataGetPeak), METH_VARARGS, nullptr},
     {"get_repeat", static_cast<PyCFunction>(MSKPP_PROFDATA_MovDataGetRepeat), METH_VARARGS, nullptr},
-    PYTHON_FUNC_DEFINE_END
-};
+    PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vconvDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VCONVRegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VCONVRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vabsDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VABSRegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VABSRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vaddDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VADDRegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VADDRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vaddreluDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VADDRELURegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VADDRELURegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vaddreluconvDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VADDRELUCONVRegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VADDRELUCONVRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vaddsDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VADDSRegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VADDSRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vandDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VANDRegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VANDRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vaxpyDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VAXPYRegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VAXPYRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vbrcbDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VBRCBRegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VBRCBRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vcaddDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VCADDRegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VCADDRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vcgaddDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VCGADDRegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VCGADDRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vcgmaxDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VCGMAXRegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VCGMAXRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vcgminDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VCGMINRegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VCGMINRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vcmaxDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VCMAXRegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VCMAXRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vcminDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VCMINRegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VCMINRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vcmpDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VCMPRegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VCMPRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vcmpvDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VCMPVRegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VCMPVRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vcmpvsDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VCMPVSRegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VCMPVSRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vconvdeqDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VCONVDEQRegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VCONVDEQRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vconvvdeqDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VCONVVDEQRegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VCONVVDEQRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vcopyDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VCOPYRegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VCOPYRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vcpaddDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VCPADDRegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VCPADDRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vdivDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VDIVRegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VDIVRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vectorDupDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VECTORDUPRegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VECTORDUPRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vexpDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VEXPRegister)
-    PYTHON_FUNC_DEFINE_END
-};
-static PyMethodDef g_vlnDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VLNRegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VEXPRegister) PYTHON_FUNC_DEFINE_END};
+static PyMethodDef g_vlnDataMethods[] = {PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VLNRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vlreluDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VLRELURegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VLRELURegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vmaddDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VMADDRegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VMADDRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vmaxDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VMAXRegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VMAXRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vmaxsDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VMAXSRegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VMAXSRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vminDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VMINRegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VMINRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vminsDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VMINSRegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VMINSRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vmrgsortDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VMRGSORTRegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VMRGSORTRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vmulDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VMULRegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VMULRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vmulsDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VMULSRegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VMULSRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vnotDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VNOTRegister)
-    PYTHON_FUNC_DEFINE_END
-};
-static PyMethodDef g_vorDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VORRegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VNOTRegister) PYTHON_FUNC_DEFINE_END};
+static PyMethodDef g_vorDataMethods[] = {PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VORRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vreluDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VRELURegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VRELURegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vrecDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VRECRegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VRECRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vsubDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VSUBRegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VSUBRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vrsqrtDataMethods[] = {
-        PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VRSQRTRegister)
-        PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VRSQRTRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vselDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VSELRegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VSELRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vshlDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VSHLRegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VSHLRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vshrDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VSHRRegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VSHRRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vsqrtDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VSQRTRegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VSQRTRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vsubReluConvDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VSUBRELUCONVRegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VSUBRELUCONVRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vsubReluDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VSUBRELURegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VSUBRELURegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vmaddReluDataMethods[] = {
-        PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VMADDRELURegister)
-        PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VMADDRELURegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vmlaDataMethods[] = {
-        PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VMLARegister)
-        PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VMLARegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vreducev2DataMethods[] = {
-        PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VREDUCEV2Register)
-        PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VREDUCEV2Register) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vreduceDataMethods[] = {
-        PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VREDUCERegister)
-        PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VREDUCERegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vmulconvDataMethods[] = {
-    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VMULCONVRegister)
-    PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VMULCONVRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vgatherDataMethods[] = {
-        PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VGATHERRegister)
-        PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VGATHERRegister) PYTHON_FUNC_DEFINE_END};
 static PyMethodDef g_vgatherbDataMethods[] = {
-        PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VGATHERBRegister)
-        PYTHON_FUNC_DEFINE_END
-};
+    PROFDATA_METHOD_GET_DEFINE(MSKPP_PROFDATA_VGATHERBRegister) PYTHON_FUNC_DEFINE_END};
 
 // 将python对象方法列表按顺初始化为python类
 MSKPP_DEFINE_CLASS_NOMEMBER(g_mskppProfdataMmadData, "MmadData", g_mmadDataMethods, nullptr);
@@ -411,8 +306,7 @@ MSKPP_DEFINE_CLASS_NOMEMBER(g_mskppProfdataVconvData, "VconvData", g_vconvDataMe
 MSKPP_DEFINE_CLASS_NOMEMBER(g_mskppProfdataVabsData, "vabs", g_vabsDataMethods, nullptr);
 MSKPP_DEFINE_CLASS_NOMEMBER(g_mskppProfdataVaddData, "vadd", g_vaddDataMethods, nullptr);
 MSKPP_DEFINE_CLASS_NOMEMBER(g_mskppProfdataVaddreluData, "vaddrelu", g_vaddreluDataMethods, nullptr);
-MSKPP_DEFINE_CLASS_NOMEMBER(g_mskppProfdataVaddreluconvData, "vaddreluconv",
-                            g_vaddreluconvDataMethods, nullptr);
+MSKPP_DEFINE_CLASS_NOMEMBER(g_mskppProfdataVaddreluconvData, "vaddreluconv", g_vaddreluconvDataMethods, nullptr);
 MSKPP_DEFINE_CLASS_NOMEMBER(g_mskppProfdataVaddsData, "vadds", g_vaddsDataMethods, nullptr);
 MSKPP_DEFINE_CLASS_NOMEMBER(g_mskppProfdataVandData, "vand", g_vandDataMethods, nullptr);
 MSKPP_DEFINE_CLASS_NOMEMBER(g_mskppProfdataVaxpyData, "vaxpy", g_vaxpyDataMethods, nullptr);
@@ -464,7 +358,7 @@ MSKPP_DEFINE_CLASS_NOMEMBER(g_mskppProfdataVgatherData, "vgather", g_vgatherData
 MSKPP_DEFINE_CLASS_NOMEMBER(g_mskppProfdataVgatherbData, "vgatherb", g_vgatherbDataMethods, nullptr);
 
 // 指令的性能数据处理python类列表
-static std::map<std::string, PyTypeObject*> ProfDataClassList = {
+static std::map<std::string, PyTypeObject *> ProfDataClassList = {
     {"MmadData", &g_mskppProfdataMmadData},
     {"MovData", &g_mskppProfdataMovData},
     {"VconvData", &g_mskppProfdataVconvData},
@@ -523,25 +417,21 @@ static std::map<std::string, PyTypeObject*> ProfDataClassList = {
     {"VgatherbData", &g_mskppProfdataVgatherbData},
 };
 
-
 static struct PyModuleDef g_mskppProfDataModuleDef = {
-    PyModuleDef_HEAD_INIT,
-    "mskpp._C.prof_data",          /* m_name */
-    nullptr,                       /* m_doc */
-    -1,                            /* m_size */
-    nullptr,                       /* m_methods */
+    PyModuleDef_HEAD_INIT, "mskpp._C.prof_data", /* m_name */
+    nullptr, /* m_doc */
+    -1, /* m_size */
+    nullptr, /* m_methods */
 };
 
-
-PyObject *InitProfdataModule()
-{
-    PyObject* m = nullptr;
+PyObject *InitProfdataModule() {
+    PyObject *m = nullptr;
     m = PyModule_Create(&g_mskppProfDataModuleDef);
     if (m == nullptr) {
         return nullptr;
     }
 
-    for (auto& it : ProfDataClassList) {
+    for (auto &it : ProfDataClassList) {
         if (PyType_Ready(it.second) < 0) {
             PyErr_Format(PyExc_SystemError, "Failed to init class %s.", it.first.c_str());
             goto error;

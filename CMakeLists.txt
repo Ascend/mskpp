@@ -60,8 +60,11 @@ target_link_options(mskpp_c PRIVATE
     -Wl,-z,relro
     -Wl,-z,now
     -Wl,-z,noexecstack
-    -s #strip
 )
+
+if (NOT BUILD_TESTS)
+    target_link_options(mskpp_c PRIVATE -s)
+endif()
 
 set_target_properties(mskpp_c PROPERTIES OUTPUT_NAME "_C" PREFIX "")
 install(TARGETS mskpp_c LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib64)

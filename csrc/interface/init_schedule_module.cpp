@@ -18,46 +18,42 @@
 #include "../core/task_schedule/task_schedule.h"
 
 namespace Mskpp {
-static PyObject *MSKPP_SCHEDULE_Clean(PyObject *self, PyObject *Py_UNUSED(ignored))
-{
+static PyObject *MSKPP_SCHEDULE_Clean(PyObject *self, PyObject *Py_UNUSED(ignored)) {
     TaskSchedule::instance()->Clear();
     Py_RETURN_NONE;
 }
 
-static PyObject *MSKPP_SCHEDULE_SetDebugMode(PyObject *self, PyObject *const *args, Py_ssize_t nargs)
-{
+static PyObject *MSKPP_SCHEDULE_SetDebugMode(PyObject *self, PyObject *const *args, Py_ssize_t nargs) {
     if (nargs != 1) {
         PyErr_Format(PyExc_TypeError, "Function set_debug_mode except 1 argument, got %zd.", nargs);
-        Py_RETURN_NONE;
+        return NULL;
     }
 
     PyObject *pyMode = args[0];
     if (!PyBool_Check(pyMode)) {
         PyErr_SetString(PyExc_TypeError, "Function set_debug_mode except a boolean value.");
-        Py_RETURN_NONE;
+        return NULL;
     }
     bool mode = (PyLong_AsLong(pyMode) != 0);
     TaskSchedule::instance()->SetDebugMode(mode);
     Py_RETURN_NONE;
 }
 
-static PyObject *MSKPP_SCHEDULE_GetDebugMode(PyObject *self, PyObject *Py_UNUSED(ignored))
-{
+static PyObject *MSKPP_SCHEDULE_GetDebugMode(PyObject *self, PyObject *Py_UNUSED(ignored)) {
     bool mode = TaskSchedule::instance()->GetDebugMode();
     PyObject *o = PyBool_FromLong(static_cast<long>(mode));
     return o;
 }
 
-static PyObject *MSKPP_SCHEDULE_AddTask(PyObject *self, PyObject *const *args, Py_ssize_t nargs)
-{
+static PyObject *MSKPP_SCHEDULE_AddTask(PyObject *self, PyObject *const *args, Py_ssize_t nargs) {
     if (nargs != 1) {
         PyErr_Format(PyExc_TypeError, "Function add_task except 1 argument, got %zd.", nargs);
-        Py_RETURN_NONE;
+        return NULL;
     }
     PyObject *o = args[0];
     if (!RawTask::CheckPyObj(o)) {
-        PyErr_SetString(PyExc_TypeError, "Please construct the task using template calss RawTask.");
-        Py_RETURN_NONE;
+        PyErr_SetString(PyExc_TypeError, "Please construct the task using template class RawTask.");
+        return NULL;
     }
 
     RawTask task(o);
@@ -65,12 +61,11 @@ static PyObject *MSKPP_SCHEDULE_AddTask(PyObject *self, PyObject *const *args, P
     Py_RETURN_NONE;
 }
 
-static PyObject *MSKPP_SCHEDULE_Run(PyObject *self, PyObject *Py_UNUSED(ignored))
-{
+static PyObject *MSKPP_SCHEDULE_Run(PyObject *self, PyObject *Py_UNUSED(ignored)) {
     int32_t ret = TaskSchedule::instance()->Run();
     if (ret < 0) {
         PyErr_SetString(PyExc_RuntimeError, "Task failed to run.");
-        Py_RETURN_NONE;
+        return NULL;
     }
     return PyLong_FromLong(ret);
 }
@@ -80,23 +75,19 @@ static PyMethodDef g_scheduleMethods[] = {
     {"set_debug_mode", reinterpret_cast<PyCFunction>(MSKPP_SCHEDULE_SetDebugMode), METH_FASTCALL, nullptr},
     {"get_debug_mode", reinterpret_cast<PyCFunction>(MSKPP_SCHEDULE_GetDebugMode), METH_NOARGS, nullptr},
     {"add_task", reinterpret_cast<PyCFunction>(MSKPP_SCHEDULE_AddTask), METH_FASTCALL, nullptr},
-    {"run", reinterpret_cast<PyCFunction>(MSKPP_SCHEDULE_Run), METH_NOARGS, nullptr},
-    {nullptr, nullptr, 0, nullptr}
-};
+    {"run", reinterpret_cast<PyCFunction>(MSKPP_SCHEDULE_Run), METH_NOARGS, nullptr}, {nullptr, nullptr, 0, nullptr}};
 
 MSKPP_DEFINE_CLASS_NOMEMBER(g_mskppScheduleClass, "Schedule", g_scheduleMethods, nullptr);
 
 static struct PyModuleDef g_mskppScheduleModuleDef = {
-    PyModuleDef_HEAD_INIT,
-    "mskpp._C.task_schedule",      /* m_name */
-    nullptr,                          /* m_doc */
-    -1,                            /* m_size */
-    nullptr,                          /* m_methods */
+    PyModuleDef_HEAD_INIT, "mskpp._C.task_schedule", /* m_name */
+    nullptr, /* m_doc */
+    -1, /* m_size */
+    nullptr, /* m_methods */
 };
 
-PyObject *InitTaskScheduleModule()
-{
-    PyObject* m = nullptr;
+PyObject *InitTaskScheduleModule() {
+    PyObject *m = nullptr;
 
     m = PyModule_Create(&g_mskppScheduleModuleDef);
     if (m == nullptr) {

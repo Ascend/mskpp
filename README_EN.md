@@ -1,14 +1,14 @@
 <h1 align="center">MindStudio Kernel Performance Prediction</h1>
 
 <div align="center">
-<h2>Ascend AI Operator Design Tool</h2>
-  
- [![Ascend](https://img.shields.io/badge/Community-MindStudio-blue.svg)](https://www.hiascend.com/developer/software/mindstudio) 
- [![License](https://badgen.net/badge/License/MulanPSL-2.0/blue)](./LICENSE)
+<p><b><span style="font-size:24px;">Ascend AI Operator Design Tool</span></b></p>
+
+ [![快速入门](https://badgen.net/badge/快速入门/QuickStart/blue)](./docs/zh/quick_start/mskpp_quick_start.md)[![AI问答(DeepWiki)](https://badgen.net/badge/AI问答/DeepWiki/blue)](https://deepwiki.com/mindstudio-docs/master) [![AI问答(ZRead)](https://badgen.net/badge/AI问答/ZRead/blue)](https://zread.ai/mindstudio-docs/master) [![精确搜索(ReadTheDocs)](https://badgen.net/badge/精确搜索/ReadTheDocs/blue)](https://mindstudio-operator-tools-docs.readthedocs.io/zh-cn/latest/) [![昇腾社区](https://badgen.net/badge/昇腾社区/Community/blue)](https://www.hiascend.com/cn/developer/software/mindstudio) [![报告问题](https://badgen.net/badge/报告问题/Issues/blue)](https://gitcode.com/Ascend/mskpp/issues) 
 
 </div>
 
-## ✨Latest News
+
+## ✨ Latest News
 
 <span style="font-size:14px;">
 
@@ -45,6 +45,13 @@ For details about how to use the tool, see [msKPP User Guide](./docs/en/user_gui
 
 The msKPP tool provides two types of APIs: basic APIs and instruction APIs. For details, see [msKPP API Reference](./docs/en/api_reference/mskpp_api_reference.md).
 
+## 🌌 Smart Search
+
+To improve the efficiency of document retrieval, we provide the following efficient search methods:  
+🔹 [AI Q&A (DeepWiki)](https://deepwiki.com/mindstudio-docs/master): Natural language Q&A to quickly grasp the project architecture and module relationships.   
+🔹 [AI Q&A (ZRead)](https://zread.ai/mindstudio-docs/master): Better Chinese Q&A experience, precisely locating feature usage and details.   
+🔹 [Precise Search (ReadTheDocs)](https://mindstudio-operator-tools-docs.readthedocs.io/zh-cn/latest/): Full-text keyword search, directly accessing APIs, parameters, and error messages.  
+
 ## 🛠️ Contribution Guide
 
 You are welcome to contribute to the project. For details, see [Contribution Guide](./docs/en/contributing/contributing_guide.md). 
@@ -58,11 +65,11 @@ You are welcome to contribute to the project. For details, see [Contribution Gui
 
 ## 🤝 Suggestions and Communication
 
-You are welcome to contribute to the community. If you have any questions or suggestions, please submit a [Issues](https://gitcode.com/Ascend/mskpp/issues). We will reply as soon as possible. Thank you for your support.
+You are welcome to contribute to the community. If you have any questions or suggestions, please submit an [Issues](https://gitcode.com/Ascend/mskpp/issues). We will reply as soon as possible. Thank you for your support.
 
-|                                      📱 Follow the MindStudio WeChat Account                                      | 💬 Communication and Support Channels                                                                                                                                                                                                                                                                                                                                                                                                                    |
-|:-----------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| <img src="https://gitcode.com/Ascend/msot/blob/master/docs/zh/figures/readme/officialAccount.png" width="120"><br><sub>*Scan the QR code to follow us and get the latest updates.*</sub>| 💡 **Join the WeChat group**:<br>Follow the WeChat account and reply "communication group" to obtain the QR code for joining the group.<br><br>🛠️ ️**Other channels**:<br><br>|
+|                                                                  Live Chat (WeChat Group)                                                                   |                                                                           Official Info (WeChat Official Account)                                                                            | In-Depth Support (Assistant/Forum)                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+|:-----------------------------------------------------------------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| <img src="https://raw.gitcode.com/mengguangxin/docs/files/dev_0526/common/Writing_Template/figures/qr_code_wechat_work.png" width="120"><br><sub>*Scan to join the tech group*</sub> | <img src="https://raw.gitcode.com/mengguangxin/docs/files/dev_0526/common/Writing_Template/figures/qr_code_wechat_official_account.png" width="120"><br><sub>*Scan to follow the official account*</sub> | Scan to join the group and follow the official account for the fastest way to reach the MindStudio user and developer community:<br> **Quick Questions:** Discuss technical issues with community members in real time<br>**Stay Updated:** Get version release and feature update notifications first<br> **Share Experience:** Exchange best practices and practical insights with developers  <br> <br> **More Support Channels**: 👉 Ascend Assistant: [![WeChat](https://img.shields.io/badge/WeChat-07C160?style=flat-square&logo=wechat&logoColor=white)](https://gitcode.com/Ascend/msit/blob/master/docs/zh/figures/readme/xiaozhushou.png) 👉 Ascend Forum: [![Website](https://img.shields.io/badge/Website-%231e37ff?style=flat-square&logo=RSS&logoColor=white)](https://www.hiascend.com/forum/) |
 
 ## 🙏 Acknowledgements
 

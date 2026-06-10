@@ -8,15 +8,7 @@
 
 ## 2. 开发环境准备
 
-- 硬件环境请参见《[昇腾产品形态说明](https://www.hiascend.com/document/detail/zh/AscendFAQ/ProduTech/productform/hardwaredesc_0001.html)》。
-
-- 请按照以下文档进行环境配置：[《算子工具开发环境安装指导》](https://gitcode.com/Ascend/msot/blob/master/docs/zh/common/dev_env_setup.md)。
-
-- 要求构建环境中安装python3.9或以上版本。
-
-- mskpp需要依赖其他python库。通过pip install -r requirement.txt一键式安装依赖库。
-- `gcc 版本 > 7.4.0`  
-- `3.20.2 <= CMAKE版本 <= 3.31.10`
+请按照以下文档进行环境配置：[《算子工具开发环境安装指导》](https://gitcode.com/Ascend/msot/blob/master/docs/zh/common/dev_env_setup.md)。
 
 ## 3. 编译打包
 

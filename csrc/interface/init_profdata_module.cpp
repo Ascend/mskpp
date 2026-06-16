@@ -43,11 +43,11 @@ PyDoc_STRVAR(MSKPP_PROFDATA_METHOD_GET_DOC, "Get estimated data for instructions
         int transEnable; \
         /* 这里需要使用long接收dataSize */ \
         if (!PyArg_ParseTuple(pstArgs, "ssli", &src, &dst, &dataSize, &transEnable)) { \
-            Py_RETURN_NONE; \
+            return NULL; \
         } \
         auto instrName##Instr = MovFactory::instance()->Create(#instrName); \
         if (instrName##Instr == nullptr) { \
-            Py_RETURN_NONE; \
+            return NULL; \
         } \
         return PyFloat_FromDouble( \
             instrName##Instr->Get(std::string(src), std::string(dst), dataSize, (bool)transEnable)); \
@@ -58,11 +58,11 @@ PyDoc_STRVAR(MSKPP_PROFDATA_METHOD_GET_DOC, "Get estimated data for instructions
         long granularity; \
         const char *instrType = nullptr; \
         if (!PyArg_ParseTuple(pstArgs, "ls", &granularity, &instrType)) { \
-            Py_RETURN_NONE; \
+            return NULL; \
         } \
         auto instrName##Instr = MmadFactory::instance()->Create(#instrName); \
         if (instrName##Instr == nullptr) { \
-            Py_RETURN_NONE; \
+            return NULL; \
         } \
         return PyFloat_FromDouble(instrName##Instr->Get(granularity, std::string(instrType))); \
     }
@@ -72,11 +72,11 @@ PyDoc_STRVAR(MSKPP_PROFDATA_METHOD_GET_DOC, "Get estimated data for instructions
         long granularity; \
         const char *instrType = nullptr; \
         if (!PyArg_ParseTuple(pstArgs, "ls", &granularity, &instrType)) { \
-            Py_RETURN_NONE; \
+            return NULL; \
         } \
         auto instrName##Instr = VecFactory::instance()->Create(#instrName, #instrName); \
         if (instrName##Instr == nullptr) { \
-            Py_RETURN_NONE; \
+            return NULL; \
         } \
         return PyFloat_FromDouble(instrName##Instr->Get(granularity, std::string(instrType))); \
     }

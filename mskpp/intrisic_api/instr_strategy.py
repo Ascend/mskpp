@@ -97,12 +97,16 @@ class VecUnaryInitByAttr(InstrInitBase):
         instr_obj.inputs = (x,)
         instr_obj.outputs = (y,)
         instr_check_func = {
-            ("VECTORDUP", ): (InstrInitParaCheck.check_shape_valid, kwargs, "fill_shape"),
-            ("VBRCB", ): (InstrInitParaCheck.check_type, kwargs, "broadcast_num", "int"),
-            ("VCONV", ): (InstrInitParaCheck.check_dtype_valid, kwargs, "dtype"),
+            ("VECTORDUP",): (InstrInitParaCheck.check_shape_valid, kwargs, "fill_shape"),
+            ("VBRCB",): (InstrInitParaCheck.check_type, kwargs, "broadcast_num", "int"),
+            ("VCONV",): (InstrInitParaCheck.check_dtype_valid, kwargs, "dtype"),
             ("VCONVDEQ", "VCONVVDEQ"): (InstrInitParaCheck.check_tensor_is_complete, x),
-            ("VCADD", "VCGADD", "VCGMAX", "VCGMIN", "VCMAX", "VCMIN", "VCPADD"):
-                (InstrInitParaCheck.check_type, kwargs, "reduce_num", "int")
+            ("VCADD", "VCGADD", "VCGMAX", "VCGMIN", "VCMAX", "VCMIN", "VCPADD"): (
+                InstrInitParaCheck.check_type,
+                kwargs,
+                "reduce_num",
+                "int",
+            ),
         }
         execute_func_by_instr_name(instr_check_func, kwargs["instr_name"])
 

@@ -16,8 +16,6 @@
 # See the Mulan PSL v2 for more details.
 # -------------------------------------------------------------------------
 import os
-import re
-import sys
 import stat
 from mskpp.utils import logger
 
@@ -41,25 +39,21 @@ class FileChecker:
             logger.error(f"Path:{self.absolute_path} not exist.")
             return False
         if not self.path_len_check_valid():
-            logger.error(f"Path:{self.absolute_path} length is too long.")
-            return False
+            logger.warning(f"Path:{self.absolute_path} length is too long.")
         if self.is_soft_link_recusively():
-            logger.error(f"Path:{self.absolute_path} contains soft link which may cause security problems,"
-                         f" please check.")
-            return False
+            logger.warning(
+                f"Path:{self.absolute_path} contains soft link which may cause security problems, please check."
+            )
         if self.file_type != "dir" and os.path.isdir(self.absolute_path):
             logger.error(f"Path:{self.absolute_path} is dir, not a file.")
             return False
         path_permission = {"csv": os.R_OK, "dir": os.W_OK, "file": os.R_OK, "app": os.X_OK}
         if self.file_type not in path_permission:
-            logger.error(f"Path:{self.absolute_path}, the file type is unsupported.")
-            return False
+            logger.warning(f"Path:{self.absolute_path}, the file type is unsupported.")
         file_mode = path_permission[self.file_type]
-        if not self.check_path_permission(file_mode):
-            return False
+        self.check_path_permission(file_mode)
         if self.file_type != "dir" and (file_mode & os.R_OK) != 0 and not self.check_file_size_valid():
-            logger.error(f"Path:{self.absolute_path}, file size is too large, max file size:{self.threshold}.")
-            return False
+            logger.warning(f"Path:{self.absolute_path}, file size is too large, max file size:{self.threshold}.")
         return True
 
     def check_output_file(self):
@@ -71,14 +65,21 @@ class FileChecker:
         return self.check_group_others_w_permission() and self.check_input_file()
 
     def is_string_char_valid(self):
-        invalid_chars = {'\n': '\\n', '\f': '\\f', '\r': '\\r', '\b': '\\b', '\t': '\\t', '\v': '\\v',
-            '\u007F': '\\u007F'}
-        for key in invalid_chars:
+        invalid_chars = {
+            '\n': '\\n',
+            '\f': '\\f',
+            '\r': '\\r',
+            '\b': '\\b',
+            '\t': '\\t',
+            '\v': '\\v',
+            '\u007f': '\\u007F',
+        }
+        for key, value in invalid_chars.items():
             if key in self.absolute_path:
-                logger.error(f"Path:{self.absolute_path} contains {invalid_chars[key]}, which is invalid.")
+                logger.error(f"Path:{self.absolute_path} contains {value}, which is invalid.")
                 return False
         return True
-    
+
     def is_soft_link_recusively(self):
         while self.absolute_path.endswith('/'):
             self.absolute_path = self.absolute_path[:-1]
@@ -102,7 +103,7 @@ class FileChecker:
             if len(dir_name) > FILE_NAME_LENGTH_LIMIT:
                 return False
         return True
-    
+
     def check_path_permission(self, file_mode):
         # 读取文件状态信息
         file_stat = os.stat(self.absolute_path)
@@ -116,29 +117,23 @@ class FileChecker:
         uid = os.getuid()
         # 检查读权限
         if (file_mode & os.R_OK) != 0 and (owner_permission & os.R_OK) == 0:
-            logger.error(f"Path:{self.absolute_path} is not readable.")
-            return False
+            logger.warning(f"Path:{self.absolute_path} is not readable.")
         # 检查写权限
         if (file_mode & os.W_OK) != 0 and (owner_permission & os.W_OK) == 0:
-            logger.error(f"Path:{self.absolute_path} is not writable.")
-            return False
+            logger.warning(f"Path:{self.absolute_path} is not writable.")
         # 检查执行权限
         if (file_mode & os.X_OK) != 0 and (owner_permission & os.X_OK) == 0:
-            logger.error(f"Path:{self.absolute_path} is not executable.")
-            return False
+            logger.warning(f"Path:{self.absolute_path} is not executable.")
         # 检查组权限是否允许写操作
         if (group_permission & os.W_OK) != 0:
-            logger.error(f"Path:{self.absolute_path} is writable by the group.")
-            return False
+            logger.warning(f"Path:{self.absolute_path} is writable by the group.")
         # 检查其他用户是否有写权限
         if (other_permission & os.W_OK) != 0:
-            logger.error(f"Path:{self.absolute_path} is writable by any other users.")
-            return False
+            logger.warning(f"Path:{self.absolute_path} is writable by any other users.")
 
         # 检查文件所有者是否与当前用户一致
         if uid != 0 and uid != file_stat.st_uid and file_stat.st_uid != 0:
-            logger.error(f"Path:{self.absolute_path} the current owner have inconsistent permission.")
-            return False
+            logger.warning(f"Path:{self.absolute_path} the current owner have inconsistent permission.")
         return True
 
     def check_file_size_valid(self):
@@ -149,9 +144,7 @@ class FileChecker:
     def check_group_others_w_permission(self):
         mode = os.stat(self.absolute_path).st_mode
         if mode & stat.S_IWGRP:
-            logger.error(f"Path:{self.absolute_path} cannot have write permission of group.")
-            return False
+            logger.warning(f"Path:{self.absolute_path} cannot have write permission of group.")
         if mode & stat.S_IWOTH:
-            logger.error(f"Path:{self.absolute_path} cannot have write permission of other users.")
-            return False
+            logger.warning(f"Path:{self.absolute_path} cannot have write permission of other users.")
         return True

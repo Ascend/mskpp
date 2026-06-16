@@ -19,7 +19,11 @@
 import time
 import os
 from datetime import datetime, timezone
+
+# pylint: disable=import-error
 from mskpp._C import arch, task_schedule
+
+# pylint: enable=import-error
 from mskpp.utils import logger
 from .metric import Metrics
 from .aicore import core_type_list
@@ -78,8 +82,11 @@ class Chip:
     def sync_instr_pre_check():
         # diff number
         if len(sync_instr_dict["SET_FLAG"]) != len(sync_instr_dict["WAIT_FLAG"]):
-            logger.error("The number of SET_FLAG = {} and WAIT_FLAG = {} instructions do not match".format(
-                len(sync_instr_dict["SET_FLAG"]), len(sync_instr_dict["WAIT_FLAG"])))
+            logger.error(
+                "The number of SET_FLAG = {} and WAIT_FLAG = {} instructions do not match".format(
+                    len(sync_instr_dict["SET_FLAG"]), len(sync_instr_dict["WAIT_FLAG"])
+                )
+            )
             return False
         # duplicate element
         set_dup = set(sync_instr_dict["SET_FLAG"])
@@ -120,10 +127,10 @@ class Chip:
 
     def param_transfer(self):
         if not checker.is_required_type(self.chip_name, str) or self.chip_name not in Chip.support_list:
-            raise Exception("Parameter chip_name in Chip is unsupported")
+            raise ValueError("Parameter chip_name in Chip is unsupported")
         self.chip_name = "Ascend910_95" if "_95" in self.chip_name else "Ascend910B1"
         if not checker.is_required_type(self.debug_mode, bool):
-            raise Exception("Parameter debug_mode in Chip should be bool, but got: {}".format(type(self.debug_mode)))
+            raise ValueError("Parameter debug_mode in Chip should be bool, but got: {}".format(type(self.debug_mode)))
 
     def create_output_dir(self):
         time_stamp = datetime.now(tz=timezone.utc).strftime("%Y%m%d%H%M%S")
@@ -131,6 +138,5 @@ class Chip:
         self.output_dir = os.path.join(cur_dir, "MSKPP" + time_stamp)
         file_checker = FileChecker(self.output_dir, "dir")
         if not file_checker.check_output_file():
-            raise Exception("Fail to Create output folder")
-        os.makedirs(self.output_dir)
-        os.chmod(self.output_dir, DATA_DIRECTORY_AUTHORITY)
+            raise OSError("Fail to Create output folder")
+        os.makedirs(self.output_dir, DATA_DIRECTORY_AUTHORITY)

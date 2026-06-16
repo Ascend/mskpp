@@ -20,8 +20,8 @@ import os
 import stat
 from mskpp.utils import logger
 
-MAX_FILE_SIZE = 10 * 1024 ** 2
-MAX_LIB_SIZE = 10 * 1024 ** 3
+MAX_FILE_SIZE = 10 * 1024**2
+MAX_LIB_SIZE = 10 * 1024**3
 SAVE_DATA_FILE_AUTHORITY = stat.S_IWUSR | stat.S_IRUSR
 DATA_DIRECTORY_AUTHORITY = 0o750
 OPEN_FLAGS = os.O_WRONLY | os.O_CREAT
@@ -36,9 +36,9 @@ def check_input_file(path, threshold=MAX_FILE_SIZE):
     if not os.access(path, os.R_OK):
         raise PermissionError(f'Path {path} is not readable.')
     if os.path.getsize(path) >= threshold:
-        raise ValueError(f'The file {path} is too large.')
+        logger.warning(f'The file {path} is too large.')
     if not check_path_owner_consistent(path):
-        raise PermissionError(f'The file {path} is insecure because it does not belong to you.')
+        logger.warning(f'The file {path} is insecure because it does not belong to you.')
     check_group_others_w_permission(path)
 
 

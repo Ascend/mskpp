@@ -36,7 +36,7 @@ cmake ..
 make -j$(nproc) install # -j 是并行编译的 job 数量，可自行指定；nproc 不可用时请手动填数字（例如 -j8）。
 ```
 
-##### 3.2.1.2 编译结果说明
+#### 3.2.2 编译结果说明
 
 编译结果生成到 output 目录下：
 
@@ -66,7 +66,7 @@ python的UT测试，依赖pytest和coverage工具，可通过执行 ```pip insta
 python build.py test
 ```
 
-输出类似如下，若跑的用例数和通过用例数相同，即表示成功：
+输出类似如下，若跑得用例数和通过用例数相同，即表示成功：
 
 ```text
 [==========] 37 tests from 6 test cases ran. (616 ms total)

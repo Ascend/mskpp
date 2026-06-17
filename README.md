@@ -3,7 +3,12 @@
 <div align="center">
 <p><b><span style="font-size:24px;">昇腾 AI 算子设计工具</span></b></p>
 
- [![快速入门](https://badgen.net/badge/快速入门/QuickStart/blue)](./docs/zh/quick_start/mskpp_quick_start.md)[![AI问答(DeepWiki)](https://badgen.net/badge/AI问答/DeepWiki/blue)](https://deepwiki.com/mindstudio-docs/master) [![AI问答(ZRead)](https://badgen.net/badge/AI问答/ZRead/blue)](https://zread.ai/mindstudio-docs/master) [![精确搜索(ReadTheDocs)](https://badgen.net/badge/精确搜索/ReadTheDocs/blue)](https://mindstudio-operator-tools-docs.readthedocs.io/zh-cn/latest/) [![昇腾社区](https://badgen.net/badge/昇腾社区/Community/blue)](https://www.hiascend.com/cn/developer/software/mindstudio) [![报告问题](https://badgen.net/badge/报告问题/Issues/blue)](https://gitcode.com/Ascend/mskpp/issues) 
+ [![License](https://badgen.net/badge/快速入门/QuickStart/blue)](./docs/zh/quick_start/mskpp_quick_start.md)
+ [![License](https://badgen.net/badge/精确搜索/ReadTheDocs/blue)](https://mindstudio-operator-tools-docs.readthedocs.io/zh-cn/latest/)
+ [![License](https://badgen.net/badge/AI问答/DeepWiki/blue)](https://deepwiki.com/mindstudio-docs/master)
+ [![License](https://badgen.net/badge/AI问答/ZRead/blue)](https://zread.ai/mindstudio-docs/master)
+ [![License](https://badgen.net/badge/昇腾社区/Community/blue)](https://www.hiascend.com/cn/developer/software/mindstudio)
+ [![License](https://badgen.net/badge/报告问题/Issues/blue)](https://gitcode.com/Ascend/mskpp/issues)
 
 </div>
 
@@ -11,7 +16,7 @@
 
 <span style="font-size:14px;">
 
-🔹 **[2025.12.31]**：MindStudio Kernel Performance Prediction 项目全面开源
+🔹 **[2025-12-31]**：MindStudio Kernel Performance Prediction 项目全面开源
 
 </span>
 

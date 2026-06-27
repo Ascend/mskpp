@@ -9,11 +9,11 @@ This document demonstrates the core functions of msKPP based on the simple addit
 
 ### 1.1 Recommendations
 
-This document assumes that you have completed all operations in <a href="https://gitcode.com/Ascend/msot/blob/master/docs/en/quick_start/op_tool_quick_start.md" target="_blank">Ascend Operator Development Toolchain Quick Start</a>. If you have not done so, complete that guide first for a better learning experience.
+This document assumes that you have completed all operations in <a href="https://gitcode.com/Ascend/msot/blob/26.0.0/docs/en/quick_start/op_tool_quick_start.md" target="_blank">Ascend Operator Development Toolchain Quick Start</a>. If you have not done so, complete that guide first for a better learning experience.
 
 ### 1.2 Environment Setup
 
-Strictly follow the <a href="https://gitcode.com/Ascend/msot/blob/master/docs/en/quick_start/installation_guide.md" target="_blank">Ascend AI Operator Development Toolchain Learning Environment Installation Guide</a> to complete the environment installation and workspace configuration.
+Strictly follow the <a href="https://gitcode.com/Ascend/msot/blob/26.0.0/docs/en/quick_start/installation_guide.md" target="_blank">Ascend AI Operator Development Toolchain Learning Environment Installation Guide</a> to complete the environment installation and workspace configuration.
 Even if you have a similar environment, perform the steps in the guide again to ensure that all dependent components and environment variables are complete and consistent.
 
 <br>
@@ -98,7 +98,7 @@ if __name__ == '__main__':
 
 ##### 2.2.1.3 Modifying the Processor Type in the Preceding Code
 
-Refer to <a href="https://gitcode.com/Ascend/msot/blob/master/docs/en/quick_start/get_chip_soc_type.md" target="_blank"> Chip SoC Type Obtaining Method</a> to obtain the chip type and replace `xxx` in `with Chip("xxx") as chip` with the obtained chip type.
+Refer to <a href="https://gitcode.com/Ascend/msot/blob/26.0.0/docs/en/quick_start/get_chip_soc_type.md" target="_blank"> Chip SoC Type Obtaining Method</a> to obtain the chip type and replace `xxx` in `with Chip("xxx") as chip` with the obtained chip type.
 
 #### 2.2.2 Executing Performance Modeling
 

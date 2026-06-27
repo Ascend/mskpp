@@ -297,7 +297,7 @@ MovFactory -[hidden]left-> MmadFactory
 class DataFactory {
 - map<string,function<shared_ptr<T>(Args...)>> creator_
 + void Register(const string name, function<shared_ptr<T>(Args...)> creator)
-+ shared_ptr<T> Create(const string name, , Args... args)
++ shared_ptr<T> Create(const string name, Args... args)
 }
 class DataRegister {
 void DataRegister(const std::string &name)
@@ -1080,7 +1080,7 @@ Security hardening for high-risk APIs
 
 **1. Input validation**  
 Strictly validate parameters in API requests to ensure data integrity and prevent malicious attacks.
-Input validation ensures the API receives only expected, properly formatted data. It mitigates issues caused data corruption, crashes, or unpredictable behaviors. Specific risks prevented include injection attacks and malicious file uploads.
+Input validation ensures the API receives only expected, properly formatted data. It mitigates issues caused by data corruption, crashes, or unpredictable behaviors. Specific risks prevented include injection attacks and malicious file uploads.
 
 In terms of software design, the following points should be considered:
 
@@ -1115,7 +1115,7 @@ The auto tuning interface should ensure that user code is not modified and preve
 
 | Module| Module Function                                | Security Analysis                                                                                                    | Code Directory                                            | Language| Remarks|
 | -------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------- | -------- | ---- |
-| Code generation| Provides the delivery code generation interface for external systems.                        | The code generation module flushes a file to the local drive. The path can be controlled externally. Note that file path attacks may occur.                                            | workload_analysis/mskpp/mskpp/launcher/code_generator.py | Python   |      |
+| Code generation| Provides the delivery code generation interface for external systems.                        | The code generation module writes a file to the local drive. The path can be controlled externally. Note that file path attacks may occur.                                            | workload_analysis/mskpp/mskpp/launcher/code_generator.py | Python   |      |
 | Compiling    | Provides the kernel and delivery code compilation interface for external systems.              | The compilation module receives the external compilation script path. Risks such as privilege escalation and injection must be prevented.                                                                  | workload_analysis/mskpp/mskpp/launcher/compiler.py       | Python   |      |
 | Auto tuning| Provides an interface for traversing the search space to find the optimal parameter combination.| The auto tuning module backs up user code and instantiates the configuration defined by the search space. Batch files are generated during the process. Upon task completion, cache files are cleared in batch. File path injection attacks must be prevented.| workload_analysis/mskpp/mskpp/optune/tuner.py            | Python   |      |
 
@@ -1126,14 +1126,14 @@ The auto tuning interface should ensure that user code is not modified and preve
 | code_gen    | Generates the kernel delivery code and supports the external specification of the file flushing path.| The input parameters of the `open` function for opening a file need to be validated.                             | workload_analysis/mskpp/mskpp/launcher/code_generator.py | Python   |      |
 | compile     | Executes the input script to generate an executable kernel.            | The script path will be used by the `subprocess.run`. The content passed to the `run` interface needs to be validated.| workload_analysis/mskpp/mskpp/launcher/compiler.py       | Python   |      |
 | clean_files | Clears the internal cache files.                  | An allowlist and validation checks should be set for files to be cleared.                         | workload_analysis/mskpp/mskpp/optune/tuner.py            | Python   |      |
-| get_kernel_from_binary| Imports the external operator binary file, generates the operator delivery code, and compiles the code into the final binary.                  | The permissions of the input external binary file and the permissions to flush the newly compiled file to drive must be verified.                         | workload_analysis/mskpp/mskpp/optune/opgen_workflow.py            | Python   |      |
+| get_kernel_from_binary| Imports the external operator binary file, generates the operator delivery code, and compiles the code into the final binary.                  | The permissions of the input external binary file and the permissions to write the newly compiled file to drive must be verified.                         | workload_analysis/mskpp/mskpp/optune/opgen_workflow.py            | Python   |      |
 | tiling_func| Imports the external dynamic library file, generates the code for calling the tiling function, and compiles and runs the code.                  | The permissions of the input external dynamic library file and the permissions to flush the newly compiled file to drive must be verified.                         | workload_analysis/mskpp/mskpp/optune/opgen_workflow.py            | Python   |      |
 
 ##### 4.5.2.4 Code Security Protection
 
 **1. Input validation**  
 Strictly validate parameters in API requests to ensure data integrity and prevent malicious attacks.
-Input validation ensures the API receives only expected, properly formatted data. It mitigates issues caused data corruption, crashes, or unpredictable behaviors. Specific risks prevented include injection attacks and malicious file uploads.
+Input validation ensures the API receives only expected, properly formatted data. It mitigates issues caused by data corruption, crashes, or unpredictable behaviors. Specific risks prevented include injection attacks and malicious file uploads.
 
 The following points should be considered:
 
@@ -1257,7 +1257,7 @@ UT: Verifies that the functions of individual functions and classes within the p
 | ---- | -------- | -------------------- | -------------------------------- |
 | ST   | Integration testing| code_gen()           | End-to-end verification of the code generation function.          |
 | ST   | Integration testing| compile()            | End-to-end verification of the compilation function.              |
-| ST   | Integration testing| kernel[]()           | End-to-end verification of the kernel running function.        |
+| ST   | Integration testing| kernel()           | End-to-end verification of the kernel running function.        |
 | ST   | Integration testing| autotune             | End-to-end verification of the auto tuning function.          |
 | ST   | Integration testing| tiling_func             | End-to-end verification of the tiling calling function.          |
 | ST   | Integration testing| get_kernel_from_binary             | End-to-end verification of the kernel calling function.          |

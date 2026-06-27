@@ -10,7 +10,7 @@ For details about the code framework and core process, see the [msKPP Architectu
 
 - For hardware environment requirements, see [Ascend Product Models](https://www.hiascend.com/document/detail/zh/AscendFAQ/ProduTech/productform/hardwaredesc_0001.html).
 
-- Set up the environment by referring to the [Operator Tool Development Environment Setup Guide](https://gitcode.com/Ascend/msot/blob/master/docs/en/common/dev_env_setup.md).
+- Set up the environment by referring to the [Operator Tool Development Environment Setup Guide](https://gitcode.com/Ascend/msot/blob/26.0.0/docs/en/common/dev_env_setup.md).
 
 - Python 3.9 or later must be installed in the build environment.
 
@@ -44,7 +44,7 @@ cmake ..
 make -j$(nproc) install # -j indicates the number of parallel build jobs, which can be specified as required. If nproc is unavailable, manually enter a number (for example, -j8).
 ```
 
-##### 3.2.1.2 Build Result Description
+**Build Result Description**
 
 The build result is generated in the `output` directory:
 
@@ -56,7 +56,7 @@ output/
 |-- mindstudio_kpp-XXX-py3-none-manylinux_2_31_XXX.whl   # Installation package
 ```
 
-#### 3.2.3 Cleanup/Rebuild
+#### 3.2.2 Cleanup/Rebuild
 
 Delete the build directory and perform operations in [Section 3.2.1](#321-building-and-packaging) again.  
 

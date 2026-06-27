@@ -139,7 +139,7 @@ Replace `Ascendxxxyy` in this document with the actual processor type.
     The generated `Pipe_statistic.csv` file contains two columns: `ProfDuration(us)_0` and `ProfRatio_0`. The values in the `ProfDuration(us)_0` column are the same as those in the `PipeUtilization.csv` file. `ProfRatio_0` indicates the ratio of the measured value to the theoretical value. `ProfRatio` is a multiple of the measured value relative to the theoretical value. A larger multiple indicates a larger optimization space.
 
     **Figure 1** Pipe_statistic.csv file
-    ![](/../figures/pipe_statistic_csv_file.png "pipe_statistic_csv_file")
+    ![](../figures/pipe_statistic_csv_file.png "pipe_statistic_csv_file")
 
 **Output Description**
 
@@ -199,7 +199,7 @@ if __name__ == '__main__':
             my_mmad(in_x, in_y, in_z)
 ```
 
-After the `main.py` script is executed using Python, the `Pipe_statistic.csv` file for pipeline statistics and `Instruction_statistic.csv` file for instruction statistics are generated in the `current path//MSKPP_TIMESTAMP` directory. You can view the msKPP modeling results.
+After the `main.py` script is executed using Python, the `Pipe_statistic.csv` file for pipeline statistics and `Instruction_statistic.csv` file for instruction statistics are generated in the `current path/MSKPP_TIMESTAMP` directory. You can view the msKPP modeling results.
 
 > [!NOTE]NOTE  
 > *TIMESTAMP* indicates the current timestamp.
@@ -303,7 +303,7 @@ if __name__ == '__main__':
             my_mmad(in_x, in_y, in_z)
 ```
 
-After the `main.py` script is executed using Python, the instruction pipeline chart (`trace.json`) and instruction proportion pie chart (`instruction_cycle_consumption.html`) are generated in the `current path/MSKPP_TIMESTAMP_` directory. You can view the msKPP modeling result.
+After the `main.py` script is executed using Python, the instruction pipeline chart (`trace.json`) and instruction proportion pie chart (`instruction_cycle_consumption.html`) are generated in the `current path/MSKPP_TIMESTAMP` directory. You can view the msKPP modeling result.
 
 > [!NOTE]NOTE  
 > *TIMESTAMP* indicates the current timestamp.

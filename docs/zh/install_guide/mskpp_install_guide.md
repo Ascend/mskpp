@@ -33,7 +33,7 @@
 - 克隆本仓库
 
     ```sh
-    git clone https://gitcode.com/Ascend/mskpp.git
+    git clone https://gitcode.com/Ascend/mskpp.git -b 26.0.0
     ```
 
 - mskpp需要依赖其他python库。通过如下命令一键式安装依赖库。
@@ -80,7 +80,17 @@ python
 >>> ...
 ```
 
-## 3. 卸载
+## 3. 验证安装
+
+安装完成后，执行以下命令验证工具是否安装成功：
+
+```shell
+python3 -c "import mskpp; print('All is OK')"
+```
+
+若输出不报错，且能显示'All is OK'，则表明安装成功。
+
+## 4. 卸载
 
 可通过如下步骤卸载：
 
@@ -109,6 +119,8 @@ python
    Successfully uninstalled 1 tool ({tools_name})
    ```
 
-## 4. 升级
+## 5. 升级
 
 升级即“先卸后装”。直接执行安装命令，工具将自动卸载旧版本，并引导您完成覆盖安装。
+
+可通过`pip3 show mindstudio-kpp`命令查看当前环境的版本信息，再选择需要升级的版本。升级版本时需要关注版本配套关系，请参见《[版本说明](https://gitcode.com/Ascend/release-management/blob/master/MindStudio/26.0.0/release_notes.md)》。

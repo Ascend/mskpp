@@ -24,7 +24,7 @@ To use the functions of the latest code or modify the source code to enhance fun
 
 ### Environment Setup
 
-Set up the environment by referring to the [Operator Tool Development Environment Setup Guide](https://gitcode.com/Ascend/msot/blob/master/docs/en/common/dev_env_setup.md).
+Set up the environment by referring to the [Operator Tool Development Environment Setup Guide](https://gitcode.com/Ascend/msot/blob/26.0.0/docs/en/common/dev_env_setup.md).
 
 Python 3.9 or later must be installed in the build environment.
 
@@ -51,7 +51,7 @@ The .whl package is generated in the `output` directory. Run the following comma
 
 ```shell
 cd output
-chmod +x mindstudio_kpp-XXX.whl
+chmod +x mindstudio-kpp
 ```
 
 #### Installation

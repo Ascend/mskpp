@@ -28,19 +28,19 @@ namespace Mskpp {
 class RawTask {
 public:
     explicit RawTask(PyObject *taskObj);
-    RawTask(const RawTask& obj);
-    RawTask& operator=(const RawTask&) = default;
+    RawTask(const RawTask &obj);
+    RawTask &operator=(const RawTask &other);
     ~RawTask();
-    std::string& GetOwner();
-    std::string& GetName();
+    std::string &GetOwner();
+    std::string &GetName();
     int64_t GetEventId() const;
     uint64_t GetCostTime() const;
     int32_t SetDuration(uint64_t start, uint64_t end) const;
-    int32_t Size() const;           // return a negative number when an error occurs
+    int32_t Size() const; // return a negative number when an error occurs
     bool IsReady() const;
     void Run() const;
     static bool CheckPyObj(PyObject *taskObj); // Since it is not appropriate to throw exceptions in the constructor,
-                                               // caller shall check the input valid.
+        // caller shall check the input valid.
 private:
     int32_t RunPreFunc() const;
     int32_t RunImplFunc() const;

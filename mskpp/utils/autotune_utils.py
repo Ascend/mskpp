@@ -51,18 +51,19 @@ def check_configs(configs):
 
 def check_warmup(warmup):
     if not isinstance(warmup, int) or warmup <= 0:
-        raise ValueError(f'The warmup value is not a valid positive integer.')
+        raise ValueError('The warmup value is not a valid positive integer.')
     if warmup < 300:
-        logger.warning('The device requires 300μs to reach full frequency, '
-                       'but the warmup value you provided is less than 300μs.')
-    if warmup > 10 ** 5:
+        logger.warning(
+            'The device requires 300μs to reach full frequency, but the warmup value you provided is less than 300μs.'
+        )
+    if warmup > 10**5:
         raise ValueError(f'The warmup value {warmup} is too large.')
 
 
 def check_repeat(repeat):
     if not isinstance(repeat, int) or repeat <= 0:
         raise ValueError('The repeat value is not a valid positive integer.')
-    if repeat > 10 ** 4:
+    if repeat > 10**4:
         raise ValueError(f'The warmup value {repeat} is too large.')
 
 
@@ -78,15 +79,16 @@ def check_device_ids(device_ids):
         raise ValueError(f'The device_ids: {device_ids} is not a list.')
     if not device_ids:
         raise ValueError('The device id list is empty.')
-    if len(device_ids) > 10 ** 2:
-        raise ValueError(f'The device id list is too large.')
+    if len(device_ids) > 10**2:
+        raise ValueError('The device id list is too large.')
     for device_id in device_ids:
         if not isinstance(device_id, int) or device_id < 0:
             raise ValueError(f'The device id {device_id} is not valid.')
     if len(device_ids) > 1:
         logger.warning(
             'Multi-device parallel execution is not yet supported. '
-            'Only the first device id in the device id list will be used currently.')
+            'Only the first device id in the device id list will be used currently.'
+        )
 
 
 def get_file_lines(file):
@@ -122,9 +124,9 @@ def find_executable_custom(executable_name, additional_paths=None):
 
 def is_torch_tensor_instance(obj):
     return (
-            hasattr(obj, "__class__")
-            and obj.__class__.__name__ == "Tensor"
-            and obj.__class__.__module__.startswith("torch")
+        hasattr(obj, "__class__")
+        and obj.__class__.__name__ == "Tensor"
+        and obj.__class__.__module__.startswith("torch")
     )
 
 
@@ -187,14 +189,21 @@ def pad_list_slice(lst: list, length: int, fill_value=None) -> list:
     # 创建目标长度列表并用 None 填充
     padded = [fill_value] * length
     # 将原始列表值复制到新列表
-    padded[:len(lst)] = lst
+    padded[: len(lst)] = lst
     return padded
 
 
 def load_json(path: str):
+    if not path or not isinstance(path, str):
+        return False, ValueError(f'File {path} does not exist or is not a string.')
+    if not os.path.isfile(path):
+        return False, OSError(f'File {path} is not a file.')
     try:
-        with open(path, 'r') as f:
+        safe_check.check_input_file(path)
+        with open(path, 'r', encoding='utf-8') as f:
             loaded_data = json.load(f)
         return True, loaded_data
+    except json.JSONDecodeError as ex:
+        return False, ex
     except Exception as ex:
         return False, ex

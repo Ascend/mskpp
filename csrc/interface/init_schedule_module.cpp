@@ -57,6 +57,9 @@ static PyObject *MSKPP_SCHEDULE_AddTask(PyObject *self, PyObject *const *args, P
     }
 
     RawTask task(o);
+    if (PyErr_Occurred()) {
+        return NULL;
+    }
     TaskSchedule::instance()->AddTask(task);
     Py_RETURN_NONE;
 }

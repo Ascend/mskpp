@@ -19,8 +19,7 @@
 #include "raw_task.h"
 
 namespace Mskpp {
-RawTask::RawTask(PyObject *taskObj) : pyTask(taskObj)
-{
+RawTask::RawTask(PyObject *taskObj) : pyTask(taskObj) {
     const char *s = nullptr;
     Py_ssize_t len;
     PyObject *o = nullptr;
@@ -64,8 +63,7 @@ RawTask::RawTask(PyObject *taskObj) : pyTask(taskObj)
     }
 }
 
-RawTask::RawTask(const RawTask& obj)
-{
+RawTask::RawTask(const RawTask &obj) {
     name = obj.name;
     owner = obj.owner;
     costTime = obj.costTime;
@@ -74,33 +72,30 @@ RawTask::RawTask(const RawTask& obj)
     Py_INCREF(pyTask);
 }
 
-RawTask::~RawTask()
-{
-    Py_XDECREF(pyTask);
+RawTask &RawTask::operator=(const RawTask &other) {
+    if (this != &other) {
+        Py_XDECREF(pyTask);
+        pyTask = other.pyTask;
+        Py_INCREF(pyTask);
+        name = other.name;
+        owner = other.owner;
+        costTime = other.costTime;
+        eventId = other.eventId;
+    }
+    return *this;
 }
 
-std::string& RawTask::GetOwner()
-{
-    return owner;
-}
+RawTask::~RawTask() { Py_XDECREF(pyTask); }
 
-std::string& RawTask::GetName()
-{
-    return name;
-}
+std::string &RawTask::GetOwner() { return owner; }
 
-int64_t RawTask::GetEventId() const
-{
-    return eventId;
-}
+std::string &RawTask::GetName() { return name; }
 
-uint64_t RawTask::GetCostTime() const
-{
-    return costTime;
-}
+int64_t RawTask::GetEventId() const { return eventId; }
 
-int32_t RawTask::SetDuration(uint64_t start, uint64_t end) const
-{
+uint64_t RawTask::GetCostTime() const { return costTime; }
+
+int32_t RawTask::SetDuration(uint64_t start, uint64_t end) const {
     PyObject *pyStart = PyLong_FromUnsignedLongLong(start);
     if (pyStart == nullptr) {
         return -1;
@@ -119,8 +114,7 @@ int32_t RawTask::SetDuration(uint64_t start, uint64_t end) const
     return 0;
 }
 
-int32_t RawTask::Size() const
-{
+int32_t RawTask::Size() const {
     uint64_t size = 1;
     PyObject *ret = PyObject_CallMethod(pyTask, "size", nullptr);
     if (ret && PyLong_CheckExact(ret)) {
@@ -130,8 +124,7 @@ int32_t RawTask::Size() const
     return size;
 }
 
-bool RawTask::IsReady() const
-{
+bool RawTask::IsReady() const {
     long ready = 0;
     PyObject *ret = PyObject_CallMethod(pyTask, "is_ready", nullptr);
     /* PyBool is sub class of PyLong */
@@ -142,8 +135,7 @@ bool RawTask::IsReady() const
     return ready != 0;
 }
 
-int RawTask::RunPreFunc() const
-{
+int RawTask::RunPreFunc() const {
     PyObject *ret = PyObject_CallMethod(pyTask, "pre_func", nullptr);
     if (ret == nullptr) {
         return -1;
@@ -152,8 +144,7 @@ int RawTask::RunPreFunc() const
     return 0;
 }
 
-int RawTask::RunPostFunc() const
-{
+int RawTask::RunPostFunc() const {
     PyObject *ret = PyObject_CallMethod(pyTask, "post_func", nullptr);
     if (ret == nullptr) {
         return -1;
@@ -162,28 +153,24 @@ int RawTask::RunPostFunc() const
     return 0;
 }
 
-int RawTask::RunImplFunc() const
-{
+int RawTask::RunImplFunc() const {
     /* do nothing, only for logic and expand */
     return 0;
 }
 
-void RawTask::Run() const
-{
+void RawTask::Run() const {
     RunPreFunc();
     RunImplFunc();
     RunPostFunc();
 }
 
-bool RawTask::CheckPyObj(PyObject *taskObj)
-{
+bool RawTask::CheckPyObj(PyObject *taskObj) {
     if (taskObj == nullptr) {
         return false;
     }
 
     static std::vector<std::string> necessaryAttr = {
-        "name", "owner", "cost_time", "size", "is_ready", "pre_func", "post_func"
-    };
+        "name", "owner", "cost_time", "size", "is_ready", "pre_func", "post_func"};
 
     for (uint32_t i = 0; i < necessaryAttr.size(); i++) {
         if (PyObject_HasAttrString(taskObj, necessaryAttr[i].c_str()) == 0) {

@@ -42,6 +42,16 @@ protected:
 
 TEST_F(ArchModule, Set_Chip_Success)
 {
+    // 显式设置初始状态，避免依赖其他测试的单例状态
+    PyObject *pInitArgs = PyTuple_New(1);
+    PyObject *initChipName = PyUnicode_FromString("Ascend910b3");
+    PyTuple_SetItem(pInitArgs, 0, initChipName);
+    std::string initFuncName = "set";
+    PyObject *initSetFunc = GetMethodList(initFuncName);
+    PyObject_CallObject(initSetFunc, pInitArgs);
+    Py_DECREF(pInitArgs);
+    Py_DECREF(initSetFunc);
+
     std::string funcName = "get";
     PyObject *getFunc = GetMethodList(funcName);
     EXPECT_TRUE(getFunc != NULL);

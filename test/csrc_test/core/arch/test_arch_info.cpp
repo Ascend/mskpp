@@ -142,8 +142,8 @@ TEST(ArchInfo, ArchInfoSetCacheHitRatio_All)
 
 TEST(ArchInfo, ArchInfoIsMteIdValid_All)
 {
-    // ArchInfo初始化为ascend910b3
-    ArchInfo::instance()->SetChipType("ascend910b3");
+    // ArchInfo初始化为ascend910b1
+    ArchInfo::instance()->SetChipType("ascend910b1");
     EXPECT_TRUE(ArchInfo::instance()->IsMteIdValid("GM", "L1"));
     EXPECT_TRUE(ArchInfo::instance()->IsMteIdValid("GM", "UB"));
     EXPECT_TRUE(ArchInfo::instance()->IsMteIdValid("UB", "GM"));

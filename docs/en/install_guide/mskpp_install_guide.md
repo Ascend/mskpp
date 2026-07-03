@@ -1,41 +1,51 @@
 # MindStudio Kernel Performance Prediction Installation Guide
 
-This document describes how to install the msKPP tool: **using the CANN package** and **building from source**.
+<br>
 
-## Binary Installation
+## 1. Installation Description
 
-The MindStudio toolchain is integrated into the CANN package for release. You can install it in either of the following ways.
+This tool has been integrated into CANN. If CANN has been installed and this tool does not need to be updated, you can directly use it without following the instructions in this document.
 
-### Method 1: Install the software according to the CANN official document
+If CANN has not been installed in your environment, install the Ascend NPU driver and CANN software (including the Toolkit and ops) by referring to [CANN Quick Installation](https://www.hiascend.com/cann/download), and configure environment variables.
 
-For details, see <a href="https://www.hiascend.com/document/detail/zh/canncommercial/850/softwareinst" target="_blank">CANN Installation Guide</a>.
-Perform the installation and configuration step by step according to the document.
+If you need to upgrade this tool separately or use the latest version, you can install it in any of the following ways: [Online Installation](#21-online-installation), [Offline Installation](#22-offline-installation), and [Source Installation](#23-source-installation).
 
-### Method 2: Use the official CANN container image
+## 2. Installation Methods
 
-Visit <a href="https://www.hiascend.com/developer/ascendhub/detail/17da20d1c2b6493cb38765adeba85884" target="_blank">CANN official image repository</a>.
-Pull the image and start the container according to the instructions in the repository.
+### 2.1 Online Installation
 
-<br>  
+If your device has Internet access, you can run a single command to automatically download and install the tool. Visit the [Ascend community](https://www.hiascend.com/en/developer/software/mindstudio/download), select the target CANN version, and choose "Online" installation method. The system will guide you through the subsequent operations.
 
-## Installation from Source Code
+### 2.2 Offline Installation
+
+For devices that are not connected to the Internet, such as those on an enterprise intranet, download the complete offline installation package on a device that has Internet access and then transfer the package to the target device for installation. Visit the [Ascend community](https://www.hiascend.com/en/developer/software/mindstudio/download), select the target CANN version, and choose "Offline" installation method. The system will guide you through the subsequent operations.
+
+### 2.3 Source Installation
 
 To use the functions of the latest code or modify the source code to enhance functions, you can download the code from this repository, build and package the tool, and install it.
 
-### Environment Setup
+#### 2.3.1 Preparing the Environment
 
-Set up the environment by referring to the [Operator Tool Development Environment Setup Guide](https://gitcode.com/Ascend/msot/blob/26.0.0/docs/en/common/dev_env_setup.md).
+Configure the environment by referring to [Operator Tool Development Environment Setup Guide](https://gitcode.com/Ascend/msot/blob/26.0.0/docs/en/common/dev_env_setup.md).
 
 Python 3.9 or later must be installed in the build environment.
 
-msKPP depends on other Python libraries. You can run the `pip install -r requirement.txt` command to install the dependency libraries in one-click mode.
-The dependency list is as follows:
+- Clone this repository.
 
-```text
-plotly>=5.11.0
-```
+    ```sh
+    git clone https://gitcode.com/Ascend/mskpp.git -b 26.0.0
+    ```
 
-### Building and Packaging
+- msKPP depends on other Python libraries. Run the following command to install the dependency libraries in one-click mode:
+
+    ```sh
+    cd mskpp
+    pip install -r requirement.txt
+    ```
+
+    The dependency library is `plotly>=5.11.0`.
+
+#### 2.3.2 Building and Packaging
 
 Run the one-click script to automatically download and build the dependency repository:
 
@@ -43,18 +53,9 @@ Run the one-click script to automatically download and build the dependency repo
 python build.py
 ```
 
-### Installation and Uninstallation
+#### 2.3.3 Installation
 
-#### Preparing the .run Package
-
-The .whl package is generated in the `output` directory. Run the following commands to ensure that the .run package has the execute permission:
-
-```shell
-cd output
-chmod +x mindstudio-kpp
-```
-
-#### Installation
+##### 2.3.3.1 Installation Package
 
 Copy the .whl package to the operating environment (not required for local installation) and run the following command to perform the installation:
 
@@ -62,32 +63,62 @@ Copy the .whl package to the operating environment (not required for local insta
 pip install mindstudio_kpp-xxxxx.whl
 ```
 
-#### Post-installation Configuration
+If information similar to the following is displayed, the installation is successful:
 
-The current CANN package has integrated msKPP. After activating the CANN environment, you can use msKPP in your Python script.
+```text
+Successfully installed mindstudio-kpp-xxxxx
+```
+
+##### 2.3.3.2 Post-installation Configuration
+
+The msKPP tool has been integrated into the CANN package. After the CANN environment is activated, you can use the msKPP tool in your Python script.
 
 ```shell
-source ~/Ascend/cann/set_env.sh
+source /usr/local/Ascend/ascend-toolkit/set_env.sh
 python
 >>> import mskpp
 >>> ...
 ```
 
-#### Uninstallation
+## 3. Verify Installation
 
-You can run the following command to uninstall the tool:
-
-```shell
-pip uninstall mskpp-xxxxx.whl 
-```
-
-#### Upgrade
-
-To replace the installed .whl package with another .whl package, run the following command:
+After installation, run the following command to verify whether the tool was installed successfully:
 
 ```shell
-pip install mindstudio_kpp-xxxxx.whl --force-reinstall
+python3 -c "import mskpp; print('All is OK')"
 ```
 
-During the installation, if the system asks you whether to replace the original installation package,
-enter `y`. The installation package will be automatically upgraded.
+If no error is reported and the output display `All is OK`, the installation is successful.
+
+## 4. Uninstallation
+
+To uninstall the tool, perform the following steps:
+
+1. Download the script.
+
+   ```bash
+   curl -O https://inst.obs.cn-north-4.myhuaweicloud.com/26.0.0/ms_install.py
+   ```
+
+   > [!NOTE]
+   >
+   > - Internet access is required to download the script. If your target environment is offline or does not allow Internet access, download the script on an Internet-connected device first, then copy it to the target device.
+   > - If the command does not respond, or you encounter connection failures, SSL certificate errors, or other issues, refer to the [FAQ](https://www.hiascend.com/developer/blog/details/02176213671719317003).
+
+2. Uninstall the tool.
+
+   ```bash
+   python ms_install.py uninstall {tools_name}
+   ```
+
+   Replace `{tools_name}` with the name of the tool to be uninstalled. You can run the `python ms_install.py help` command to query the tool name, which is displayed under the `Available Tools` field in the command output.
+
+   If the uninstallation is successful, the following information is displayed:
+
+   ```text
+   Successfully uninstalled 1 tool ({tools_name})
+   ```
+
+## 5. Upgrade
+
+Upgrades follow the "uninstall first, then install" process. Simply run the installation command. The tool will automatically remove the previous version and guide you through the upgrade process.

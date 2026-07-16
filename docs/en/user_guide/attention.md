@@ -10,6 +10,7 @@
 
 - Performance modeling results depend on time estimation based on input/output scales. No actual computation is performed, and the results are for peak performance reference only.
 - To generate the instruction proportion pie chart (`instruction_cycle_consumption.html`), the third-party Python library plotly must be installed in advance:
+
     ```shell
     pip3 install plotly
     ```

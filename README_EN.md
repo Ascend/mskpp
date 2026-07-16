@@ -7,7 +7,6 @@
 
 </div>
 
-
 ## ✨ Latest News
 
 <span style="font-size:14px;">
@@ -58,9 +57,9 @@ You are welcome to contribute to the project. For details, see [Contribution Gui
 
 ## ⚖️ Related Notes
 
-🔹 [Release Notes](./docs/en/release_notes/release_notes.md) 
-🔹 [License Notice](./docs/en/legal/license_notice.md) 
-🔹 [Security Statement](./docs/en/legal/security_statement.md) 
+🔹 [Release Notes](./docs/en/release_notes/release_notes.md)   
+🔹 [License Notice](./docs/en/legal/license_notice.md)   
+🔹 [Security Statement](./docs/en/legal/security_statement.md)   
 🔹 [Disclaimer](./docs/en/legal/disclaimer.md) 
 
 ## 🤝 Suggestions and Communication
@@ -69,7 +68,7 @@ You are welcome to contribute to the community. If you have any questions or sug
 
 |                                                                  Live Chat (WeChat Group)                                                                   |                                                                           Official Info (WeChat Official Account)                                                                            | In-Depth Support (Assistant/Forum)                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 |:-----------------------------------------------------------------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| <img src="https://raw.gitcode.com/mengguangxin/docs/files/dev_0526/common/Writing_Template/figures/qr_code_wechat_work.png" width="120"><br><sub>*Scan to join the tech group*</sub> | <img src="https://raw.gitcode.com/mengguangxin/docs/files/dev_0526/common/Writing_Template/figures/qr_code_wechat_official_account.png" width="120"><br><sub>*Scan to follow the official account*</sub> | Scan to join the group and follow the official account for the fastest way to reach the MindStudio user and developer community:<br> **Quick Questions:** Discuss technical issues with community members in real time<br>**Stay Updated:** Get version release and feature update notifications first<br> **Share Experience:** Exchange best practices and practical insights with developers  <br> <br> **More Support Channels**: 👉 Ascend Assistant: [![WeChat](https://img.shields.io/badge/WeChat-07C160?style=flat-square&logo=wechat&logoColor=white)](https://gitcode.com/Ascend/msit/blob/master/docs/zh/figures/readme/xiaozhushou.png) 👉 Ascend Forum: [![Website](https://img.shields.io/badge/Website-%231e37ff?style=flat-square&logo=RSS&logoColor=white)](https://www.hiascend.com/forum/) |
+| <img src="https://raw.gitcode.com/Ascend/docs/files/master/common/Writing_Template/figures/qr_code_wechat_work.png" width="120"><br><sub>*Scan to join the tech group*</sub> | <img src="https://raw.gitcode.com/Ascend/docs/files/master/common/Writing_Template/figures/qr_code_wechat_official_account.png" width="120"><br><sub>*Scan to follow the official account*</sub> | Scan to join the group and follow the official account for the fastest way to reach the MindStudio user and developer community:<br> **Quick Questions:** Discuss technical issues with community members in real time<br>**Stay Updated:** Get version release and feature update notifications first<br> **Share Experience:** Exchange best practices and practical insights with developers  <br> <br> **More Support Channels**: 👉 Ascend Assistant: [![WeChat](https://img.shields.io/badge/WeChat-07C160?style=flat-square&logo=wechat&logoColor=white)](https://gitcode.com/Ascend/msit/blob/master/docs/zh/figures/readme/xiaozhushou.png) 👉 Ascend Forum: [![Website](https://img.shields.io/badge/Website-%231e37ff?style=flat-square&logo=RSS&logoColor=white)](https://www.hiascend.com/forum/) |
 
 ## 🙏 Acknowledgements
 

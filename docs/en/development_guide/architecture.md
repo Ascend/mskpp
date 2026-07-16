@@ -1257,7 +1257,7 @@ UT: Verifies that the functions of individual functions and classes within the p
 | ---- | -------- | -------------------- | -------------------------------- |
 | ST   | Integration testing| code_gen()           | End-to-end verification of the code generation function.          |
 | ST   | Integration testing| compile()            | End-to-end verification of the compilation function.              |
-| ST   | Integration testing| kernel[]()           | End-to-end verification of the kernel running function.        |
+| ST   | Integration testing| kernel()           | End-to-end verification of the kernel running function.        |
 | ST   | Integration testing| autotune             | End-to-end verification of the auto tuning function.          |
 | ST   | Integration testing| tiling_func             | End-to-end verification of the tiling calling function.          |
 | ST   | Integration testing| get_kernel_from_binary             | End-to-end verification of the kernel calling function.          |

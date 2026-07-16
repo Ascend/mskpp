@@ -102,7 +102,7 @@ class Chip(name, debug_mode=False)
 |--|--|
 |chip.enable_trace()|Enables the operator simulation pipeline function to generate the pipeline chart file `trace.json`.|
 |chip.enable_metrics()|Enables single instruction and pipeline information, and generates instruction statistics (`Instruction_statistic.csv`), transfer pipeline statistics (`Pipe_statistic.csv`), and instruction proportion pie chart (`instruction_cycle_consumption.html`).|
-|chip.set_cache_hit_ratio(config)|Enables manual adjustment of the L2 cache hit ratio. The value of `config` is `{"cache_hit_ratio": 0.6`}. For details, see the cache hit ratio modeling setion.|
+|chip.set_cache_hit_ratio(config)|Enables manual adjustment of the L2 cache hit ratio. The value of `config` is `{"cache_hit_ratio": 0.6`}. For details, see the cache hit ratio modeling section.|
 |chip.set_prof_summary_path("xxx/PipeUtilization.csv")|`PipeUtilization.csv` is an example of the msProf result, which is used to compare the theoretical values of the pipeline information with values measured by msProf. For details, see "comparison between theoretical values of pipeline information and values measured by msProf".|
 |chip.disable_instr_log()|After this function is enabled, the log printing is suppressed after the instruction task is added and scheduled.|
 
@@ -251,7 +251,7 @@ None
 
 **Function**
 
-Ensures the synchronization of different instructions between pipelines in a core. After `pipe_src` is scheduled, `pipe_dst` is unblocked. After `set_flag` and `wait_flag` are set, the [Instruction Pipeline Chart (Using MindStudio Insight as an Example)](https://www.hiascend.com/document/detail/zh/mindstudio/82RC1/ODtools/Operatordevelopmenttools/atlasopdev_16_0087.html) will better meet the user's expectations.
+Ensures the synchronization of different instructions between pipelines in a core. After `pipe_src` is scheduled, `pipe_dst` is unblocked. After `set_flag` and `wait_flag` are set, the [Instruction Pipeline Chart (Using MindStudio Insight as an Example)](https://gitcode.com/Ascend/msopprof/blob/master/docs/en/user_guide/msopprof_simulator_user_guide.md#instruction-pipeline-chart) will better meet the user's expectations.
 
 **Prototype**
 
@@ -793,7 +793,7 @@ from mskpp import vmuls, Tensor
 ub_x, ub_z = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 ub_x.load(gm_x)
-out = vmuls(ub_x, 5, ub_z)()  // 5 is the value of scalar y.
+out = vmuls(ub_x, 5, ub_z)()  # 5 is the value of scalar y.
 ```
 
 **Returns**
@@ -1055,7 +1055,7 @@ from mskpp import vadds, Tensor
 ub_x, ub_z = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 ub_x.load(gm_x)
-out = vadds(ub_x, 5, ub_z)() // 5 is the value of scalar y.
+out = vadds(ub_x, 5, ub_z)() # 5 is the value of scalar y.
 ```
 
 **Returns**
@@ -1126,7 +1126,7 @@ vaxpy(x, y, z, if_mix=False)
 
 ```python
 from mskpp import vaxpy, Tensor
-ub_x, ub_z = Tensor("UB"), Tensor("UB")
+ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 ub_x.load(gm_x)
 out = vaxpy(ub_x, ub_y, ub_z)()
@@ -1698,7 +1698,7 @@ class vlrelu(x, y, z)
 from mskpp import vlrelu, Tensor
 ub_x, ub_z = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
-scalar_y = 5  // 5 is the value of scalar y.
+scalar_y = 5  # 5 is the value of scalar y.
 ub_x.load(gm_x)
 out = vlrelu(ub_x, scalar_y, ub_z)()
 ```
@@ -1883,7 +1883,7 @@ from mskpp import vmins, Tensor
 ub_x, ub_z = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 ub_x.load(gm_x)
-out = vmins(ub_x, 5, ub_z)()  // 5 is a scalar value of y.
+out = vmins(ub_x, 5, ub_z)()  # 5 is a scalar value of y.
 ```
 
 **Returns**
@@ -1964,7 +1964,7 @@ class vmrgsort(x, y, z)
 
 ```python
 from mskpp import vmrgsort, Tensor
-ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB")
+ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
@@ -2377,6 +2377,7 @@ class vshr(x, y)
 
 ```python
 from mskpp import vshr, Tensor
+ub_x, ub_y = Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
@@ -2412,7 +2413,7 @@ class vsqrt(x, y)
 
 ```python
 from mskpp import vsqrt, Tensor
-ub_x, ub_z = Tensor("UB"), Tensor("UB")
+ub_x, ub_y = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 ub_x.load(gm_x)
 out = vsqrt(ub_x, ub_y)()
@@ -2437,7 +2438,7 @@ None
 **Prototype**
 
 ```python
-class vsubrelu (x, y, z)
+class vsubrelu(x, y, z)
 ```
 
 **Parameter Description**
@@ -2513,7 +2514,7 @@ Transposes a 16 × 16 matrix starting from the input address `x` (32-byte aligne
 **Prototype**
 
 ```python
-class vtranspose (x, y)
+class vtranspose(x, y)
 ```
 
 **Parameter Description**

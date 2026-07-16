@@ -10,6 +10,7 @@
 
 - 性能建模结果依赖于输入/输出规模的估时，不执行真实计算，仅作为性能上限参考。
 - 生成指令占比饼图（`instruction_cycle_consumption.html`）需要预先安装第三方 Python 库 plotly：
+
     ```shell
     pip3 install plotly
     ```

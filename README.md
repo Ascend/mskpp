@@ -51,7 +51,7 @@ msKPP工具分为基础功能接口和指令接口两种接口类型。具体内
 
 ## ⚖️ 相关说明
 
-🔹《[版本说明](./docs/zh/release_notes/release_notes.md)》  
+🔹《[版本说明](https://gitcode.com/Ascend/mskpp/releases/tag_MindStudio_26.0.0.B120_001)》  
 🔹《[许可证声明](./docs/zh/legal/license_notice.md)》  
 🔹《[安全声明](./docs/zh/legal/security_statement.md)》  
 🔹《[免责声明](./docs/zh/legal/disclaimer.md)》  

@@ -51,9 +51,9 @@ You are welcome to contribute to the project. For details, see [Contribution Gui
 
 ## ⚖️ Related Notes
 
-🔹 [Release Notes](./docs/en/release_notes/release_notes.md) 
-🔹 [License Notice](./docs/en/legal/license_notice.md) 
-🔹 [Security Statement](./docs/en/legal/security_statement.md) 
+🔹 [Release Notes](https://gitcode.com/Ascend/mskpp/releases/tag_MindStudio_26.0.0.B120_001)   
+🔹 [License Notice](./docs/en/legal/license_notice.md)   
+🔹 [Security Statement](./docs/en/legal/security_statement.md)   
 🔹 [Disclaimer](./docs/en/legal/disclaimer.md) 
 
 ## 🤝 Suggestions and Communication

@@ -4,31 +4,35 @@
 
 ## 1. 概述
 
-msKPP 工具用于算子开发前的性能建模设计，开发者基于其 DSL（Domain-Specific Language，领域特定语言），以算子的数学逻辑为输入，编写算子表达式，即可在秒级内获得性能预测结果。该建模仅依赖输入/输出规模，无需执行真实计算，可高效验证算子实现方案。  
-本文档基于入门教程中开发的简易加法算子，演示 msKPP 工具的核心功能，帮助初学者直观感受 msKPP 在算子开发过程中的高效与便捷。
+msKPP 工具用于算子开发前的性能建模设计，开发者基于其 DSL（Domain-Specific Language，领域特定语言），以算子的数学逻辑为输入，编写算子表达式，即可在秒级内获得性能预测结果。该建模仅依赖输入/输出规模，无需执行真实计算，可高效验证算子实现方案。本文档基于入门教程中开发的简易加法算子，演示 msKPP 工具的核心功能，帮助初学者直观感受 msKPP 在算子开发过程中的高效与便捷。
 
-### 1.1 建议
-
-本章节以您已完成《[算子开发工具快速入门](https://gitcode.com/Ascend/msot/blob/master/docs/zh/quick_start/op_tool_quick_start.md)》的全流程操作为前提；若尚未体验，建议先完成该指南以获得更佳的学习效果。
-
-### 1.2 环境准备
-
-请严格按照《[昇腾 AI 算子开发工具链学习环境安装指南](https://gitcode.com/Ascend/msot/blob/master/docs/zh/quick_start/installation_guide.md)》完成环境安装与工作区配置。
-即使您已具备类似环境，也需按该指南重新执行一遍，以确保所有依赖组件、环境变量等完整一致。
+本章节以您已完成<a href="https://gitcode.com/Ascend/msot/blob/master/docs/zh/quick_start/op_tool_quick_start.md" target="_blank">《算子开发工具链快速入门》</a>的全流程操作为前提；若尚未体验，建议先完成该指南以获得更佳的学习效果。
 
 ## 2. 操作步骤
 
-### 2.1 运行环境预检
+### 2.1 必备环境准备（强制前置 ⚠️）
 
-#### 2.1.1 确认 Python 依赖包已安装
+🛑 **本节为强制前置步骤！跳过将导致后续操作大量出现失败。**  
+本教程**仅支持**标准化 CANN 容器环境，不兼容裸机、虚拟机或其他非标准容器部署。
 
-执行以下命令，若输出"All is OK"，则表明所需 Python 包及其版本均符合要求：
+#### 2.1.1 安装 CANN 容器环境
 
-```shell
-python3 -c "import numpy, sympy, scipy, attrs, psutil, decorator; from packaging import version; assert version.parse(numpy.__version__) <= version.parse('1.26.4'); print('All is OK')"
+✅ **请严格按以下指南完成环境安装：**  
+👉 **<a href="https://gitcode.com/Ascend/msot/blob/master/docs/zh/quick_start/installation_guide.md" target="_blank">《昇腾 AI 算子开发工具链学习环境安装指南》</a>**
+
+> ⏱️ **外网可达环境下预计耗时：约 3 分钟**  
+> 安装完成后，您将获得一个预装所有算子工具、示例代码和依赖库的标准化容器环境。
+
+#### 2.1.2 执行环境自检脚本（必须通过！）
+
+在如下正式体验前，请**全文复制下方整段脚本**，粘贴到终端执行，只有输出全部显示为 [PASS] 才能继续：
+
+```bash
+# 1. 容器环境检查
+[ -f /.dockerenv ] && [ -n "$ASCEND_HOME_PATH" ] && [ -n "$ATB_HOME_PATH" ] && echo -e "\033[32m[PASS] CANN 容器环境 OK \033[0m" || echo -e "\033[31m[FAIL] 非标容器或未进入容器！\033[0m"
+# 2. 示例代码仓检查
+[ -d ~/ot_demo/msot/example/quick_start ] && echo -e "\033[32m[PASS] 示例代码仓 OK\033[0m" || echo -e "\033[31m[FAIL] 代码仓缺失\033[0m"
 ```
-
-若报错，请参照[第 1.2 节](#12-环境准备)进行正确安装。
 
 ### 2.2 算子建模设计（msKPP）
 

@@ -120,7 +120,7 @@ class Chip:
 
     def param_transfer(self):
         if not checker.is_required_type(self.chip_name, str) or self.chip_name not in Chip.support_list:
-            raise Exception("Parameter chip_name in Chip is unsupported")
+            raise Exception("Parameter chip_name in Chip is unsupported, supported chip types: {}".format(Chip.support_list))
         self.chip_name = "Ascend910_95" if "_95" in self.chip_name else "Ascend910B1"
         if not checker.is_required_type(self.debug_mode, bool):
             raise Exception("Parameter debug_mode in Chip should be bool, but got: {}".format(type(self.debug_mode)))

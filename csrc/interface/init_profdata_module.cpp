@@ -23,6 +23,7 @@ PyDoc_STRVAR(MSKPP_PROFDATA_METHOD_GET_DOC, "Get estimated data for instructions
 
 #define PYTHON_FUNC_DEFINE_END {nullptr, nullptr, 0, nullptr}
 
+// NOLINTBEGIN(cppcoreguidelines-macro-usage)
 #define PROFDATA_METHOD_GET_DEFINE(func) \
     {"get", static_cast<PyCFunction>(func), METH_VARARGS, MSKPP_PROFDATA_METHOD_GET_DOC},
 
@@ -80,6 +81,7 @@ PyDoc_STRVAR(MSKPP_PROFDATA_METHOD_GET_DOC, "Get estimated data for instructions
         } \
         return PyFloat_FromDouble(instrName##Instr->Get(granularity, std::string(instrType))); \
     }
+// NOLINTEND(cppcoreguidelines-macro-usage)
 
 // 调用指令方法
 static PyObject *MSKPP_PROFDATA_MovDataGetPeak(PyObject *self, PyObject *pstArgs) {
@@ -436,7 +438,7 @@ PyObject *InitProfdataModule() {
             PyErr_Format(PyExc_SystemError, "Failed to init class %s.", it.first.c_str());
             goto error;
         }
-        if (PyModule_AddObject(m, it.first.c_str(), (PyObject *)it.second) < 0) {
+        if (PyModule_AddObject(m, it.first.c_str(), reinterpret_cast<PyObject *>(it.second)) < 0) {
             PyErr_Format(PyExc_SystemError, "Failed to bind class %s.", it.first.c_str());
             goto error;
         }

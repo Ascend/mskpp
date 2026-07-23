@@ -84,9 +84,9 @@ PyObject *MSKPP_ARCH_IsMteValid(PyObject *self, PyObject *const *args, Py_ssize_
         return NULL;
     }
     if (ArchInfo::instance()->IsMteIdValid(std::string(src), std::string(dst))) {
-        Py_RETURN_TRUE;
+        Py_RETURN_TRUE; // NOLINT(cppcoreguidelines-pro-type-cstyle-cast)
     } else {
-        Py_RETURN_FALSE;
+        Py_RETURN_FALSE; // NOLINT(cppcoreguidelines-pro-type-cstyle-cast)
     }
 }
 

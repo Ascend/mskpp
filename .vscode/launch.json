@@ -1,0 +1,78 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Python: Debug Active File",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${file}",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}",
+        "LD_LIBRARY_PATH": "${workspaceFolder}/build_ut:${workspaceFolder}/build_ut/lib:${env:LD_LIBRARY_PATH}"
+      },
+      "justMyCode": false
+    },
+    {
+      "name": "Python: Debug Pytest Case",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "args": [
+        "${file}",
+        "-v",
+        "-s"
+      ],
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}",
+        "LD_LIBRARY_PATH": "${workspaceFolder}/build_ut:${workspaceFolder}/build_ut/lib:${env:LD_LIBRARY_PATH}"
+      },
+      "justMyCode": false
+    },
+    {
+      "name": "GDB: Debug Unit Test",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build_ut/test/csrc_test/mskpp_test_c",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}/build_ut",
+      "environment": [
+        {
+          "name": "LD_LIBRARY_PATH",
+          "value": "${workspaceFolder}/build_ut/lib:${workspaceFolder}/build_ut:${env:LD_LIBRARY_PATH}"
+        }
+      ],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "miDebuggerPath": "gdb",
+      "setupCommands": [
+        {
+          "description": "为 gdb 启用整齐打印",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        },
+        {
+          "description": "设置反汇编风格为 Intel",
+          "text": "-gdb-set disassembly-flavor intel",
+          "ignoreFailures": true
+        },
+        {
+          "description": "允许挂起断点",
+          "text": "set breakpoint pending on",
+          "ignoreFailures": true
+        }
+      ],
+      "logging": {
+        "moduleLoad": false,
+        "trace": false,
+        "engineLogging": false,
+        "programOutput": true,
+        "exceptions": true
+      }
+    }
+  ]
+}

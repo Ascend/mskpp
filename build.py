@@ -197,10 +197,19 @@ class BuildManager:
             key, _, value = option.partition('=')
             logging.info("--extra: %s = %s", key, value)
 
+        extra_options = {}
+        for option in self.parsed_arguments.extra:
+            key, _, value = option.partition('=')
+            extra_options[key] = value
+
         if 'local' not in self.parsed_arguments.command:
             from download_dependencies import DependencyManager
 
             DependencyManager(self.parsed_arguments).run()
+
+        if extra_options.get('only_down_deps') == 'true':
+            logging.info("only_down_deps=true, exiting after dependency download.")
+            return
 
         if 'test' in self.parsed_arguments.command:
             self._build_and_run_tests()

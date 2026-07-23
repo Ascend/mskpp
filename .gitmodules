@@ -2,3 +2,4 @@
 	path = thirdparty/mockcpp
 	url = https://gitcode.com/Ascend/mockcpp.git
 	branch = ascend_mindstudio_mockcpp_master
+	ignore = all

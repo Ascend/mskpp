@@ -85,6 +85,7 @@ repos:
           - "--verbose"
           - "-i"
         exclude: ^(build|test|thirdparty)/
+
    # --------------- C++ 静态检查（本地 clang-tidy）------------------
   - repo: local
     hooks:
@@ -96,3 +97,18 @@ repos:
         files: \.(c|h|cpp|hpp|cc|hh|cxx|hxx)$
         args:
           - "--config-file=.clang-tidy"
+
+  # -------------------------- Gitleaks 本地离线二进制扫描 --------------------------
+  - repo: local
+    hooks:
+      - id: gitleaks-offline-scan
+        name: Gitleaks Secret Scan(Local Binary)
+        entry: ./gitleaks
+        language: system
+        pass_filenames: true
+        args:
+          - protect
+          - --verbose
+          - --redact
+          - --config=pre-commit/.gitleaks.toml
+        stages: [pre-commit]

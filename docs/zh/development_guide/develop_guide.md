@@ -1,82 +1,62 @@
-# MindStudio Kernel Performance Prediction 开发环境搭建及编译和UT方法
+# msKPP 开发指南
 
 <br>
 
-## 1. 预备知识
+本文档介绍 msKPP（MindStudio Kernel Performance Prediction）的开发环境搭建、编译构建及 UT 单元测试方法。
 
-请参考《[msKPP 架构设计文档](./architecture.md)》学习代码框架及核心流程。
+## 1. 前置条件
 
-## 2. 开发环境准备
+### 1.1 知识准备
 
-请按照以下文档进行环境配置：[《算子工具开发环境安装指导》](https://gitcode.com/Ascend/msot/blob/master/docs/zh/common/dev_env_setup.md)。
+开发前请先阅读《[msKPP 架构设计文档](./architecture.md)》，了解代码框架及核心流程。
 
-## 3. 编译打包
+### 1.2 环境准备
 
-分为如下两种方式，优缺点如下：
+按照《[msKPP 安装指南 — 源码安装](../install_guide/mskpp_install_guide.md#23-源码安装)》章节完成编译和测试环境的搭建。
 
-| 方法 | 适用场景 | 优点 | 缺点 |
-|------|---------|------|------|
-| 一键式脚本 | 首次构建、CI/CD 流水线 | 零配置，一步到位 | 无法单独执行某一步骤 |
-| 分步骤脚本 | 日常开发、增量编译 | 灵活，效率高 | 需要多步操作 |
+> **说明：** 环境镜像的构建方法及配套软件版本由 MindStudio 统一镜像制作指南维护，本仓库不重复定义。
 
-### 3.1 方法一：一键式脚本
+## 2. 编译构建
 
-```shell
-python build.py
+在项目根目录执行：
+
+```bash
+python3 build.py
 ```
 
-### 3.2 方法二：分步骤脚本
+#### 构建产物
 
-#### 3.2.1 编译打包
+构建成功后，输出将生成在 `artifacts` 目录下。
 
-```shell
-mkdir build
-cd build
-cmake ..
-make -j$(nproc) install # -j 是并行编译的 job 数量，可自行指定；nproc 不可用时请手动填数字（例如 -j8）。
-```
+#### 清理构建
 
-#### 3.2.2 编译结果说明
+如需全量重新编译，删除构建目录后重新执行上述步骤：
 
-编译结果生成到 output 目录下：
-
-```text
-output/
-|-- include                                              # API接口头文件
-|-- lib                                                  # 静态库
-|-- lib64                                                # 动态库
-|-- mindstudio_kpp-XXX-py3-none-manylinux_2_31_XXX.whl   # 安装包
-```
-
-#### 3.2.3 清理/重新编译
-
-删除构建目录，重新执行[第 3.2.1 节](#321-编译打包)：   
-
-```shell
+```bash
 rm -rf build
 ```
 
-## 4. 执行UT测试
+## 3. 单元测试
 
-### 4.1 一键式脚本
+### 3.1 执行测试
 
-python的UT测试，依赖pytest和coverage工具，可通过执行 ```pip install coverage pytest``` 安装
-
-```shell
-python build.py test
+```bash
+python3 build.py test
 ```
 
-输出类似如下，若跑得用例数和通过用例数相同，即表示成功：
+全部通过时输出类似如下示例：
 
 ```text
 [==========] 37 tests from 6 test cases ran. (616 ms total)
 [  PASSED  ] 37 tests.
 ```
 
-### 4.2 清理/重新编译
+> **判定标准：** `ran` 的用例数与 `PASSED` 的用例数一致即为通过。若存在 `FAILED` 用例，请根据日志定位失败原因。
 
-删除构建目录，重新执行[第 4.1 节](#41-一键式脚本)：   
+### 3.2 清理测试环境
 
-```shell
-rm -rf build_ut  
+删除 UT 构建目录后重新执行测试：
+
+```bash
+rm -rf build_ut
 ```

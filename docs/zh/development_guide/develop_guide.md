@@ -12,7 +12,7 @@
 
 ### 1.2 环境准备
 
-按照《[msKPP 安装指南 — 源码安装](../install_guide/mskpp_install_guide.md#23-源码安装)》章节完成编译和测试环境的搭建。
+按照《[msKPP 安装指南 — 源码安装](../install_guide/mskpp_install_guide.md#231-环境准备)》章节完成编译和测试环境的搭建。
 
 > **说明：** 环境镜像的构建方法及配套软件版本由 MindStudio 统一镜像制作指南维护，本仓库不重复定义。
 

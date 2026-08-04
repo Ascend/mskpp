@@ -26,14 +26,14 @@
 
 #### 2.3.1 环境准备
 
-请按照以下文档进行环境配置：《[算子工具开发环境安装指导](https://gitcode.com/Ascend/msot/blob/master/docs/zh/common/dev_env_setup.md)》。
+请按照以下文档进行环境配置：《[算子工具开发环境安装指导](https://gitcode.com/Ascend/msot/blob/26.1.0/docs/zh/common/dev_env_setup.md)》。
 
 要求构建环境中安装`python3.9`及以上版本才能正常运行。
 
 - 克隆本仓库
 
     ```sh
-    git clone https://gitcode.com/Ascend/mskpp.git
+    git clone https://gitcode.com/Ascend/mskpp.git -b 26.1.0
     ```
 
 - mskpp需要依赖其他python库。通过如下命令一键式安装依赖库。
@@ -97,7 +97,7 @@ python3 -c "import mskpp; print('All is OK')"
 1. 下载脚本。
 
    ```bash
-   curl -O https://inst.obs.cn-north-4.myhuaweicloud.com/26.0.0/ms_install.py
+   curl -O https://inst.obs.cn-north-4.myhuaweicloud.com/26.1.0/ms_install.py
    ```
 
    > [!NOTE]
@@ -123,4 +123,4 @@ python3 -c "import mskpp; print('All is OK')"
 
 升级即“先卸后装”。直接执行安装命令，工具将自动卸载旧版本，并引导您完成覆盖安装。
 
-可通过`pip3 show mindstudio-kpp`命令查看当前环境的版本信息，再选择需要升级的版本。
+可通过`pip3 show mindstudio-kpp`命令查看当前环境的版本信息，再选择需要升级的版本。升级版本时需要关注版本配套关系，请参见《[版本说明](https://gitcode.com/Ascend/release-management/blob/master/MindStudio/26.1.0/release_notes.md)》。

@@ -251,7 +251,7 @@ repeat参数仅支持以下4条搬运通路：L1_TO_L0A、L1_TO_L0B、GM_TO_L0A�
 
 **功能说明**
 
-用于确保核内各PIPE间不同指令的同步，pipe_src先完成调度后，pipe_dst将解除阻塞状态。设置set_flag和wait_flag之后，[指令流水图介绍（以MindStudio Insight为例）](https://gitcode.com/Ascend/msopprof/blob/master/docs/zh/user_guide/msopprof_simulator_user_guide.md#instruction-pipeline-chart)将会更贴合用户的调用预期。
+用于确保核内各PIPE间不同指令的同步，pipe_src先完成调度后，pipe_dst将解除阻塞状态。设置set_flag和wait_flag之后，[指令流水图介绍（以MindStudio Insight为例）](https://gitcode.com/Ascend/msopprof/blob/26.1.0/docs/zh/user_guide/msopprof_simulator_user_guide.md#%E6%8C%87%E4%BB%A4%E6%B5%81%E6%B0%B4%E5%9B%BE)将会更贴合用户的调用预期。
 
 **接口原型**
 

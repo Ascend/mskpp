@@ -91,19 +91,21 @@ repos:
     hooks:
       - id: clang-tidy
         name: clang-tidy (本地venv)
-        entry: clang-tidy
+        entry: pre-commit/clang-tidy-wrapper.sh
         language: system
         pass_filenames: true
         files: \.(c|h|cpp|hpp|cc|hh|cxx|hxx)$
         args:
           - "--config-file=.clang-tidy"
+          - "-p"
+          - "build"
 
   # -------------------------- Gitleaks 本地离线二进制扫描 --------------------------
   - repo: local
     hooks:
       - id: gitleaks-offline-scan
         name: Gitleaks Secret Scan(Local Binary)
-        entry: ./gitleaks
+        entry: gitleaks
         language: system
         pass_filenames: true
         args:

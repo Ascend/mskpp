@@ -8,15 +8,7 @@ For details about the code framework and core process, see the [msKPP Architectu
 
 ## 2. Development Environment Setup
 
-- For hardware environment requirements, see [Ascend Product Models](https://www.hiascend.com/document/detail/zh/AscendFAQ/ProduTech/productform/hardwaredesc_0001.html).
-
-- Set up the environment by referring to the [Operator Tool Development Environment Setup Guide](https://gitcode.com/Ascend/msot/blob/master/docs/en/common/dev_env_setup.md).
-
-- Python 3.9 or later must be installed in the build environment.
-
-- msKPP depends on other Python libraries. You can run the `pip install -r requirement.txt` command to install the dependency libraries in one-click mode.
-- `GCC version > 7.4.0` 
-- `3.20.2 <= CMAKE version <= 3.31.10`
+Set up the environment by referring to the [Operator Tool Development Environment Setup Guide](https://gitcode.com/Ascend/msot/blob/master/docs/en/common/dev_env_setup.md).
 
 ## 3. Building and Packaging
 
@@ -41,10 +33,10 @@ python build.py
 mkdir build
 cd build
 cmake ..
-make -j$(nproc) install # -j indicates the number of parallel build jobs, which can be specified as required. If nproc is unavailable, manually enter a number (for example, -j8).
+make -j$(nproc) install # -j indicates the number of parallel build jobs, which can be specified as required. If nproc is unavailable, manually enter a number (for example, -j8)
 ```
 
-##### 3.2.1.2 Build Result Description
+#### 3.2.2 Build Result Description
 
 The build result is generated in the `output` directory:
 
@@ -66,7 +58,7 @@ rm -rf build
 
 ## 4. Running UT
 
-### 4.1 One-click script
+### 4.1 One-click Script
 
 The Python UT depends on the pytest and coverage tools, which can be installed by running `pip install coverage pytest`.
 
@@ -86,5 +78,5 @@ If the number of executed test cases is the same as the number of passed test ca
 Delete the build directory and perform operations in [Section 4.1](#41-one-click-script) again.  
 
 ```shell
-rm -rf build_ut  
+rm -rf build_ut
 ```

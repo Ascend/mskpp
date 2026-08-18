@@ -78,5 +78,5 @@ python build.py test
 删除构建目录，重新执行[第 4.1 节](#41-一键式脚本)：   
 
 ```shell
-rm -rf build_ut  
+rm -rf build_ut
 ```

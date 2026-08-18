@@ -12,15 +12,15 @@ Enable **address space layout randomization** (ASLR) (level 2) in the system. Ru
 
 2. If a tool depends on CANN, install the CANN package under the same non-privileged user. After running the `source` command, do not modify the environment variables in `set_env.sh`.
 
-3. Before using any tools, set umask to `0027` or stricter to ensure generated files meet minimum security requirements.
+3. Before using any tools, set `umask` to 0027 or stricter to ensure generated files meet minimum security requirements.
 
 ## File Permission Control
 
- 1. When providing input files to the tool, it is recommended that the file owner matches the process owner of the tool and that file permissions restrict write access for `group` and `others`. By default, tool files written to the drive are not writable by group users and other users. You can manually control the permissions for the generated files as needed.
+ 1. When providing input files to the tool, it is recommended that the file owner matches the process owner of the tool and that file permissions restrict write access for `group` and `others`. By default, tool files written to the drive are not writable by users in the same group or other users. You can manually control the permissions for the generated files as needed.
 
  2. Proper permission control is essential during installation and use. For details, see the following table.
 
-## File Permission Reference 
+### File Permission Reference
 
 | Type                              | Maximum Linux Permission|
 | ---------------------------------- | ------------------- |
@@ -42,11 +42,11 @@ Enable **address space layout randomization** (ASLR) (level 2) in the system. Ru
 | Key components, private keys, certificates, and ciphertext files    | 600 (rw-------)   |
 | APIs and scripts for encryption and decryption            | 500 (r-x------)   |
 
-## Vulnerability Security Statement 
+## Vulnerability Security Statement
 
 For details, see [MindStudio Vulnerability Handling Mechanism Description](./vulnerability_handling_procedure.md).
 
-## Data security
+## Data Security
 
 During tool use, some functions related to code lines may access customer operator code. If the operator code must remain confidential and cannot be leaked, delete the corresponding deliverables in a timely manner after use to prevent information leakage.
 
@@ -61,6 +61,12 @@ This project supports building from source. During the build process, the system
 2. If an exception occurs during operation, the tool will exit the process and print error messages. This is expected behavior. You are advised to locate the specific cause of the error based on the error prompts, such as by viewing log files or result files generated during the collection and parsing process.
 
 3. During tool use, no security validation is performed on the user-input programs. You need to ensure the security of the programs.
+
+4. This tool is in the development state. No restrictions are placed on the owner and permissions for installation, nor on the owner and permissions for the file objects that the tool processes. You need to assign appropriate owners and permissions based on the application scenario and ensure that the file content processed by the tool is secure and trustworthy.
+
+5. When you provide input to the tool, ensure that the content is secure and trustworthy and that no symbolic links are involved. Convert any file to a real absolute path before you input it into the tool.
+
+6. During runtime, the tool loads `.so` files from `LD_LIBRARY_PATH`. Before using the tool, ensure that the content of the `LD_LIBRARY_PATH` environment variable is secure and trustworthy, that the paths it points to do not involve symbolic links, and that the permissions and owner meet security expectations and cannot be tampered with by third parties. Otherwise, there is a risk of arbitrary code injection.
 
 ## Public Network Addresses
 

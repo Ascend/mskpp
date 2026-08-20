@@ -93,7 +93,7 @@ class Chip(name, debug_mode=False)
 
 |参数名|输入类型|说明|
 |--|--|--|
-|name|string|处理器名称。目前大部分数据基于Atlas A2 训练系列产品/Atlas A2 推理系列产品采集，使用**npu-smi info**可以查看当前设备昇腾AI处理器类型。|
+|name|string|处理器名称。目前大部分数据基于昇腾A2系列产品采集，使用**npu-smi info**可以查看当前设备昇腾AI处理器类型。|
 |debug_mode|bool|是否启用调试模式，默认为False。开启debug模式后可查看未正确运行的指令，但不会生成任何输出文件。<br>True：启用<br/>False：不启用|
 
 **成员说明**
@@ -121,7 +121,7 @@ with Chip("Ascendxxxyy") as chip:    # Ascendxxxyy需替换为实际使用的处
 ```
 
 > [!NOTE]     
-> 非Atlas A3 训练系列产品/Atlas A3 推理系列产品：在安装昇腾AI处理器的服务器执行**npu-smi info**命令进行查询，获取**Chip Name**信息。实际配置值为AscendChip Name，例如**Chip Name**取值为xxxyy，实际配置值为Ascendxxxyy。当Ascendxxxyy为代码样例的路径时，需要配置为ascendxxxyy。
+> 非昇腾A3系列产品：在安装昇腾AI处理器的服务器执行**npu-smi info**命令进行查询，获取**Chip Name**信息。实际配置值为AscendChip Name，例如**Chip Name**取值为xxxyy，实际配置值为Ascendxxxyy。当Ascendxxxyy为代码样例的路径时，需要配置为ascendxxxyy。
 
 **返回值说明**
 

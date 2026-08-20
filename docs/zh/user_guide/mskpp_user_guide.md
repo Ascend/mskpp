@@ -69,9 +69,9 @@ msKPP支持tensor拆分使用、debug模式和pipe信息的理论值与msprof实
 
 ### 4.3 使用示例
 
-- 支持搬运通路建模（Atlas A2 训练系列产品/Atlas A2 推理系列产品）
+- 支持搬运通路建模（昇腾A2系列产品）
 
-    在Atlas A2 训练系列产品/Atlas A2 推理系列产品中，新增了L1到fixpipe buffer(FP)的通路以及L1到Bias table(BT)的通路。前者用于L0C_TO_OUT随路转换时存储量化转换的scale参数，后者用于存储一维的bias数据。在本工具中对该搬运通路建模只需按照GM->L1->FP/BT的顺序即可。
+    在昇腾A2系列产品中，新增了L1到fixpipe buffer(FP)的通路以及L1到Bias table(BT)的通路。前者用于L0C_TO_OUT随路转换时存储量化转换的scale参数，后者用于存储一维的bias数据。在本工具中对该搬运通路建模只需按照GM->L1->FP/BT的顺序即可。
 
     ```py
     in_x = Tensor("GM", "FP16", [64], format="ND")
@@ -87,7 +87,7 @@ msKPP支持tensor拆分使用、debug模式和pipe信息的理论值与msprof实
 
 - 支持随路转换建模
 
-    在昇腾AI处理器的Cube单元中，进行计算的数据格式需要是特殊的私有NZ格式。而通常在GM上的数据都是ND格式，因此在进行Cube运算时，需要将数据格式进行转换。在Atlas A2 训练系列产品/Atlas A2 推理系列产品中，GM到Cube相关的存储单元的搬运通路已具备ND转NZ的随路转换能力。
+    在昇腾AI处理器的Cube单元中，进行计算的数据格式需要是特殊的私有NZ格式。而通常在GM上的数据都是ND格式，因此在进行Cube运算时，需要将数据格式进行转换。在昇腾A2系列产品中，GM到Cube相关的存储单元的搬运通路已具备ND转NZ的随路转换能力。
 
     在msKPP工具中，若GM-L1且用户定义GM的tensor是ND，L1的tensor是NZ，或L0C-GM且用户定义L0C上的tensor是NZ，GM的tensor是ND，则开启随路转换，调取相关实测数据。
 

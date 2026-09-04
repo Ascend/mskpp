@@ -1025,6 +1025,7 @@ multi-pipe parallelism, each pipe is isolated by name and maintains its own time
 ##### 4.4.1.4 Algorithm Implementation
 
 The algorithm implementation is described following technology selection:
+
 1. Instruction tasks from the Python are added to task queues that are distinguished by pipe names, until all scheduling instructions are added.
 2. The scheduling task is started. The first schedulable task queue is obtained. Active and blocked queues are distinguished prior to this operation.
 3. The first task is popped from the active queue for execution. The task sets time range for executing the scheduling instruction and the last update time of the queue, and transparently updates the ready status of the instruction.

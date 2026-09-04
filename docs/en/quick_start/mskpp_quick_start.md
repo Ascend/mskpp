@@ -38,7 +38,8 @@ Before the hands-on experience, **copy the entire script in the following code b
 
 During operator algorithm design, the msKPP tool can be used to obtain performance modeling results within seconds. It allows for performance estimation without hardware and quickly verifies the feasibility of implementation solutions. You are advised to follow the operations first to experience the effect. You can read the principles later.
 
-> [!NOTE]      
+> [!NOTE]
+> 
 > **Knowledge point: principles of the msKPP tool**  
 > msKPP is not an executable program, but a Python class library dedicated to Ascend. You need to import related modules, compile and execute Python scripts, and generate profiling result files to complete modeling. The internal principle involves pre-collecting profile data of various instruction operations in real environments, then modeling and estimating various performance overheads based on the user-defined operator execution flow.
 
@@ -52,7 +53,8 @@ rm -rf ~/ot_demo/workspace/mskpp && mkdir -p ~/ot_demo/workspace/mskpp && cd ~/o
 
 ##### 2.2.1.2 Developing a Python Script  
 
-> [!NOTE]     
+> [!NOTE]
+> 
 > **(Optional) Knowledge point: the msKPP DSL solution**  
 > This class library and APIs are designed as a "dialect" specifically for Ascend performance modeling. Mastery of this DSL requires dedicated learning, as it is not directly writable with general Python syntax. However, the usage model is relatively straightforward and can be picked up quickly with a small amount of guided effort. 
 > Typical development process: Import the necessary instructions (such as `vadd`) for tensors, chips, and operator implementation. Use the `with` statement to enter the context of operator implementation, and then create tensors to perform specific operations.

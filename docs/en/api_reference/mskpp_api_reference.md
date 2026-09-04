@@ -120,7 +120,8 @@ with Chip("Ascendxxxyy") as chip:    # Ascendxxxyy needs to be replaced with the
     chip.enable_metrics()  # Call this function to enable the single instruction and pipeline information, and generate the transfer pipeline statistics, instruction information statistics, and instruction proportion pie chart
 ```
 
-> [!NOTE]  
+> [!NOTE]
+> 
 > For servers other than the Atlas A3 training products/Atlas A3 inference products: Run the `npu-smi info` command on the server where the Ascend AI Processor is installed to obtain the chip name. Note that the actual value is represented by `AscendChip name`. For example, if the chip name is `xxxyy`, the actual value is `Ascendxxxyy`. If `Ascendxxxyy` is the path of the code sample, set this parameter to `ascendxxxyy`.
 
 **Returns**

@@ -120,7 +120,8 @@ with Chip("Ascendxxxyy") as chip:    # Ascendxxxyy需替换为实际使用的处
     chip.enable_metrics()  # 调用该函数即可使能单指令及分PIPE的流水信息，生成搬运流水统计、指令信息统计和指令占比饼图
 ```
 
-> [!NOTE]     
+> [!NOTE]
+> 
 > 非Atlas A3 训练系列产品/Atlas A3 推理系列产品：在安装昇腾AI处理器的服务器执行**npu-smi info**命令进行查询，获取**Chip Name**信息。实际配置值为AscendChip Name，例如**Chip Name**取值为xxxyy，实际配置值为Ascendxxxyy。当Ascendxxxyy为代码样例的路径时，需要配置为ascendxxxyy。
 
 **返回值说明**

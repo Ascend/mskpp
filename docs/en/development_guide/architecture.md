@@ -129,9 +129,11 @@ List of software units:
 
 According to the software unit list, the main software modules involved in msKPP are the instruction task creation module (`INSTR_TASK`), instruction task scheduling module (`INSTR_SCHEDULE`), instruction profile data
 calculation module (`PROF_DATA`), and msKPP profile data parsing modules (`TRACE` and `METRICS`). For details about the instruction task scheduling module, see the algorithm implementation section. The msKPP profile data analysis module provides
-a foundational public method for recording and parsing scheduling instructions. Its primary function is to generate a visualized instruction pipeline trace (`trace.json`) along with corresponding statistical charts and tables. This section presents a static block diagram for the instruction task creation module and the instruction task profile data calculation module.
+a foundational public method for recording and parsing scheduling instructions. Its primary function is to generate a visualized instruction pipeline trace (`trace.json`) along with corresponding statistical charts and tables. This section presents a static block diagram for the instruction task creation module and the instruction task profile data
+calculation module.
 
-The following figure shows the static structure of the `INSTR_TASK` instruction task creation module. Instruction tasks include `ComputationInstruction` and `MemoryInstruction`. Among them, `ComputationInstruction` is registered using the factory pattern.
+The following figure shows the static structure of the `INSTR_TASK` instruction task creation module. Instruction tasks include `ComputationInstruction` and `MemoryInstruction`. Among them, `ComputationInstruction` is registered using the factory
+pattern.
 
 ```plantuml
 @startuml
@@ -978,10 +980,10 @@ For the UML class diagram, see the `Instructions_Data` class diagram in section 
 
 Data model design
 
-The msKPP data model design consists of two parts: Python-side command data addition and C++-side data computation. The former provides a unified interface for users to easily add custom commands and profile data as needed. While the latter abstracts common calculation methods and factory classes for different data class diagrams, allowing callers to retrieve instruction data through abstract interfaces without concerning themselves with internal computation logic—achieving interface isolation, separation of computation from invocation, and easy maintenance and extensibility by creating instruction data computation instances via the abstract factory interface.
- 
-In Section 4.1.4, "Instruction Profile Data Calculation Module," users can add a new instruction profile data type by simply inheriting from `PrefModel`, implementing the `size` and `time` methods for the instruction, and registering it with `@RegisterPrefOf()`, enabling real-time size and timing calculations via the registration interface when an instruction task is created.
- 
+The msKPP data model design consists of two parts: Python-side command data addition and C++-side data computation. The former provides a unified interface for users to easily add custom commands and profile data as needed. While the latter abstracts common calculation methods and factory classes for different data class diagrams, allowing callers to retrieve instruction data through abstract interfaces without concerning themselves with internal computation logic—achieving interface isolation, separation of computation from invocation
+and easy maintenance and extensibility by creating instruction data computation instances via the abstract factory interface.
+In Section 4.1.4, "Instruction Profile Data Calculation Module," users can add a new instruction profile data type by simply inheriting from `PrefModel`, implementing the `size` and `time` methods for the instruction, and registering it with `@RegisterPrefOf()`, enabling real-time size and timing calculations via the registration interface
+when an instruction task is created.
 In the 4.1.4 Instructions_Data class diagram, three data computation classes—MmadData, MovData, and VxxData—are implemented according to different instruction types, all inheriting a unified timing calculation interface. Three data computation types
 are registered with factory classes to instantiate three respective abstract factories, allowing external callers to retrieve corresponding profile data results simply by specifying the instruction name and passing the appropriate parameters.
 
@@ -1132,6 +1134,7 @@ The auto tuning interface should ensure that user code is not modified and preve
 ##### 4.5.2.4 Code Security Protection
 
 **1. Input validation**  
+
 Strictly validate parameters in API requests to ensure data integrity and prevent malicious attacks.
 Input validation ensures the API receives only expected, properly formatted data. It mitigates issues caused data corruption, crashes, or unpredictable behaviors. Specific risks prevented include injection attacks and malicious file uploads.
 
@@ -1155,7 +1158,8 @@ When an error that affects the correct running of the main process occurs, the p
 
 ##### 4.6.1.1 Design Objectives
 
-Defines the key element model for msKPP developer testing (DT) as a Layer 0 public design. This includes software testability design and layered testing strategies. It covers DT environments, test project design, general and domain-specific frameworks, and DFX testing for various layers.
+Defines the key element model for msKPP developer testing (DT) as a Layer 0 public design. This includes software testability design and layered testing strategies. It covers DT environments, test project design, general
+and domain-specific frameworks, and DFX testing for various layers.
 
 ##### 4.6.1.2 Design Constraints
 
@@ -1237,7 +1241,8 @@ component MSKPP {
 
 ##### 4.6.2.1 Design Objectives
 
-Defines the key element model for msKPP developer testing (DT) as a Layer 0 public design. This includes software testability design and layered testing strategies. It covers DT environments, test project design, general and domain-specific frameworks, and DFX testing for various layers.
+Defines the key element model for msKPP developer testing (DT) as a Layer 0 public design. This includes software testability design and layered testing strategies. It covers DT environments, test project design, general
+and domain-specific frameworks, and DFX testing for various layers.
 
 ##### 4.6.2.2 Design Constraints
 

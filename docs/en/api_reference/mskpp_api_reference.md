@@ -1,4 +1,4 @@
-# **msKPP API Reference**
+# msKPP API Reference
 
 ## APIs
 
@@ -6,74 +6,74 @@ The msKPP tool provides two types of APIs: basic APIs and instruction APIs. Basi
 
 **Table 1** msKPP API list
 
-|**API**|Description|
+|API|Description|
 |--|--|
 |[Basic APIs](#basic-apis)|-|
-|[Chip](#Chip)|Chip platform for performance modeling, which initializes the profile data of the chip.|
-|[Core](#Core)|Simulated AI Core inside the chip.|
-|[Tensor](#Tensor)|Basic data type for operator execution.|
-|[Tensor.load](#Tensor.load)|Data transfer API, which models data transfer between different units.|
+|[Chip](#Chip)|Chip platform for performance modeling, which initializes the profile data of the chip|
+|[Core](#Core)|Simulated AI Core inside the chip|
+|[Tensor](#Tensor)|Basic data type for operator execution|
+|[Tensor.load](#Tensor.load)|Data transfer API, which models data transfer between different units|
 |[Synchronization Instruction APIs](#synchronization-instruction-apis)|-|
-|[set_flag](#set_flag)|Instruction API for synchronization between pipes in a core, which is used with `wait_flag`.|
-|[wait_flag](#wait_flag)|Instruction API for synchronization between pipes in a core, which is used with `set_flag`.|
+|[set_flag](#set_flag)|Instruction API for synchronization between pipes in a core, which is used with `wait_flag`|
+|[wait_flag](#wait_flag)|Instruction API for synchronization between pipes in a core, which is used with `set_flag`|
 |[Instruction APIs](#instruction-apis)|-|
-|[mmad](#mmad)|API for modeling `mmad` performance of cube instructions.|
-|[vadd](#vadd)|API for modeling `vadd` performance of vector instructions.|
-|[vbrcb](#vbrcb)|API for modeling `vbrcb` performance of vector instructions.|
-|[vconv](#vconv)|API for modeling `vconv` performance of vector instructions.|
-|[vconv_deq](#vconv_deq)|API for modeling `vconv_deq` performance of vector instructions.|
-|[vconv_vdeq](#vconv_vdeq)|API for modeling `vconv_vdeq` performance of vector instructions.|
-|[vector_dup](#vector_dup)|API for modeling `vector_dup` performance of vector instructions.|
-|[vexp](#vexp)|API for modeling `vexp` performance of vector instructions.|
-|[vln](#vln)|API for modeling `vln` performance of vector instructions.|
-|[vmax](#vmax)|API for modeling `vmax` performance of vector instructions.|
-|[vmul](#vmul)|API for modeling `vmul` performance of vector instructions.|
-|[vmuls](#vmuls)|API for modeling `vmuls` performance of vector instructions.|
-|[vsub](#vsub)|API for modeling `vsub` performance of vector instructions.|
-|[vdiv](#vdiv)|API for modeling `vdiv` performance of vector instructions.|
-|[vcadd](#vcadd)|API for modeling `vcadd` performance of vector instructions.|
-|[vabs](#vabs)|API for modeling `vabs` performance of vector instructions.|
-|[vaddrelu](#vaddrelu)|API for modeling `vaddrelu` performance of vector instructions.|
-|[vaddreluconv](#vaddreluconv)|API for modeling `vaddreluconv` performance of vector instructions.|
-|[vadds](#vadds)|API for modeling `vadds` performance of vector instructions.|
-|[vand](#vand)|API for modeling `vand` performance of vector instructions.|
-|[vaxpy](#vaxpy)|API for modeling `vaxpy` performance of vector instructions.|
-|[vbitsort](#vbitsort)|API for modeling `vbitsort` performance of vector instructions.|
-|[vcgadd](#vcgadd)|API for modeling `vcgadd` performance of vector instructions.|
-|[vcgmax](#vcgmax)|API for modeling `vcgmax` performance of vector instructions.|
-|[vcgmin](#vcgmin)|API for modeling `vcgmin` performance of vector instructions.|
-|[vcmax](#vcmax)|API for modeling `vcmax` performance of vector instructions.|
-|[vcmin](#vcmin)|API for modeling `vcmin` performance of vector instructions.|
-|[vcmp__xxx_](#vcmp_xxx)|API for modeling `vcmp_xxx` performance of vector instructions.|
-|[vcmpv__xxx_](#vcmpv_xxx)|API for modeling `vcmpv_xxx` performance of vector instructions.|
-|[vcmpvs__xxx_](#vcmpvs_xxx)|API for modeling `vcmpvs_xxx` performance of vector instructions.|
-|[vcopy](#vcopy)|API for modeling `vcopy` performance of vector instructions.|
-|[vcpadd](#vcpadd)|API for modeling `vcpadd` performance of vector instructions.|
-|[vgather](#vgather)|API for modeling `vgather` performance of vector instructions.|
-|[vgatherb](#vgatherb)|API for modeling `vgatherb` performance of vector instructions.|
-|[vlrelu](#vlrelu)|API for modeling `vlrelu` performance of vector instructions.|
-|[vmadd](#vmadd)|API for modeling `vmadd` performance of vector instructions.|
-|[vmaddrelu](#vmaddrelu)|API for modeling `vmaddrelu` performance of vector instructions.|
-|[vmaxs](#vmaxs)|API for modeling `vmaxs` performance of vector instructions.|
-|[vmin](#vmin)|API for modeling `vmin` performance of vector instructions.|
-|[vmins](#vmins)|API for modeling `vmins` performance of vector instructions.|
-|[vmla](#vmla)|API for modeling `vmla` performance of vector instructions.|
-|[vmrgsort](#vmrgsort)|API for modeling `vmrgsort` performance of vector instructions.|
-|[vmulconv](#vmulconv)|API for modeling `vmulconv` performance of vector instructions.|
-|[vnot](#vnot)|API for modeling `vnot` performance of vector instructions.|
-|[vor](#vor)|API for modeling `vor` performance of vector instructions.|
-|[vrec](#vrec)|API for modeling `vrec` performance of vector instructions.|
-|[vreduce](#vreduce)|API for modeling `vreduce` performance of vector instructions.|
-|[vreducev2](#vreducev2)|API for modeling `vreducev2` performance of vector instructions.|
-|[vrelu](#vrelu)|API for modeling `vrelu` performance of vector instructions.|
-|[vrsqrt](#vrsqrt)|API for modeling `vrsqrt` performance of vector instructions.|
-|[vsel](#vsel)|API for modeling `vsel` performance of vector instructions.|
-|[vshl](#vshl)|API for modeling `vshl` performance of vector instructions.|
-|[vshr](#vshr)|API for modeling `vshr` performance of vector instructions.|
-|[vsqrt](#vsqrt)|API for modeling `vsqrt` performance of vector instructions.|
-|[vsubrelu](#vsubrelu)|API for modeling `vsubrelu` performance of vector instructions.|
-|[vsubreluconv](#vsubreluconv)|API for modeling `vsubreluconv` performance of vector instructions.|
-|[vtranspose](#vtranspose)|API for modeling `vtranspose` performance of vector instructions.|
+|[mmad](#mmad)|API for modeling `mmad` performance of cube instructions|
+|[vadd](#vadd)|API for modeling `vadd` performance of vector instructions|
+|[vbrcb](#vbrcb)|API for modeling `vbrcb` performance of vector instructions|
+|[vconv](#vconv)|API for modeling `vconv` performance of vector instructions|
+|[vconv_deq](#vconv_deq)|API for modeling `vconv_deq` performance of vector instructions|
+|[vconv_vdeq](#vconv_vdeq)|API for modeling `vconv_vdeq` performance of vector instructions|
+|[vector_dup](#vector_dup)|API for modeling `vector_dup` performance of vector instructions|
+|[vexp](#vexp)|API for modeling `vexp` performance of vector instructions|
+|[vln](#vln)|API for modeling `vln` performance of vector instructions|
+|[vmax](#vmax)|API for modeling `vmax` performance of vector instructions|
+|[vmul](#vmul)|API for modeling `vmul` performance of vector instructions|
+|[vmuls](#vmuls)|API for modeling `vmuls` performance of vector instructions|
+|[vsub](#vsub)|API for modeling `vsub` performance of vector instructions|
+|[vdiv](#vdiv)|API for modeling `vdiv` performance of vector instructions|
+|[vcadd](#vcadd)|API for modeling `vcadd` performance of vector instructions|
+|[vabs](#vabs)|API for modeling `vabs` performance of vector instructions|
+|[vaddrelu](#vaddrelu)|API for modeling `vaddrelu` performance of vector instructions|
+|[vaddreluconv](#vaddreluconv)|API for modeling `vaddreluconv` performance of vector instructions|
+|[vadds](#vadds)|API for modeling `vadds` performance of vector instructions|
+|[vand](#vand)|API for modeling `vand` performance of vector instructions|
+|[vaxpy](#vaxpy)|API for modeling `vaxpy` performance of vector instructions|
+|[vbitsort](#vbitsort)|API for modeling `vbitsort` performance of vector instructions|
+|[vcgadd](#vcgadd)|API for modeling `vcgadd` performance of vector instructions|
+|[vcgmax](#vcgmax)|API for modeling `vcgmax` performance of vector instructions|
+|[vcgmin](#vcgmin)|API for modeling `vcgmin` performance of vector instructions|
+|[vcmax](#vcmax)|API for modeling `vcmax` performance of vector instructions|
+|[vcmin](#vcmin)|API for modeling `vcmin` performance of vector instructions|
+|[vcmp__xxx_](#vcmp_xxx)|API for modeling `vcmp_xxx` performance of vector instructions|
+|[vcmpv__xxx_](#vcmpv_xxx)|API for modeling `vcmpv_xxx` performance of vector instructions|
+|[vcmpvs__xxx_](#vcmpvs_xxx)|API for modeling `vcmpvs_xxx` performance of vector instructions|
+|[vcopy](#vcopy)|API for modeling `vcopy` performance of vector instructions|
+|[vcpadd](#vcpadd)|API for modeling `vcpadd` performance of vector instructions|
+|[vgather](#vgather)|API for modeling `vgather` performance of vector instructions|
+|[vgatherb](#vgatherb)|API for modeling `vgatherb` performance of vector instructions|
+|[vlrelu](#vlrelu)|API for modeling `vlrelu` performance of vector instructions|
+|[vmadd](#vmadd)|API for modeling `vmadd` performance of vector instructions|
+|[vmaddrelu](#vmaddrelu)|API for modeling `vmaddrelu` performance of vector instructions|
+|[vmaxs](#vmaxs)|API for modeling `vmaxs` performance of vector instructions|
+|[vmin](#vmin)|API for modeling `vmin` performance of vector instructions|
+|[vmins](#vmins)|API for modeling `vmins` performance of vector instructions|
+|[vmla](#vmla)|API for modeling `vmla` performance of vector instructions|
+|[vmrgsort](#vmrgsort)|API for modeling `vmrgsort` performance of vector instructions|
+|[vmulconv](#vmulconv)|API for modeling `vmulconv` performance of vector instructions|
+|[vnot](#vnot)|API for modeling `vnot` performance of vector instructions|
+|[vor](#vor)|API for modeling `vor` performance of vector instructions|
+|[vrec](#vrec)|API for modeling `vrec` performance of vector instructions|
+|[vreduce](#vreduce)|API for modeling `vreduce` performance of vector instructions|
+|[vreducev2](#vreducev2)|API for modeling `vreducev2` performance of vector instructions|
+|[vrelu](#vrelu)|API for modeling `vrelu` performance of vector instructions|
+|[vrsqrt](#vrsqrt)|API for modeling `vrsqrt` performance of vector instructions|
+|[vsel](#vsel)|API for modeling `vsel` performance of vector instructions|
+|[vshl](#vshl)|API for modeling `vshl` performance of vector instructions|
+|[vshr](#vshr)|API for modeling `vshr` performance of vector instructions|
+|[vsqrt](#vsqrt)|API for modeling `vsqrt` performance of vector instructions|
+|[vsubrelu](#vsubrelu)|API for modeling `vsubrelu` performance of vector instructions|
+|[vsubreluconv](#vsubreluconv)|API for modeling `vsubreluconv` performance of vector instructions|
+|[vtranspose](#vtranspose)|API for modeling `vtranspose` performance of vector instructions|
 
 ## Basic APIs
 
@@ -94,7 +94,7 @@ class Chip(name, debug_mode=False)
 |Parameter|Input Type|Description|
 |--|--|--|
 |name|String|Processor name. Currently, most data is collected from the Atlas A2 training products/Atlas A2 inference products. You can use `npu-smi info` to view the Ascend AI Processor type of a device.|
-|debug_mode|Bool|Whether to enable the debug mode. The default value is `False`. After the debug mode is enabled, you can view the instructions that are not properly executed, but no output is generated.<br>`True`: enabled<br>`False`: disabled|
+|debug_mode|Bool|Whether to enable the debug mode. The default value is `False`. After the debug mode is enabled, you can view the instructions that are not properly executed, but no output file is generated.<br>`True`: enabled<br>`False`: disabled|
 
 **Member Description**
 
@@ -102,7 +102,7 @@ class Chip(name, debug_mode=False)
 |--|--|
 |chip.enable_trace()|Enables the operator simulation pipeline function to generate the pipeline chart file `trace.json`.|
 |chip.enable_metrics()|Enables single instruction and pipeline information, and generates instruction statistics (`Instruction_statistic.csv`), transfer pipeline statistics (`Pipe_statistic.csv`), and instruction proportion pie chart (`instruction_cycle_consumption.html`).|
-|chip.set_cache_hit_ratio(config)|Enables manual adjustment of the L2 cache hit ratio. The value of `config` is `{"cache_hit_ratio": 0.6`}. For details, see the cache hit ratio modeling section.|
+|chip.set_cache_hit_ratio(config)|Enables manual adjustment of the L2 cache hit ratio. The value of `config` is `{"cache_hit_ratio": 0.6}`. For details, see the cache hit ratio modeling section.|
 |chip.set_prof_summary_path("xxx/PipeUtilization.csv")|`PipeUtilization.csv` is an example of the msProf result, which is used to compare the theoretical values of the pipeline information with values measured by msProf. For details, see "comparison between theoretical values of pipeline information and values measured by msProf".|
 |chip.disable_instr_log()|After this function is enabled, the log printing is suppressed after the instruction task is added and scheduled.|
 
@@ -114,13 +114,14 @@ This class needs to be initialized under the `with` statement.
 
 ```python
 from mskpp import Chip
-# For details about how to view the Ascend AI Processor type of the current device, see the following description.
-with Chip("Ascendxxxyy") as chip:    # Ascendxxxyy needs to be replaced with the actual processor type.
-    chip.enable_trace()   # Call this function to enable the operator simulation pipeline function and generate a pipeline chart file.
-    chip.enable_metrics()  # Call this function to enable the single instruction and pipeline information, and generate the transfer pipeline statistics, instruction information statistics, and instruction proportion pie chart.
+# For details about how to view the Ascend AI Processor type of the current device, see the following description
+with Chip("Ascendxxxyy") as chip:    # Ascendxxxyy needs to be replaced with the actual processor type
+    chip.enable_trace()   # Call this function to enable the operator simulation pipeline function and generate a pipeline chart file
+    chip.enable_metrics()  # Call this function to enable the single instruction and pipeline information, and generate the transfer pipeline statistics, instruction information statistics, and instruction proportion pie chart
 ```
 
-> [!NOTE]NOTE  
+> [!NOTE]
+> 
 > For servers other than the Atlas A3 training products/Atlas A3 inference products: Run the `npu-smi info` command on the server where the Ascend AI Processor is installed to obtain the chip name. Note that the actual value is represented by `AscendChip name`. For example, if the chip name is `xxxyy`, the actual value is `Ascendxxxyy`. If `Ascendxxxyy` is the path of the code sample, set this parameter to `ascendxxxyy`.
 
 **Returns**
@@ -154,7 +155,7 @@ This class needs to be initialized under the `with` statement.
 ```python
 from mskpp import Core
 with Core("AIC0") as aic:
-    # Code related to the operator compute logic on AI Cube Core 0.
+    # Code related to the operator compute logic on AI Cube Core 0
     ...
 ```
 
@@ -166,7 +167,7 @@ None
 
 **Function**
 
-Onboard tensor abstraction, in which the memory location, data type, size, and format of tensors can be specified as the data dependency identifiers of instructions.
+On-chip tensor abstraction, in which the memory location, data type, size, and format of tensors can be specified as the data dependency identifiers of instructions.
 
 **Prototype**
 
@@ -181,7 +182,7 @@ class Tensor(mem_type, dtype=None, size=None, format=None, is_inited=False)
 |mem_type|String|Location of the memory space where the abstracted tensor is located, such as GM, UB, L1, L0A, L0B, L0C, FB, and BT.|
 |dtype|String|Data type, such as BOOL, UINT1, UINT2, UINT8, UINT16, UINT32, BF16, UINT64, INT4, INT8, INT16, INT32, INT64, FP16, and FP32.|
 |size|List|Shape of a tensor.|
-|format|String|Data layout format. For details, see "Programming Guide" > "Concepts and Terms" > "Neural Networks and Operators" > "Data Layout Format" in Ascend C Operator Development Guide.|
+|format|String|Data layout format. For details, see "Programming Guide" > "Concepts and Terms" > "Neural Networks and Operators" > "Data Layout Format" in *Ascend C Operator Development Guide*.|
 |is_inited|Bool|Switch that indicates whether the tensor class is ready. Once enabled, instructions that utilize the tensors as the input can be initiated.|
 
 **Member Description**
@@ -201,12 +202,12 @@ You need to create a tensor whose shape is `[1]` and `is_inited=True` for scalar
 ```python
 from mskpp import Tensor, Core
 gm_tmp= Tensor("GM", "FP16", [48, 16], format="ND")
-with Core("AIV0") as aiv:  # Computing logic on AIV0.
+with Core("AIV0") as aiv:  # Computing logic on AIV0
     ...
     gm_tmp.load(result, set_value=0)
 with Core("AIC0") as aic:
     in_x = Tensor("GM", "FP16", [48, 16], format="ND")
-    in_x.load(gm_tmp, expect_value=0) # Computing logic on AIC0.
+    in_x.load(gm_tmp, expect_value=0) # Computing logic on AIC0
     ...
 ```
 
@@ -231,7 +232,7 @@ Tensor.load(tensor, repeat=1, set_value=-1, expect_value=-1)
 |Parameter|Input Type|Description|
 |--|--|--|
 |tensor|Variable|Another input tensor, whose function is the same as that defined in the API.|
-|repeat|int|This parameter simulates the transfer instruction `repeat`. You can input this parameter to obtain the bandwidth of each transfer channel with varying `repeat` values. The bandwidth is used to calculate the time consumed by the transfer instruction. This parameter is optional. The default value is `1`. You are advised to set it to an integer within the range of [1, 255]. If the input value of `repeat` does not meet the requirement, the system throws exception "input repeat = *xx* invalid." where *xx* is the input abnormal value of `repeat`.|
+|repeat|int|This parameter simulates the transfer instruction `repeat`. You can input this parameter to obtain the bandwidth of each transfer channel with varying `repeat` values. The bandwidth is used to calculate the time consumed by the transfer instruction. This parameter is optional. The default value is 1. You are advised to set it to an integer within the range of [1, 255]. If the input value of `repeat` does not meet the requirement, the system throws an exception "input repeat = *xx* invalid." where *xx* is the input abnormal value of `repeat`.|
 |set_value|int|Identifier indicating that the tensor data is dependent by others. This parameter can be customized and must be used in conjunction with `expect_value`. This parameter is optional. If it is not specified, the dependency relationship is not enabled.|
 |expect_value|int|Identifier indicating that loading of the tensor data depends on other data. This parameter can be customized and must be used in conjunction with `set_value`. This parameter is optional. If it is not specified, the dependency relationship is not enabled.|
 
@@ -239,7 +240,7 @@ Tensor.load(tensor, repeat=1, set_value=-1, expect_value=-1)
 
 `set_value` and `expect_value` must be used in pairs. Otherwise, pipeline blocking may occur.
 
-The `repeat` parameter supports only the following four transfer channels: L1_TO_L0A, L1_TO_L0B, GM_TO_L0A, and GM_TO_L0B.
+The `repeat` parameter supports only the following four transfer channels: `L1_TO_L0A`, `L1_TO_L0B`, `GM_TO_L0A`, and `GM_TO_L0B`.
 
 **Returns**
 
@@ -251,7 +252,7 @@ None
 
 **Function**
 
-Ensures the synchronization of different instructions between pipelines in a core. After `pipe_src` is scheduled, `pipe_dst` is unblocked. After `set_flag` and `wait_flag` are set, the [Instruction Pipeline Chart (Using MindStudio Insight as an Example)](https://gitcode.com/Ascend/msopprof/blob/master/docs/en/user_guide/msopprof_simulator_user_guide.md#instruction-pipeline-chart) will better meet the user's expectations.
+Ensures the synchronization of different instructions between pipelines in a core. After `pipe_src` is scheduled, `pipe_dst` is unblocked. After `set_flag` and `wait_flag` are set, the [Instruction Pipeline Chart (Using MindStudio Insight as an Example)](https://gitcode.com/Ascend/msopprof/blob/master/docs/en/user_guide/msopprof_simulator_user_guide.md) will better meet the user's expectations.
 
 **Prototype**
 
@@ -280,15 +281,15 @@ from mskpp import Tensor, Chip, set_flag, wait_flag
 with Chip("Ascendxxyy") as chip:
     gm_weight = Tensor("GM", "FP16", [128, 256], format="ND")
     l1_weight = Tensor("L1", "FP16", [128, 256], format="ND")
-    for conv_idx in range(4):  # Before data is loaded to L0A, the GM is loaded to L1 in batches.
+    for conv_idx in range(4):  # Before data is loaded to L0A, the GM is loaded to L1 in batches
         gm_weight_part = gm_weight[:, 64]
         l1_weight_part = l1_weight[:, 64]
         l1_weight_part.load(gm_weight_part)
         if conv_idx == 3:
-            set_flag("PIPE-MTE2", "PIPE-MTE1", 1)  # MTE1 can be executed only after MTE2 execution is complete.
+            set_flag("PIPE-MTE2", "PIPE-MTE1", 1)  # MTE1 can be executed only after MTE2 execution is complete
     x = Tensor("L0A")   # L0A
-    # MTE2 is being executed. MTE1 can be executed only after MTE2 execution is complete.
-    l1_weight.set_valid()  # Manually enable L1.
+    # MTE2 is being executed. MTE1 can be executed only after MTE2 execution is complete
+    l1_weight.set_valid()  # Manually enable L1
     wait_flag("PIPE-MTE2", "PIPE-MTE1", 1)
     x.load(l1_weight)
 ```
@@ -330,15 +331,15 @@ from mskpp import Tensor, Chip, set_flag, wait_flag
 with Chip("Ascendxxyy") as chip:
     gm_weight = Tensor("GM", "FP16", [128, 256], format="ND")
     l1_weight = Tensor("L1", "FP16", [128, 256], format="ND")
-    for conv_idx in range(4):  # Before data is loaded to L0A, the GM is loaded to L1 in batches.
+    for conv_idx in range(4):  # Before data is loaded to L0A, the GM is loaded to L1 in batches
         gm_weight_part = gm_weight[:, 64]
         l1_weight_part = l1_weight[:, 64]
         l1_weight_part.load(gm_weight_part)
         if conv_idx == 3:
-            set_flag("PIPE-MTE2", "PIPE-MTE1", 1)  # MTE1 can be executed only after MTE2 is executed.
+            set_flag("PIPE-MTE2", "PIPE-MTE1", 1)  # MTE1 can be executed only after MTE2 execution is complete
     x = Tensor("L0A")   # L0A
-    # MTE2 is being executed. MTE1 can be executed only after MTE2 execution is complete.
-    l1_weight.set_valid()  # Manually enable L1.
+    # MTE2 is being executed. MTE1 can be executed only after MTE2 execution is complete
+    l1_weight.set_valid()  # Manually enable L1
     wait_flag("PIPE-MTE2", "PIPE-MTE1", 1)
     x.load(l1_weight)
 ```
@@ -381,7 +382,7 @@ from mskpp import mmad, Tensor
 in_x = Tensor("GM", "FP16", [32, 48], format="ND")
 in_y = Tensor("GM", "FP16", [48, 16], format="ND")
 in_z = Tensor("GM", "FP32", [32, 16], format="NC1HWC0")
-out_z = mmad(in_x, in_y, in_z)()
+out_z = mmad(in_x, in_y, in_z)
 ```
 
 **Returns**
@@ -422,7 +423,7 @@ ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vadd(ub_x, ub_y, ub_z)()
+out = vadd(ub_x, ub_y, ub_z)
 ```
 
 **Returns**
@@ -459,7 +460,7 @@ ub_x, ub_y = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 broadcast_num = 16
 ub_x.load(gm_x)
-out = vbrcb(ub_x, ub_y, broadcast_num)()
+out = vbrcb(ub_x, ub_y, broadcast_num)
 ```
 
 **Returns**
@@ -497,7 +498,7 @@ from mskpp import vconv, Tensor
 ub_x, ub_y = Tensor("UB", "FP16"), Tensor("UB")
 gm_x = Tensor("GM")
 ub_x.load(gm_x)
-out = vconv(ub_x, ub_y, "FP32")()
+out = vconv(ub_x, ub_y, "FP32")
 ```
 
 **Returns**
@@ -535,7 +536,7 @@ from mskpp import vconv_deq, Tensor
 ub_x, ub_y = Tensor("UB", "FP16"), Tensor("UB")
 gm_x = Tensor("GM")
 ub_x.load(gm_x)
-out = vconv_deq(ub_x, ub_y, "FP32")()
+out = vconv_deq(ub_x, ub_y, "FP32")
 ```
 
 **Returns**
@@ -573,7 +574,7 @@ from mskpp import vconv_vdeq, Tensor
 ub_x, ub_y = Tensor("UB", "FP16"), Tensor("UB")
 gm_x = Tensor("GM")
 ub_x.load(gm_x)
-out = vconv_vdeq(ub_x, ub_y, "FP32")()
+out = vconv_vdeq(ub_x, ub_y, "FP32")
 ```
 
 **Returns**
@@ -612,7 +613,7 @@ Since the input to this instruction is only a scalar, you need to create a tenso
 from mskpp import vector_dup, Tensor
 ub_x = Tensor("UB", "FP16", [1], format="ND", is_inited=True)
 ub_y = Tensor("UB")
-out = vector_dup(ub_x, ub_y, [8, 2048])()
+out = vector_dup(ub_x, ub_y, [8, 2048])
 ```
 
 **Returns**
@@ -647,7 +648,7 @@ from mskpp import vexp, Tensor
 ub_x = Tensor("UB")
 ub_x.load(gm_x)
 ub_y = Tensor("UB")
-out = vexp(ub_x, ub_y)()
+out = vexp(ub_x, ub_y)
 ```
 
 **Returns**
@@ -683,7 +684,7 @@ ub_x = Tensor("UB")
 gm_x = Tensor("GM")
 ub_x.load(gm_x)
 ub_y = Tensor("UB")
-out = vln(ub_x, ub_y)()
+out = vln(ub_x, ub_y)
 ```
 
 **Returns**
@@ -720,7 +721,7 @@ ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vmax(ub_x, ub_y, ub_z)()
+out = vmax(ub_x, ub_y, ub_z)
 ```
 
 **Returns**
@@ -757,7 +758,7 @@ ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vmul(ub_x, ub_y, ub_z)()
+out = vmul(ub_x, ub_y, ub_z)
 ```
 
 **Returns**
@@ -793,7 +794,7 @@ from mskpp import vmuls, Tensor
 ub_x, ub_z = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 ub_x.load(gm_x)
-out = vmuls(ub_x, 5, ub_z)()  # 5 is the value of scalar y.
+out = vmuls(ub_x, 5, ub_z)  # 5 is the value of scalar y
 ```
 
 **Returns**
@@ -830,7 +831,7 @@ ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vsub(ub_x, ub_y, ub_z)()
+out = vsub(ub_x, ub_y, ub_z)
 ```
 
 **Returns**
@@ -867,7 +868,7 @@ ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vdiv(ub_x, ub_y, ub_z)()
+out = vdiv(ub_x, ub_y, ub_z)
 ```
 
 **Returns**
@@ -880,7 +881,7 @@ None
 
 `vcadd` instruction abstraction.
 
-Reduces the tensor dimensions based on the input parameters of the instruction. In the msKPP instruction system, `reduce_num` controls the shape reduction multiple and ensures that the shapes of the input and output tensors are the same. When the last dimension of the shape is reduced to `1`, the dimension is eliminated. Ensure that the last dimension of the shape can be exactly divided by `reduce_num` and is not `0`.
+Reduces the tensor dimensions based on the input parameters of the instruction. In the msKPP instruction system, `reduce_num` controls the shape reduction multiple and ensures that the shapes of the input and output tensors are the same. When the last dimension of the shape is reduced to 1, the dimension is eliminated. Ensure that the last dimension of the shape can be exactly divided by `reduce_num` and is not 0.
 
 **Prototype**
 
@@ -904,12 +905,12 @@ ub_x, ub_y = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 reduce_num = 16
 ub_x.load(gm_x)
-out = vcadd(ub_x, ub_y, reduce_num)()
+out = vcadd(ub_x, ub_y, reduce_num)
 ```
 
 **Constraints**
 
-The value of `reduce_num` cannot be `0`.
+The value of `reduce_num` cannot be 0.
 
 **Returns**
 
@@ -943,7 +944,7 @@ from mskpp import vabs, Tensor
 ub_x, ub_y = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 ub_x.load(gm_x)
-out = vabs(ub_x, ub_y)()
+out = vabs(ub_x, ub_y)
 ```
 
 **Returns**
@@ -980,7 +981,7 @@ ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vaddrelu(ub_x, ub_y, ub_z)()
+out = vaddrelu(ub_x, ub_y, ub_z)
 ```
 
 **Returns**
@@ -1019,7 +1020,7 @@ ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vaddreluconv(ub_x, ub_y, ub_z)()
+out = vaddreluconv(ub_x, ub_y, ub_z)
 ```
 
 **Returns**
@@ -1055,7 +1056,7 @@ from mskpp import vadds, Tensor
 ub_x, ub_z = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 ub_x.load(gm_x)
-out = vadds(ub_x, 5, ub_z)() # 5 is the value of scalar y.
+out = vadds(ub_x, 5, ub_z) # 5 is the value of scalar y
 ```
 
 **Returns**
@@ -1092,7 +1093,7 @@ ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vand(ub_x, ub_y, ub_z)()
+out = vand(ub_x, ub_y, ub_z)
 ```
 
 **Returns**
@@ -1105,7 +1106,7 @@ None
 
 `vaxpy` instruction abstraction.
 
-`z = x * y + z`. vaxpy calculates the product of vector `x` and scalar `y`, and adds the target address `z`. The output data type can be specified as FP32 by using `if_mix`.
+`z = x * y + z`. vaxpy calculates the product of vector `x` and scalar `y`, and adds the value at the target address `z`. The output data type can be specified as FP32 by using `if_mix`.
 
 **Prototype**
 
@@ -1129,7 +1130,7 @@ from mskpp import vaxpy, Tensor
 ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 ub_x.load(gm_x)
-out = vaxpy(ub_x, ub_y, ub_z)()
+out = vaxpy(ub_x, ub_y, ub_z)
 ```
 
 **Returns**
@@ -1166,7 +1167,7 @@ ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM") 
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vbitsort(ub_x, ub_y, ub_z)()
+out = vbitsort(ub_x, ub_y, ub_z)
 ```
 
 **Returns**
@@ -1197,7 +1198,7 @@ class vcgadd(x, y, reduce_num)
 
 **Constraints**
 
-The value of `reduce_num` cannot be `0`.
+The value of `reduce_num` cannot be 0.
 
 **Example**
 
@@ -1207,7 +1208,7 @@ ub_x, ub_y = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 reduce_num = 16
 ub_x.load(gm_x)
-out = vcgadd(ub_x, ub_y, reduce_num)()
+out = vcgadd(ub_x, ub_y, reduce_num)
 ```
 
 **Returns**
@@ -1238,7 +1239,7 @@ class vcgmax(x, y, reduce_num)
 
 **Constraints**
 
-The value of `reduce_num` cannot be `0`.
+The value of `reduce_num` cannot be 0.
 
 **Example**
 
@@ -1248,7 +1249,7 @@ ub_x, ub_y = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 reduce_num = 16
 ub_x.load(gm_x)
-out = vcgmax(ub_x, ub_y, reduce_num)()
+out = vcgmax(ub_x, ub_y, reduce_num)
 ```
 
 **Returns**
@@ -1279,7 +1280,7 @@ class vcgmin(x, y, reduce_num)
 
 **Constraints**
 
-The value of `reduce_num` cannot be `0`.
+The value of `reduce_num` cannot be 0.
 
 **Example**
 
@@ -1289,7 +1290,7 @@ ub_x, ub_y = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 reduce_num = 16
 ub_x.load(gm_x)
-out = vcgmin(ub_x, ub_y, reduce_num)()
+out = vcgmin(ub_x, ub_y, reduce_num)
 ```
 
 **Returns**
@@ -1320,7 +1321,7 @@ class vcmax(x, y, reduce_num)
 
 **Constraints**
 
-The value of `reduce_num` cannot be `0`.
+The value of `reduce_num` cannot be 0.
 
 **Example**
 
@@ -1330,7 +1331,7 @@ ub_x, ub_y = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 reduce_num = 16
 ub_x.load(gm_x)
-out = vcmax(ub_x, ub_y, reduce_num)()
+out = vcmax(ub_x, ub_y, reduce_num)
 ```
 
 **Returns**
@@ -1361,7 +1362,7 @@ class vcmin(x, y, reduce_num)
 
 **Constraints**
 
-The value of `reduce_num` cannot be `0`.
+The value of `reduce_num` cannot be 0.
 
 **Example**
 
@@ -1371,7 +1372,7 @@ ub_x, ub_y = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 reduce_num = 16
 ub_x.load(gm_x)
-out = vcmin(ub_x, ub_y, reduce_num)()
+out = vcmin(ub_x, ub_y, reduce_num)
 ```
 
 **Returns**
@@ -1421,7 +1422,7 @@ ub_x, ub_y = Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vcmp(ub_x, ub_y)()
+out = vcmp(ub_x, ub_y)
 ```
 
 **Returns**
@@ -1472,7 +1473,7 @@ ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vcmpv(ub_x, ub_y, ub_z)()
+out = vcmpv(ub_x, ub_y, ub_z)
 ```
 
 **Returns**
@@ -1523,7 +1524,7 @@ ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vcmpvs(ub_x, ub_y, ub_z)()
+out = vcmpvs(ub_x, ub_y, ub_z)
 ```
 
 **Returns**
@@ -1548,8 +1549,8 @@ class vcopy(x, y)
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
-|x|Input|Tensor variable|Input vector tensor. int16, int32, uint16, and uint32 are supported.|
-|y|Output|Tensor variable|Output vector tensor. int16, int32, uint16, and uint32 are supported.|
+|x|Input|Tensor variable|Input vector tensor. INT16, INT32, UINT16, and UINT32 are supported.|
+|y|Output|Tensor variable|Output vector tensor. INT16, INT32, UINT16, and UINT32 are supported.|
 
 **Example**
 
@@ -1558,7 +1559,7 @@ from mskpp import vcopy, Tensor
 ub_x, ub_y = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 ub_x.load(gm_x)
-out = vcopy(ub_x, ub_y)()
+out = vcopy(ub_x, ub_y)
 ```
 
 **Returns**
@@ -1583,8 +1584,8 @@ class vcpadd(x, y, reduce_num)
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
-|x|Input|Tensor variable|Input `x` vector tensor. fp16 and fp32 are supported.|
-|y|Output|Tensor variable|Output `y` vector tensor. fp16 and fp32 are supported.|
+|x|Input|Tensor variable|Input `x` vector tensor. FP16 and FP32 are supported.|
+|y|Output|Tensor variable|Output `y` vector tensor. FP16 and FP32 are supported.|
 |reduce_num|Input|Int|Reduction factor for the shape.|
 
 **Example**
@@ -1595,7 +1596,7 @@ ub_x, ub_y = Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vcpadd(ub_x, ub_y, reduce_num)()
+out = vcpadd(ub_x, ub_y, reduce_num)
 ```
 
 **Returns**
@@ -1629,7 +1630,7 @@ ub_x, ub_y = Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vgather(ub_x, ub_y)()
+out = vgather(ub_x, ub_y)
 ```
 
 **Returns**
@@ -1663,7 +1664,7 @@ ub_x, ub_y = Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vgatherb(ub_x, ub_y)()
+out = vgatherb(ub_x, ub_y)
 ```
 
 **Returns**
@@ -1688,9 +1689,9 @@ class vlrelu(x, y, z)
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
-|x|Input|Tensor variable|Input `x` vector tensor. float16 and float32 are supported.|
-|y|Input|Tensor variable|Input `y` scalar. float16 and float32 are supported.|
-|z|Output|Tensor variable|Output vector tensor. float16 and float32 are supported.|
+|x|Input|Tensor variable|Input `x` vector tensor. FP16 and FP32 are supported.|
+|y|Input|Tensor variable|Input `y` scalar. FP16 and FP32 are supported.|
+|z|Output|Tensor variable|Output vector tensor. FP16 and FP32 are supported.|
 
 **Example**
 
@@ -1698,9 +1699,9 @@ class vlrelu(x, y, z)
 from mskpp import vlrelu, Tensor
 ub_x, ub_z = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
-scalar_y = 5  # 5 is the value of scalar y.
+scalar_y = 5   # 5 is the value of scalar y
 ub_x.load(gm_x)
-out = vlrelu(ub_x, scalar_y, ub_z)()
+out = vlrelu(ub_x, scalar_y, ub_z)
 ```
 
 **Returns**
@@ -1725,9 +1726,9 @@ class vmadd(x, y, z)
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
-|x|Input|Tensor variable|Input `x` vector tensor. float16 and float32 are supported.|
-|y|Input|Tensor variable|Input `y` vector tensor. float16 and float32 are supported.|
-|z|Output|Tensor variable|Output vector tensor. float16 and float32 are supported.|
+|x|Input|Tensor variable|Input `x` vector tensor. FP16 and FP32 are supported.|
+|y|Input|Tensor variable|Input `y` vector tensor. FP16 and FP32 are supported.|
+|z|Output|Tensor variable|Output vector tensor. FP16 and FP32 are supported.|
 
 **Example**
 
@@ -1737,7 +1738,7 @@ ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vmadd(ub_x, ub_y, ub_z)()
+out = vmadd(ub_x, ub_y, ub_z)
 ```
 
 **Returns**
@@ -1762,9 +1763,9 @@ class vmaddrelu(x, y, z)
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
-|x|Input|Tensor variable|Input `x` vector tensor. float16 and float32 are supported.|
-|y|Input|Tensor variable|Input `y` vector tensor. float16 and float32 are supported.|
-|z|Output|Tensor variable|Output vector tensor. float16 and float32 are supported.|
+|x|Input|Tensor variable|Input `x` vector tensor. FP16 and FP32 are supported.|
+|y|Input|Tensor variable|Input `y` vector tensor. FP16 and FP32 are supported.|
+|z|Output|Tensor variable|Output vector tensor. FP16 and FP32 are supported.|
 
 **Example**
 
@@ -1774,7 +1775,7 @@ ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vmaddrelu(ub_x, ub_y, ub_z)()
+out = vmaddrelu(ub_x, ub_y, ub_z)
 ```
 
 **Returns**
@@ -1799,9 +1800,9 @@ class vmaxs(x, y, z)
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
-|x|Input|Tensor variable|Input `x` vector tensor. float16, float32, int16, and int32 are supported.|
+|x|Input|Tensor variable|Input `x` vector tensor. FP16, FP32, INT16, and INT32 are supported.|
 |y|Input|Tensor variable|Input scalar. The program does not process this parameter.|
-|z|Output|Tensor variable|Output vector tensor. float16, float32, int16, and int32 are supported.|
+|z|Output|Tensor variable|Output vector tensor. FP16, FP32, INT16, and INT32 are supported.|
 
 **Example**
 
@@ -1810,7 +1811,7 @@ from mskpp import vmaxs, Tensor
 ub_x, ub_z = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 ub_x.load(gm_x)
-out = vmaxs(ub_x, 5, ub_z)()
+out = vmaxs(ub_x, 5, ub_z)
 ```
 
 **Returns**
@@ -1835,9 +1836,9 @@ class vmin(x, y, z)
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
-|x|Input|Tensor variable|Input `x` vector tensor. float16, float32, int16, and int32 are supported.|
-|y|Input|Tensor variable|Input `y` vector tensor. float16, float32, int16, and int32 are supported.|
-|z|Output|Tensor variable|Output vector tensor. float16, float32, int16, and int32 are supported.|
+|x|Input|Tensor variable|Input `x` vector tensor. FP16, FP32, INT16, and INT32 are supported.|
+|y|Input|Tensor variable|Input `y` vector tensor. FP16, FP32, INT16, and INT32 are supported.|
+|z|Output|Tensor variable|Output vector tensor. FP16, FP32, INT16, and INT32 are supported.|
 
 **Example**
 
@@ -1847,7 +1848,7 @@ ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vmin(ub_x, ub_y, ub_z)()
+out = vmin(ub_x, ub_y, ub_z)
 ```
 
 **Returns**
@@ -1872,9 +1873,9 @@ class vmins(x, y, z)
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
-|x|Input|Tensor variable|Input `x` vector tensor. float16, float32, int16, and int32 are supported.|
+|x|Input|Tensor variable|Input `x` vector tensor. FP16, FP32, INT16, and INT32 are supported.|
 |y|Input|Tensor variable|Input scalar. The program does not process this parameter.|
-|z|Output|Tensor variable|Output vector tensor. float16, float32, int16, and int32 are supported.|
+|z|Output|Tensor variable|Output vector tensor. FP16, FP32, INT16, and INT32 are supported.|
 
 **Example**
 
@@ -1883,7 +1884,7 @@ from mskpp import vmins, Tensor
 ub_x, ub_z = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 ub_x.load(gm_x)
-out = vmins(ub_x, 5, ub_z)()  # 5 is a scalar value of y.
+out = vmins(ub_x, 5, ub_z)  # 5 is a scalar value of y
 ```
 
 **Returns**
@@ -1900,11 +1901,11 @@ None
 
 The value can be:
 
-type = f16: f16 = f16 × f16 + f16
+`type = f16: f16 = f16 × f16 + f16`
 
-type = f32: f32 = f32 × f32 + f32
+`type = f32: f32 = f32 × f32 + f32`
 
-`if_mix = True`: f32 = f16 × f16 + f32. The `x` and `y` vectors use 64-element f16 data for calculation. The source vector uses only the lower four blocks, and the upper four blocks are ignored. `Xd` is 64-element f32 data with eight blocks, and is used as both the target vector and the third source vector.
+`if_mix = True`: `f32 = f16 × f16 + f32`. The `x` and `y` vectors use 64-element f16 data for calculation. The source vector uses only the lower four blocks, and the upper four blocks are ignored. `Xd` is 64-element f32 data with eight blocks, and is used as both the target vector and the third source vector.
 
 **Prototype**
 
@@ -1933,7 +1934,7 @@ ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vmla(ub_x, ub_y, ub_z)()
+out = vmla(ub_x, ub_y, ub_z)
 ```
 
 **Returns**
@@ -1968,7 +1969,7 @@ ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vmrgsort(ub_x, ub_y, ub_z)()
+out = vmrgsort(ub_x, ub_y, ub_z)
 ```
 
 **Returns**
@@ -1996,7 +1997,7 @@ class vmulconv(x, y, z, dtype)
 |x|Input|Tensor variable|Input `x` vector tensor. FP16 is supported.|
 |y|Input|Tensor variable|Input `y` vector tensor. FP16 is supported.|
 |z|Output|Tensor variable|Output vector tensor.|
-|dtype|Input|Tensor variable|Input data type, including UINT8 and INT8. The output data type of `z` is determined by `dtype`.|
+|dtype|Input|String|Input data type, including UINT8 and INT8. The output data type of `z` is determined by `dtype`.|
 
 **Example**
 
@@ -2006,7 +2007,7 @@ ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vmulconv(ub_x, ub_y, ub_z, 'UINT8')()
+out = vmulconv(ub_x, ub_y, ub_z, 'UINT8')
 ```
 
 **Returns**
@@ -2041,7 +2042,7 @@ from mskpp import vnot, Tensor
 ub_x, ub_y = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 ub_x.load(gm_x)
-out = vnot(ub_x, ub_y)()
+out = vnot(ub_x, ub_y)
 ```
 
 **Constraints**
@@ -2082,7 +2083,7 @@ ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x,gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vor(ub_x, ub_y, ub_z)()
+out = vor(ub_x, ub_y, ub_z)
 ```
 
 **Constraints**
@@ -2121,7 +2122,7 @@ from mskpp import vrec, Tensor
 ub_x, ub_y = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 ub_x.load(gm_x)
-out=vrec(ub_x, ub_y)()
+out=vrec(ub_x, ub_y)
 ```
 
 **Returns**
@@ -2160,7 +2161,7 @@ gm_x, gm_y, gm_z = Tensor("GM"), Tensor("GM"), Tensor("GM")
 reserve_num = 16
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vreduce(ub_x, ub_y, ub_z, reserve_num)()
+out = vreduce(ub_x, ub_y, ub_z, reserve_num)
 gm_z.load(out[0])
 ```
 
@@ -2200,7 +2201,7 @@ gm_x, gm_y, gm_z = Tensor("GM"), Tensor("GM"), Tensor("GM")
 reserve_num = 16
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vreducev2(ub_x, ub_y, ub_z, reserve_num)()
+out = vreducev2(ub_x, ub_y, ub_z, reserve_num)
 gm_z.load(out[0])
 ```
 
@@ -2226,8 +2227,8 @@ class vrelu(x, y)
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
-|x|Input|Tensor variable|Input `x` vector tensor. float16, float32, and int32 are supported.|
-|y|Output|Tensor variable|Output vector tensor. float16, float32, and int32 are supported.|
+|x|Input|Tensor variable|Input `x` vector tensor. FP16, FP32, and INT32 are supported.|
+|y|Output|Tensor variable|Output vector tensor. FP16, FP32, and INT32 are supported.|
 
 **Example**
 
@@ -2237,7 +2238,7 @@ ub_x, ub_y = Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vrelu(ub_x, ub_y)()
+out = vrelu(ub_x, ub_y)
 ```
 
 **Returns**
@@ -2262,8 +2263,8 @@ class vrsqrt(x, y)
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
-|x|Input|Tensor variable|Input `x` vector tensor. float16 and float32 are supported.|
-|y|Output|Tensor variable|Output vector tensor. float16 and float32 are supported.|
+|x|Input|Tensor variable|Input `x` vector tensor. FP16 and FP32 are supported.|
+|y|Output|Tensor variable|Output vector tensor. FP16 and FP32 are supported.|
 
 **Example**
 
@@ -2273,7 +2274,7 @@ ub_x, ub_y = Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vrsqrt(ub_x, ub_y)()
+out = vrsqrt(ub_x, ub_y)
 ```
 
 **Returns**
@@ -2310,7 +2311,7 @@ ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vsel(ub_x, ub_y, ub_z)()
+out = vsel(ub_x, ub_y, ub_z)
 ```
 
 **Returns**
@@ -2345,7 +2346,7 @@ from mskpp import vshl, Tensor
 ub_x, ub_z = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 ub_x.load(gm_x)
-out = vshl(ub_x, ub_z)()
+out = vshl(ub_x, ub_z)
 ```
 
 **Returns**
@@ -2381,7 +2382,7 @@ ub_x, ub_y = Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vshr(ub_x, ub_y)()
+out = vshr(ub_x, ub_y)
 ```
 
 **Returns**
@@ -2406,8 +2407,8 @@ class vsqrt(x, y)
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
-|x|Input|Tensor variable|Input `x` vector tensor. float16 and float32 are supported.|
-|y|Output|Tensor variable|Output `y` vector tensor. float16 and float32 are supported.|
+|x|Input|Tensor variable|Input `x` vector tensor. FP16 and FP32 are supported.|
+|y|Output|Tensor variable|Output `y` vector tensor. FP16 and FP32 are supported.|
 
 **Example**
 
@@ -2416,7 +2417,7 @@ from mskpp import vsqrt, Tensor
 ub_x, ub_y = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 ub_x.load(gm_x)
-out = vsqrt(ub_x, ub_y)()
+out = vsqrt(ub_x, ub_y)
 ```
 
 **Constraints**
@@ -2445,9 +2446,9 @@ class vsubrelu(x, y, z)
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
-|x|Input|Tensor variable|Input `x` vector tensor. float16 and float32 are supported.|
-|y|Input|Tensor variable|Input `y` vector tensor. float16 and float32 are supported.|
-|z|Output|Tensor variable|Output vector tensor. float16 and float32 are supported.|
+|x|Input|Tensor variable|Input `x` vector tensor. FP16 and FP32 are supported.|
+|y|Input|Tensor variable|Input `y` vector tensor. FP16 and FP32 are supported.|
+|z|Output|Tensor variable|Output vector tensor. FP16 and FP32 are supported.|
 
 **Example**
 
@@ -2457,7 +2458,7 @@ ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vsubrelu(ub_x, ub_y, ub_z)()
+out = vsubrelu(ub_x, ub_y, ub_z)
 ```
 
 **Returns**
@@ -2496,7 +2497,7 @@ ub_x, ub_y, ub_z = Tensor("UB"), Tensor("UB"), Tensor("UB")
 gm_x, gm_y = Tensor("GM"), Tensor("GM")
 ub_x.load(gm_x)
 ub_y.load(gm_y)
-out = vsubreluconv(ub_x, ub_y, ub_z)()
+out = vsubreluconv(ub_x, ub_y, ub_z)
 ```
 
 **Returns**
@@ -2509,7 +2510,7 @@ None
 
 `vtranspose` instruction abstraction.
 
-Transposes a 16 × 16 matrix starting from the input address `x` (32-byte aligned). Each element has 16 bits. The result is output to `y`. The input and output are continuous 512-byte storage spaces.
+Transposes a 16 × 16 matrix starting from the input address `x` (32-Byte aligned). Each element has 16 bits. The result is output to `y`. The input and output are continuous 512-Byte storage spaces.
 
 **Prototype**
 
@@ -2531,7 +2532,7 @@ from mskpp import vtranspose, Tensor
 ub_x, ub_y = Tensor("UB"), Tensor("UB")
 gm_x = Tensor("GM")
 ub_x.load(gm_x)
-out = vtranspose(ub_x, ub_y)()
+out = vtranspose(ub_x, ub_y)
 ```
 
 **Returns**

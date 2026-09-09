@@ -10,7 +10,7 @@ MindStudio Kernel Performance Prediction（算子设计工具，msKPP）具有�
 
 进行算子开发之前，需要安装驱动固件和CANN Toolkit软件包以及ops算子包，请参见《[CANN 软件安装指南](https://www.hiascend.com/cann/download)》。本节不再给出安装示例。
 
-请参考环境要求完成相关环境变量的配置，完成后可直接使用msKPP工具的[性能建模功能介绍](#3-性能建模功能介绍)功能。
+请参考环境要求完成相关环境变量的配置，完成后可直接使用msKPP工具的[性能建模功能](#3-性能建模功能介绍)。
 
 > [!NOTE]
 > 
@@ -27,11 +27,11 @@ MindStudio Kernel Performance Prediction（算子设计工具，msKPP）具有�
     - 以with语句开启算子实现代码的入口，“enable_trace”和“enable_metrics”两个接口可使能trace打点图和指令统计功能，具体请参见[极限性能分析功能介绍](#6-极限性能分析功能介绍)章节的main.py文件。
     - 算子建模详细指令接口说明请参考《[MindStudio Kernel Performance Prediction对外接口使用说明](../api_reference/mskpp_api_reference.md)》。
 
-- 二次开发请保证输入数据可信安全。
+- 二次开发请保证输入数据安全可信。
 
 ## 3. 性能建模功能介绍
 
-msKPP为了达到理论性能的目标，基于如下[表1](#111)对实际处理器进行计算和搬运类指令的性能建模。
+msKPP为了达到理论性能的目标，基于如下[表1](#111)对实际处理器的计算和搬运类指令进行性能建模。
 
 **表 1**  msKPP建模假设性能<a name="111"></a>
 
@@ -226,7 +226,7 @@ if __name__ == '__main__':
 |Pipe|表示昇腾处理器中不同PIPE单元的名称。|
 |Duration(us)|PIPE耗时，单位us。|
 |Cycle|各个指令每次执行时消耗的cycle数。|
-|Size(B)|表示搬运类PIPE的搬运量大小，单位B。|
+|Size(B)|表示搬运类PIPE的搬运量大小，单位Byte。|
 |Ops|表示计算类PIPE的计算元素大小。|
 
 对于流水线耗时最长，明显是搬运性能瓶颈的PIPE，通常有如下优化思路：
@@ -308,7 +308,7 @@ if __name__ == '__main__':
             my_mmad(in_x, in_y, in_z)
 ```
 
-使用Python执行以上main.py脚本后，会在`当前路径/MSKPP_TIMESTAMP`目录下生成文件指令流水图（trace.json）和指令占比饼图（instruction_cycle_consumption.html），可查看msKPP建模结果。
+使用Python执行以上main.py脚本后，会在`当前路径/MSKPP_TIMESTAMP`目录下生成指令流水图（trace.json）和指令占比饼图（instruction_cycle_consumption.html）文件，可查看msKPP建模结果。
 
 > [!NOTE]
 > 
@@ -380,7 +380,7 @@ if __name__ == '__main__':
     with Chip("Ascendxxxyy") as chip:
         chip.enable_trace()    # 使能算子模拟流水图的功能，生成trace.json文件
         chip.enable_metrics()   # 使能单指令及分Pipe的流水信息，生成Instruction_statistic.csv和Pipe_statistic.csv文件
-        # 这里进入了对数据切分逻辑的处理，对一大块GM的数据，如何经过拆分成小数据分批次搬入，如何对
+        # 这里进入了对数据切分逻辑的处理，对一大块GM的数据，如何拆分成小数据分批次搬入，如何对
         # 内存进行分片多buffer搬运，都是属于tiling策略的范畴，这里模拟了单buffer情况，
         # 将[160, 240]和[240, 80]的矩阵乘，切割为25个[32, 48]和[48, 16]的小矩阵分批次进行运算的一个tiling策略
         for _ in range(25):

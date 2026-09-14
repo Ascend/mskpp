@@ -1,0 +1,162 @@
+name: PR-pipeline_full
+
+on:
+  # PR 流水线通过 PR 评论 /compile 触发，不在 PR 打开/更新时自动运行
+  pull_request:
+    types: [open, update]
+    branches: [ '*' ]
+  pull_request_comment:
+    types: [created]
+    branches: [ '*' ]
+    comments: [ '^(?:\/)?compile*' ]
+  workflow_dispatch:
+
+env:
+  # 入口 workflow 中系统上下文必须放在 env（PR 触发时 inputs 不会被自动填充）
+  REPO_NAME: ${{ atomgit.event.repository.name }}
+  ORG_NAME: ${{ atomgit.repository_owner }}
+  REMOTE_URL: ${{ atomgit.repositoryurl }}
+  PR_ID: ${{ atomgit.event.pull_request.number }}
+  TARGET_BRANCH: ${{ atomgit.event.pull_request.base.ref }}
+
+stages:
+  stage_0:
+    name: CodeCheck
+    select: selected_by_default
+    jobs:
+      Detect_file_changes:
+        name: Detect_file_changes
+        runs-on: [ dedicate-hosted, x64, large ]
+        container:
+          image: swr.cn-north-4.myhuaweicloud.com/huawei-ascend/demo_mindx:mindxdl_20230912_1
+          options: --user root
+        outputs:
+          need_build: ${{ steps.set-skip.outputs.need_build }}
+        steps:
+          - name: git upgrade
+            run: |
+              apt-get update
+              apt-get install -y software-properties-common
+              add-apt-repository ppa:git-core/ppa -y
+              apt-get update
+              apt-get install -y git
+              git --version
+
+          # 手写 checkout，绕过 actions/checkout 的 submodule foreach 清理逻辑
+          - name: checkout (manual, skip submodule)
+            run: |
+              set -e
+              REF="${{ atomgit.event.pull_request.merge_commit_sha || atomgit.event.pull_request.head.sha }}"
+              if [ -z "$REF" ]; then
+                echo "::error::No valid ref to checkout"
+                exit 1
+              fi
+              echo "Checking out ref: $REF"
+              git init
+              git remote add origin "${{ env.REMOTE_URL }}"
+              git fetch --no-tags --prune --no-recurse-submodules --depth=1 origin "$REF"
+              git checkout --force FETCH_HEAD
+
+          - name: Only_doc_commit
+            id: filter
+            uses: paths-changes-filter
+            with:
+              event-name: 'pull_request'
+              base: ${{ atomgit.event.pull_request.base.ref }}
+              repo: ${{ atomgit.repository }}
+              number: ${{ env.PR_ID }}
+              token: ${{ atomgit.ATOMGIT_TOKEN }}
+              list-files: json
+              predicate-quantifier: every
+              filters: |
+                changed:
+                  - '**'
+                non-doc:
+                  - '!**.md'
+                  - '!**.rst'
+                  - '!**.log'
+                  - '!**.png'
+                  - '!**.jpg'
+                  - '!**.doc'
+                  - '!**.eddx'
+                  - '!**.svg'
+          - name: set build skip flag
+            id: set-skip
+            run: |
+              echo "changed: ${{ steps.filter.outputs.changed_files }}"
+              echo "non-doc: ${{ steps.filter.outputs.non-doc }}"
+              if [ "${{ steps.filter.outputs.non-doc }}" = "true" ]; then
+                echo "need_build=yes" >> "$ATOMGIT_OUTPUT"
+              else
+                echo "need_build=no" >> "$ATOMGIT_OUTPUT"
+              fi
+
+      pre-commit:
+        name: pre_commit
+        runs-on: [ dedicate-hosted, x64, large ]
+        container:
+          image: swr.cn-north-4.myhuaweicloud.com/mindspore/mindspore_python3.11:v0.1
+          options: --user root
+        steps:
+          # 同样手写 checkout，绕过 submodule 清理
+          - name: checkout (manual, skip submodule)
+            run: |
+              set -e
+              REF="${{ atomgit.event.pull_request.merge_commit_sha || atomgit.event.pull_request.head.sha }}"
+              if [ -z "$REF" ]; then
+                echo "::error::No valid ref to checkout"
+                exit 1
+              fi
+              echo "Checking out ref: $REF"
+              git init
+              git remote add origin "${{ env.REMOTE_URL }}"
+              git fetch --no-tags --prune --no-recurse-submodules --depth=1 origin "$REF"
+              git checkout --force FETCH_HEAD
+
+          - name: gitleaks install
+            run: |
+              wget -q --no-host-directories -c --no-check-certificate https://pytorch-package.obs.cn-north-4.myhuaweicloud.com/pta-codecheck/gitleaks
+              chmod +x gitleaks
+              cp gitleaks /usr/local/bin/
+              gitleaks version
+          - name: setup python
+            run: |
+              ln -sf /usr/local/bin/python3.11 /usr/bin/python
+              python --version
+              ls -al
+          - name: run pre-commit
+            uses: openlibing-pre-commit-action
+
+  stage_1:
+    name: build
+    select: selected_by_default
+    jobs:
+      Build_mskpp_x86:
+        name: Build_mskpp_x86
+        if: ${{ jobs.Detect_file_changes.outputs.need_build == 'yes' }}
+        uses: .gitcode/workflows/.build_mindstudio_job.yml
+        with:
+          IMAGE_FLAG: "mindstudio-build:26.1.0"
+          runs_on_arch: "x64"
+          ARTIFACT_NAME: "mskpp-run-x86-test"
+
+      Build_mskpp_arm:
+        name: Build_mskpp_arm
+        if: ${{ jobs.Detect_file_changes.outputs.need_build == 'yes' }}
+        uses: .gitcode/workflows/.build_mindstudio_job.yml
+        with:
+          IMAGE_FLAG: "mindstudio-build:26.1.0"
+          runs_on_arch: "arm64"
+          ARTIFACT_NAME: "mskpp-run-arm-test"
+
+  stage_2:
+    name: UT
+    select: selected_by_default
+    jobs:
+      UT_mskpp:
+        name: UT_mskpp
+        if: ${{ jobs.Detect_file_changes.outputs.need_build == 'yes' }}
+        uses: .gitcode/workflows/.ut_mindstudio_job.yml
+        with:
+          IMAGE_FLAG: "mindstudio-build:26.1.0"
+          runs_on_arch: "x64"

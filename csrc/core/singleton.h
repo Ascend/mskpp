@@ -17,22 +17,21 @@
 #ifndef WORKLOAD_ANALYSIS_MSKPP_SINGLETON_H
 #define WORKLOAD_ANALYSIS_MSKPP_SINGLETON_H
 
-template<class T>
-class Singleton {
+template <class T> class Singleton {
 public:
-    static T *instance()
-    {
+    static T *instance() {
         static T value;
         return &value;
     }
 
-protected:
-    Singleton() = default;                                        // ctor hidden
-    Singleton(Singleton const &);             // copy ctor hidden
-    Singleton &operator=(Singleton const &);  // assign op. hidden
-    virtual ~Singleton()
-    {}  // dtor hidden
-};
+    Singleton(Singleton const &) = delete; // copy ctor disabled
+    Singleton &operator=(Singleton const &) = delete; // copy assign disabled
+    Singleton(Singleton &&) = delete; // move ctor disabled
+    Singleton &operator=(Singleton &&) = delete; // move assign disabled
 
+protected:
+    Singleton() = default; // ctor hidden
+    virtual ~Singleton() = default; // dtor hidden
+};
 
 #endif // WORKLOAD_ANALYSIS_MSKPP_SINGLETON_H

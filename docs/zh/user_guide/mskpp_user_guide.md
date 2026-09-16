@@ -24,7 +24,7 @@ MindStudio Kernel Performance Prediction（算子设计工具，msKPP）具有�
 
 - 在任意目录下基于msKPP接口进行算子建模，实现中包括如下注意事项：
     - 进行算子建模前，需要导入Tensor、Chip以及算子实现所必要的指令（统一以小写命名）。
-    - 以with语句开启算子实现代码的入口，“enable_trace”和“enable_metrics”两个接口可使能trace打点图和指令统计功能，具体请参见[极限性能分析功能介绍](#6-极限性能分析功能介绍)章节的main.py文件。
+    - 以with语句开启算子实现代码的入口，“enable_trace”和“enable_metrics”两个接口可使能trace打点图功能和指令统计功能，具体请参见[极限性能分析功能介绍](#6-极限性能分析功能介绍)章节的main.py文件。
     - 算子建模详细指令接口说明请参考《[MindStudio Kernel Performance Prediction对外接口使用说明](../api_reference/mskpp_api_reference.md)》。
 
 - 二次开发请保证输入数据安全可信。

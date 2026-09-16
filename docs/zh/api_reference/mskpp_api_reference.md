@@ -102,7 +102,7 @@ class Chip(name, debug_mode=False)
 |--|--|
 |chip.enable_trace()|使能算子模拟流水图的功能，生成流水图文件trace.json。|
 |chip.enable_metrics()|使能单指令及分PIPE的流水信息，生成指令统计（Instruction_statistic.csv）、搬运流水统计（Pipe_statistic.csv）文件和指令占比饼图（instruction_cycle_consumption.html）。|
-|chip.set_cache_hit_ratio(config)|用于使能手动调整L2Cache命中率，其中config = {"cache_hit_ratio": 0.6}，具体介绍请参见支持cache命中率建模章节。|
+|chip.set_cache_hit_ratio(config)|用于使能手动调整L2 Cache命中率，其中config = {"cache_hit_ratio": 0.6}，具体介绍请参见支持cache命中率建模章节。|
 |chip.set_prof_summary_path("xxx/PipeUtilization.csv")|其中PipeUtilization.csv为msprof的结果示例，用于使能PIPE信息的理论值与msprof实测值比对。具体介绍请参见支持PIPE信息的理论值与msprof实测值比对章节。|
 |chip.disable_instr_log()|使能后，抑制指令任务添加和调度结束后的日志打印。|
 
@@ -120,7 +120,8 @@ with Chip("Ascendxxxyy") as chip:    # Ascendxxxyy需替换为实际使用的处
     chip.enable_metrics()  # 调用该函数即可使能单指令及分PIPE的流水信息，生成搬运流水统计、指令信息统计和指令占比饼图
 ```
 
-> [!NOTE]     
+> [!NOTE]
+> 
 > 非Atlas A3 系列产品：在安装昇腾AI处理器的服务器执行**npu-smi info**命令进行查询，获取**Chip Name**信息。实际配置值为AscendChip Name，例如**Chip Name**取值为xxxyy，实际配置值为Ascendxxxyy。当Ascendxxxyy为代码样例的路径时，需要配置为ascendxxxyy。
 
 **返回值说明**
@@ -394,7 +395,7 @@ out_z = mmad(in_x, in_y, in_z)
 
 vadd指令抽象。
 
-z = x + y， x、y按元素相加。
+z = x + y，x、y按元素相加。
 
 **接口原型**
 
@@ -586,7 +587,7 @@ out = vconv_vdeq(ub_x, ub_y, "FP32")
 
 vector_dup指令抽象。
 
-y = vector_dup(x)， x、 y按元素进行填充。
+y = vector_dup(x)，x、 y按元素进行填充。
 
 **接口原型**
 
@@ -625,7 +626,7 @@ out = vector_dup(ub_x, ub_y, [8, 2048])
 
 vexp指令抽象。
 
-y = vexp(x)， x、y按元素取指数。
+y = vexp(x)，x、y按元素取指数。
 
 **接口原型**
 
@@ -921,7 +922,7 @@ reduce_num不能为0。
 
 vabs指令抽象。
 
-y = vabs(x)， x、y按元素取绝对值。
+y = vabs(x)，x、y按元素取绝对值。
 
 **接口原型**
 
@@ -1384,17 +1385,17 @@ out = vcmin(ub_x, ub_y, reduce_num)
 
 vcmp_[eq|ge|gt|le|lt|ne]指令抽象，该六条指令性能一致。
 
-vcmp_eq: z = (x == y)， x、y按元素比较相等得到z。
+vcmp_eq: z = (x == y)，x、y按元素比较相等得到z。
 
-vcmp_ge: z = (x >= y)， x、y按元素比较大于或等于得到z。
+vcmp_ge: z = (x >= y)，x、y按元素比较大于或等于得到z。
 
-vcmp_gt: z = (x > y)， x、y按元素比较大于得到z。
+vcmp_gt: z = (x > y)，x、y按元素比较大于得到z。
 
-vcmp_le: z = (x <= y)， x、y按元素比较小于或等于得到z。
+vcmp_le: z = (x <= y)，x、y按元素比较小于或等于得到z。
 
-vcmp_lt: z = (x < y)， x、y按元素比较小于得到z。
+vcmp_lt: z = (x < y)，x、y按元素比较小于得到z。
 
-vcmp_ne: z = (x != y)， x、y按元素比较不等得到z。
+vcmp_ne: z = (x != y)，x、y按元素比较不等得到z。
 
 **接口原型**
 
@@ -1434,17 +1435,17 @@ out = vcmp(ub_x, ub_y)
 
 vcmpv_[eq|ge|gt|le|lt|ne]指令抽象，该六条指令性能一致。
 
-vcmpv_eq: z = (x == y)， x、y按元素比较相等得到z。
+vcmpv_eq: z = (x == y)，x、y按元素比较相等得到z。
 
-vcmpv_ge: z = (x >= y)， x、y按元素比较大于或等于得到z。
+vcmpv_ge: z = (x >= y)，x、y按元素比较大于或等于得到z。
 
-vcmpv_gt: z = (x > y)， x、y按元素比较大于得到z。
+vcmpv_gt: z = (x > y)，x、y按元素比较大于得到z。
 
-vcmpv_le: z = (x <= y)， x、y按元素比较小于或等于得到z。
+vcmpv_le: z = (x <= y)，x、y按元素比较小于或等于得到z。
 
-vcmpv_lt: z = (x < y)， x、y按元素比较小于得到z。
+vcmpv_lt: z = (x < y)，x、y按元素比较小于得到z。
 
-vcmpv_ne: z = (x != y)， x、y按元素比较不等得到z。
+vcmpv_ne: z = (x != y)，x、y按元素比较不等得到z。
 
 **接口原型**
 
@@ -1485,17 +1486,17 @@ out = vcmpv(ub_x, ub_y, ub_z)
 
 vcmpvs_[eq|ge|gt|le|lt|ne]指令抽象，该六条指令性能一致。
 
-vcmpvs_eq: z = (x == y)， x逐元素与y中存储的标量比较相等得到z。
+vcmpvs_eq: z = (x == y)，x逐元素与y中存储的标量比较相等得到z。
 
-vcmpvs_ge: z = (x >= y)， x逐元素与y中存储的标量比较大于或等于得到z。
+vcmpvs_ge: z = (x >= y)，x逐元素与y中存储的标量比较大于或等于得到z。
 
 vcmpvs_gt: z = (x > y)，x逐元素与y中存储的标量比较大于得到z。
 
-vcmpvs_le: z = (x <= y)， x逐元素与y中存储的标量比较小于或等于得到z。
+vcmpvs_le: z = (x <= y)，x逐元素与y中存储的标量比较小于或等于得到z。
 
-vcmpvs_lt: z = (x < y)， x逐元素与y中存储的标量比较小于得到z。
+vcmpvs_lt: z = (x < y)，x逐元素与y中存储的标量比较小于得到z。
 
-vcmpvs_ne: z = (x != y)， x逐元素与y中存储的标量比较不等得到z。
+vcmpvs_ne: z = (x != y)，x逐元素与y中存储的标量比较不等得到z。
 
 **接口原型**
 
@@ -2394,7 +2395,7 @@ out = vshr(ub_x, ub_y)
 
 vsqrt指令抽象。
 
-y = √x， x按元素开平方根。
+y = √x，x按元素开平方根。
 
 **接口原型**
 

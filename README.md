@@ -37,19 +37,19 @@ MindStudio Kernel Performance Prediction（算子设计，msKPP）是一款性�
 
 ## 🚀 快速入门
 
-详细操作步骤请参见《[msKPP 快速入门](./docs/zh/quick_start/mskpp_quick_start.md)》
+基于入门教程中开发的简易加法算子，演示msKPP工具的核心功能，详细操作步骤请参见《[msKPP 快速入门](./docs/zh/quick_start/mskpp_quick_start.md)》。
 
 ## 📦 安装指南
 
-介绍msKPP工具的环境依赖及安装方式，具体请参见《[msKPP 安装指南](./docs/zh/install_guide/mskpp_install_guide.md)》
+msKPP工具支持在线安装、离线安装以及源码安装，具体请参见《[msKPP 安装指南](./docs/zh/install_guide/mskpp_install_guide.md)》。
 
 ## 📘 使用指南
 
-工具的详细使用方法，请参见《[msKPP 使用指南](./docs/zh/user_guide/mskpp_user_guide.md)》
+工具的详细使用方法，请参见《[msKPP 使用指南](./docs/zh/user_guide/mskpp_user_guide.md)》。
 
-## 📚 API参考 
+## 📚 API参考
 
-msKPP工具分为基础功能接口和指令接口两种接口类型。具体内容请参见 《[msKPP 对外接口使用说明](./docs/zh/api_reference/mskpp_api_reference.md)》
+msKPP工具分为基础功能接口和指令接口两种接口类型。具体内容请参见《[msKPP 对外接口使用说明](./docs/zh/api_reference/mskpp_api_reference.md)》。
 
 ## 🌌 智能检索
 
@@ -60,11 +60,11 @@ msKPP工具分为基础功能接口和指令接口两种接口类型。具体内
 
 ## 🛠️ 贡献指南
 
-欢迎参与项目贡献，请参见《[贡献指南](./docs/zh/contributing/contributing_guide.md)》
+欢迎参与项目贡献，请参见《[贡献指南](./docs/zh/contributing/contributing_guide.md)》。
 
 ## ⚖️ 相关说明
 
-🔹《[版本说明](./docs/zh/release_notes/release_notes.md)》  
+🔹《[版本说明](https://gitcode.com/Ascend/mskpp/releases)》  
 🔹《[许可证声明](./docs/zh/legal/license_notice.md)》  
 🔹《[安全声明](./docs/zh/legal/security_statement.md)》  
 🔹《[免责声明](./docs/zh/legal/disclaimer.md)》

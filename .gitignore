@@ -16,6 +16,7 @@ output/
 
 # Dependencies
 thirdparty/boost
+thirdparty/googletest
 
 # C extension
 /mskpp/_C.so

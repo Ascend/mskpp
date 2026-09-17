@@ -1,23 +1,26 @@
 name: PR-pipeline_full
 
 on:
-  # PR 流水线通过 PR 评论 /compile 触发，不在 PR 打开/更新时自动运行
-  pull_request:
-    types: [open, update]
-    branches: [ '*' ]
+  # PR 流水线通过 PR 评论 /compile 触发 ，不在 PR 打开/更新时自动运行
+  # pull_request:
+  #   types: [open, update]
+  #   branches: [ '*' ]
+  pr_comment:
+    types: [created]
+    keyword: '^compile$'
   pull_request_comment:
     types: [created]
     branches: [ '*' ]
-    comments: [ '^(?:\/)?compile*' ]
-  workflow_dispatch:
+    comments: [ '^compile$' ]
 
 env:
-  # 入口 workflow 中系统上下文必须放在 env（PR 触发时 inputs 不会被自动填充）
   REPO_NAME: ${{ atomgit.event.repository.name }}
-  ORG_NAME: ${{ atomgit.repository_owner }}
   REMOTE_URL: ${{ atomgit.repositoryurl }}
   PR_ID: ${{ atomgit.event.pull_request.number }}
-  TARGET_BRANCH: ${{ atomgit.event.pull_request.base.ref }}
+
+permissions:
+  repository: read
+  id-token: write
 
 stages:
   stage_0:
@@ -26,37 +29,17 @@ stages:
     jobs:
       Detect_file_changes:
         name: Detect_file_changes
-        runs-on: [ dedicate-hosted, x64, large ]
+        runs-on: [ self-hosted, x86, cpu=2 ]
         container:
-          image: swr.cn-north-4.myhuaweicloud.com/huawei-ascend/demo_mindx:mindxdl_20230912_1
-          options: --user root
+          image: swr.cn-north-4.myhuaweicloud.com/pytorch_images_x86/pytorchx86:v_03
         outputs:
           need_build: ${{ steps.set-skip.outputs.need_build }}
         steps:
-          - name: git upgrade
-            run: |
-              apt-get update
-              apt-get install -y software-properties-common
-              add-apt-repository ppa:git-core/ppa -y
-              apt-get update
-              apt-get install -y git
-              git --version
-
-          # 手写 checkout，绕过 actions/checkout 的 submodule foreach 清理逻辑
-          - name: checkout (manual, skip submodule)
-            run: |
-              set -e
-              REF="${{ atomgit.event.pull_request.merge_commit_sha || atomgit.event.pull_request.head.sha }}"
-              if [ -z "$REF" ]; then
-                echo "::error::No valid ref to checkout"
-                exit 1
-              fi
-              echo "Checking out ref: $REF"
-              git init
-              git remote add origin "${{ env.REMOTE_URL }}"
-              git fetch --no-tags --prune --no-recurse-submodules --depth=1 origin "$REF"
-              git checkout --force FETCH_HEAD
-
+          - name: checkout
+            uses: checkout
+            with:
+              ref: refs/merge-requests/${{ env.PR_ID }}/merge
+              fetch-depth: 0
           - name: Only_doc_commit
             id: filter
             uses: paths-changes-filter
@@ -72,14 +55,15 @@ stages:
                 changed:
                   - '**'
                 non-doc:
-                  - '!**.md'
-                  - '!**.rst'
-                  - '!**.log'
-                  - '!**.png'
-                  - '!**.jpg'
-                  - '!**.doc'
-                  - '!**.eddx'
-                  - '!**.svg'
+                  - '!**/*.md'
+                  - '!**/*.rst'
+                  - '!**/*.log'
+                  - '!**/*.png'
+                  - '!**/*.jpg'
+                  - '!**/*.doc'
+                  - '!**/*.eddx'
+                  - '!**/*.svg'
+
           - name: set build skip flag
             id: set-skip
             run: |
@@ -90,44 +74,64 @@ stages:
               else
                 echo "need_build=no" >> "$ATOMGIT_OUTPUT"
               fi
+              echo "${{ steps.filter.outputs.changed_files }}" | tr -d '[]" ' | tr ',' '\n' > modify_files.txt
+              cat modify_files.txt
 
+  stage_1:
+    name: CodeCheck_Build_Test
+    select: selected_by_default
+    jobs:
       pre-commit:
-        name: pre_commit
-        runs-on: [ dedicate-hosted, x64, large ]
+        name: pre-commit
+        runs-on: [ self-hosted, x86, cpu=2 ]
         container:
           image: swr.cn-north-4.myhuaweicloud.com/mindspore/mindspore_python3.11:v0.1
           options: --user root
         steps:
-          # 同样手写 checkout，绕过 submodule 清理
-          - name: checkout (manual, skip submodule)
-            run: |
-              set -e
-              REF="${{ atomgit.event.pull_request.merge_commit_sha || atomgit.event.pull_request.head.sha }}"
-              if [ -z "$REF" ]; then
-                echo "::error::No valid ref to checkout"
-                exit 1
-              fi
-              echo "Checking out ref: $REF"
-              git init
-              git remote add origin "${{ env.REMOTE_URL }}"
-              git fetch --no-tags --prune --no-recurse-submodules --depth=1 origin "$REF"
-              git checkout --force FETCH_HEAD
-
+          - name: checkout
+            uses: checkout
+            with:
+              ref: ${{ atomgit.event.pull_request.merge_commit_sha || '' }}
           - name: gitleaks install
             run: |
               wget -q --no-host-directories -c --no-check-certificate https://pytorch-package.obs.cn-north-4.myhuaweicloud.com/pta-codecheck/gitleaks
               chmod +x gitleaks
-              cp gitleaks /usr/local/bin/
-              gitleaks version
-          - name: setup python
+          - name: setup-python311
             run: |
               ln -sf /usr/local/bin/python3.11 /usr/bin/python
               python --version
-              ls -al
           - name: run pre-commit
-            uses: openlibing-pre-commit-action
+            uses: openlibing/pre-commit-action@v1.0.0
 
-  stage_1:
+      SCA:
+        name: SCA
+        runs-on: [ self-hosted, x86, cpu=2 ]
+        container:
+          image: swr.cn-north-4.myhuaweicloud.com/mindspore/mindspore_python3.11:v0.1
+          options: --user root
+        steps:
+          - name: checkout
+            uses: checkout
+          - name: Run SCA PR scan
+            uses: openlibing/sca-action/sca-pr-action@v1.0.0
+            with:
+              project-name: MindStudio
+
+      malicious-scan:
+        name: antipoison
+        runs-on: [ self-hosted, x86, cpu=2 ]
+        container:
+          image: swr.cn-north-4.myhuaweicloud.com/mindspore/mindspore_python3.11:v0.1
+          options: --user root
+        steps:
+          - name: Checkout
+            uses: checkout
+          - name: Run malicious code scan
+            uses: openlibing/malicious-code-scan-action/malicious-code-pr-scan-action@v1.0.0
+            with:
+              project-name: MindStudio
+
+  stage_2:
     name: build
     select: selected_by_default
     jobs:
@@ -149,7 +153,7 @@ stages:
           runs_on_arch: "arm64"
           ARTIFACT_NAME: "mskpp-run-arm-test"
 
-  stage_2:
+  stage_3:
     name: UT
     select: selected_by_default
     jobs:

@@ -6,7 +6,7 @@
 
 msKPP 工具用于算子开发前的性能建模设计，开发者基于其 DSL（Domain-Specific Language，领域特定语言），以算子的数学逻辑为输入，编写算子表达式，即可在秒级内获得性能预测结果。该建模仅依赖输入/输出规模，无需执行真实计算，可高效验证算子实现方案。本文档基于入门教程中开发的简易加法算子，演示 msKPP 工具的核心功能，帮助初学者直观感受 msKPP 在算子开发过程中的高效与便捷。
 
-本章节以您已完成<a href="https://gitcode.com/Ascend/msot/blob/master/docs/zh/quick_start/op_tool_quick_start.md" target="_blank">《算子开发工具链快速入门》</a>的全流程操作为前提；若尚未体验，建议先完成该指南以获得更佳的学习效果。
+本章节以您已完成<a href="https://gitcode.com/Ascend/msot/blob/26.2.0/docs/zh/quick_start/op_tool_quick_start.md" target="_blank">《算子开发工具链快速入门》</a>的全流程操作为前提；若尚未体验，建议先完成该指南以获得更佳的学习效果。
 
 ## 2. 操作步骤
 
@@ -18,7 +18,7 @@ msKPP 工具用于算子开发前的性能建模设计，开发者基于其 DSL�
 #### 2.1.1 安装 CANN 容器环境
 
 ✅ **请严格按以下指南完成环境安装：**  
-👉 **<a href="https://gitcode.com/Ascend/msot/blob/master/docs/zh/quick_start/installation_guide.md" target="_blank">《昇腾 AI 算子开发工具链学习环境安装指南》</a>**
+👉 **<a href="https://gitcode.com/Ascend/msot/blob/26.2.0/docs/zh/quick_start/installation_guide.md" target="_blank">《昇腾 AI 算子开发工具链学习环境安装指南》</a>**
 
 > ⏱️ **外网可达环境下预计耗时：约 3 分钟**  
 > 安装完成后，您将获得一个预装所有算子工具、示例代码和依赖库的标准化容器环境。
@@ -38,8 +38,10 @@ msKPP 工具用于算子开发前的性能建模设计，开发者基于其 DSL�
 
 在算子算法设计阶段，借助 msKPP 工具可在秒级时间内获得性能建模结果，无需硬件即可预估性能，快速验证实现方案的可行性。建议先跟随操作步骤体验效果，原理部分可稍后阅读：
 
-> [!NOTE]      
+> [!NOTE]
+> 
 > **知识点：msKPP 工具原理**   
+> 
 > msKPP 并非传统可执行程序，而是一套专用于昇腾的 Python 类库。用户需导入（import）相关模块，编写并执行 Python 脚本，生成性能分析结果文件以完成建模。其内部原理是：预先采集真实环境中各类指令操作的性能数据，再基于用户定义的算子执行流程，对各种性能开销进行建模与估算。
 
 #### 2.2.1 编写 Python 建模脚本
@@ -50,12 +52,16 @@ msKPP 工具用于算子开发前的性能建模设计，开发者基于其 DSL�
 rm -rf ~/ot_demo/workspace/mskpp && mkdir -p ~/ot_demo/workspace/mskpp && cd ~/ot_demo/workspace/mskpp
 ```
 
-##### 2.2.1.2 开发 Python 脚本   
+##### 2.2.1.2 开发 Python 脚本
 
-> [!NOTE]     
+> [!NOTE]
+> 
 > **知识点（可选阅读）：msKPP 的 DSL 语言方案（Domain-Specific Language，领域特定语言）**   
-> 这套类库及接口是专为昇腾性能建模而设计的“方言”，需经过专门学习方可掌握，无法仅凭通用 Python 语法直接编写，但用法较简单，稍加学习即可应用。  
+> 
+> 这套类库及接口是专为昇腾性能建模而设计的“方言”，需经过专门学习方可掌握，无法仅凭通用 Python 语法直接编写，但用法较简单，稍加学习即可应用。
+> 
 > 常规开发流程：需先导入 Tensor、Chip 以及算子实现所必需的指令（例如 vadd），通过 with 语句进入算子实现的上下文，再创建 Tensor 以执行具体操作。
+> 
 > 样例脚本中已经做了详细的注释，其他指令接口说明请参考《[msKPP 工具接口说明](../api_reference/mskpp_api_reference.md)》。
 
 请创建文件 mskpp_demo.py，内容如下：
@@ -98,7 +104,7 @@ if __name__ == '__main__':
         my_vadd(in_x, in_y, in_z)
 ```
 
-##### 2.2.1.3 修改如上代码中的芯片类型   
+##### 2.2.1.3 修改如上代码中的芯片类型
 
 执行以下命令获取芯片SoC类型：`python3 -c "import acl; print(acl.get_soc_name())"`，将 `with Chip("xxx") as chip` 中的 xxx 替换为查询到的结果。
 

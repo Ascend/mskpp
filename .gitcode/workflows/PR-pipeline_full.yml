@@ -1,4 +1,4 @@
-name: PR-pipeline_full
+name: PR-pipeline_mskpp
 
 on:
   # PR 流水线通过 PR 评论 /compile 触发 ，不在 PR 打开/更新时自动运行
@@ -96,6 +96,8 @@ stages:
             run: |
               wget -q --no-host-directories -c --no-check-certificate https://pytorch-package.obs.cn-north-4.myhuaweicloud.com/pta-codecheck/gitleaks
               chmod +x gitleaks
+              cp gitleaks /usr/local/bin/
+              gitleaks version
           - name: setup-python311
             run: |
               ln -sf /usr/local/bin/python3.11 /usr/bin/python

@@ -368,7 +368,7 @@ msKPP自动寻优功能对外向开发者提供Python接口，其部署在CANN�
 1. runtime，运行时库实现算子下发；
 2. AscendCL，设备上下文管理；
 3. bisheng编译器，代码编译；
-4. mspti， 性能数据采集。
+4. mspti，性能数据采集。
 
 ![image](./architecture_figures/3aaa6dee2c7d6ea527eaa3dae5f60cef_3197x1388.png)
 
@@ -758,7 +758,7 @@ compile
 | output_bin_path | str      | N    | 指定编译生成的可执行文件路径。默认值：_gen_module.so。             |
 | use_cache       | bool     | N    | 开启后不执行编译，加载output_bin_path所指定的文件。默认值：False。 |
 
-返回值说明：CompiledKernel对象，如下方式调用kernel：kernel[blockdim](arg1, arg2, ...)。
+返回值说明：CompiledKernel对象，如下方式调用`kernel：kernel[blockdim](arg1, arg2, ...)`。
 
 调用示例：
 

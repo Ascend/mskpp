@@ -6,7 +6,7 @@
 
 The msKPP tool is used for performance modeling design before operator development. Developers can compile operator expressions based on the domain-specific language (DSL) and the mathematical logic of operators, and obtain performance prediction results within seconds. This modeling depends only on the input/output scale and does not require actual computation, allowing for efficient verification of operator implementation solutions. This document demonstrates the core functions of msKPP based on the simple addition operator developed in the introductory tutorial. It helps beginners intuitively experience the efficiency and convenience the tool brings to the operator development process.
 
-This section assumes that you have completed all the operations in <a href="https://gitcode.com/Ascend/msot/blob/master/docs/en/quick_start/op_tool_quick_start.md" target="_blank">Quick Start of the Operator Development Toolchain</a>. If you have not, you are advised to complete this guide first to obtain a better learning effect.
+This section assumes that you have completed all the operations in <a href="https://atomgit.com/Ascend/msot/blob/26.2.0/docs/en/quick_start/op_tool_quick_start.md" target="_blank">Quick Start of the Operator Development Toolchain</a>. If you have not, you are advised to complete this guide first to obtain a better learning effect.
 
 ## 2. Procedure
 
@@ -18,7 +18,7 @@ This tutorial **only supports** the standard CANN container environment and is n
 #### 2.1.1 Installing the CANN Container Environment
 
 ✅ **Strictly follow the guide to complete the environment installation:**  
-👉 **<a href="https://gitcode.com/Ascend/msot/blob/master/docs/en/quick_start/installation_guide.md" target="_blank">Ascend AI Operator Development Toolchain Learning Environment Installation Guide</a>**
+👉 **<a href="https://atomgit.com/Ascend/msot/blob/26.2.0/docs/en/quick_start/installation_guide.md" target="_blank">Ascend AI Operator Development Toolchain Learning Environment Installation Guide</a>**
 
 > ⏱️ **Estimated time in a network-reachable environment: about 3 minutes**  
 > After the installation, you will obtain a standard container environment preinstalled with all operator tools, sample code, and dependent libraries.
@@ -39,8 +39,9 @@ Before the hands-on experience, **copy the entire script in the following code b
 During operator algorithm design, the msKPP tool can be used to obtain performance modeling results within seconds. It allows for performance estimation without hardware and quickly verifies the feasibility of implementation solutions. You are advised to follow the operations first to experience the effect. You can read the principles later.
 
 > [!NOTE]
-> 
+>
 > **Knowledge point: principles of the msKPP tool**  
+>
 > msKPP is not an executable program, but a Python class library dedicated to Ascend. You need to import related modules, compile and execute Python scripts, and generate profiling result files to complete modeling. The internal principle involves pre-collecting profile data of various instruction operations in real environments, then modeling and estimating various performance overheads based on the user-defined operator execution flow.
 
 #### 2.2.1 Compiling a Python Modeling Script
@@ -51,13 +52,16 @@ During operator algorithm design, the msKPP tool can be used to obtain performan
 rm -rf ~/ot_demo/workspace/mskpp && mkdir -p ~/ot_demo/workspace/mskpp && cd ~/ot_demo/workspace/mskpp
 ```
 
-##### 2.2.1.2 Developing a Python Script  
+##### 2.2.1.2 Developing a Python Script
 
 > [!NOTE]
-> 
+>
 > **(Optional) Knowledge point: the msKPP DSL solution**  
-> This class library and APIs are designed as a "dialect" specifically for Ascend performance modeling. Mastery of this DSL requires dedicated learning, as it is not directly writable with general Python syntax. However, the usage model is relatively straightforward and can be picked up quickly with a small amount of guided effort. 
-> Typical development process: Import the necessary instructions (such as `vadd`) for tensors, chips, and operator implementation. Use the `with` statement to enter the context of operator implementation, and then create tensors to perform specific operations.
+>
+> This class library and APIs are designed as a "dialect" specifically for Ascend performance modeling. Mastery of this DSL requires dedicated learning, as it is not directly writable with general Python syntax. However, the usage model is relatively straightforward and can be picked up quickly with a small amount of guided effort.
+>
+> Typical development process: First import `Tensor`, `Chip`, and the instructions necessary for operator implementation (such as `vadd`). Use the `with` statement to enter the context of operator implementation, and then create tensors to perform specific operations.
+>
 > The sample script contains detailed comments. For details about other instruction APIs, see [msKPP API Reference](../api_reference/mskpp_api_reference.md).
 
 Create the `mskpp_demo.py` file with the following content:

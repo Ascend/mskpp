@@ -44,9 +44,9 @@ The msKPP tool provides two types of APIs: basic APIs and instruction APIs. Basi
 |[vcgmin](#vcgmin)|API for modeling `vcgmin` performance of vector instructions|
 |[vcmax](#vcmax)|API for modeling `vcmax` performance of vector instructions|
 |[vcmin](#vcmin)|API for modeling `vcmin` performance of vector instructions|
-|[vcmp__xxx_](#vcmp_xxx)|API for modeling `vcmp_xxx` performance of vector instructions|
-|[vcmpv__xxx_](#vcmpv_xxx)|API for modeling `vcmpv_xxx` performance of vector instructions|
-|[vcmpvs__xxx_](#vcmpvs_xxx)|API for modeling `vcmpvs_xxx` performance of vector instructions|
+|[vcmp_xxx](#vcmp_xxx)|API for modeling `vcmp_xxx` performance of vector instructions|
+|[vcmpv_xxx](#vcmpv_xxx)|API for modeling `vcmpv_xxx` performance of vector instructions|
+|[vcmpvs_xxx](#vcmpvs_xxx)|API for modeling `vcmpvs_xxx` performance of vector instructions|
 |[vcopy](#vcopy)|API for modeling `vcopy` performance of vector instructions|
 |[vcpadd](#vcpadd)|API for modeling `vcpadd` performance of vector instructions|
 |[vgather](#vgather)|API for modeling `vgather` performance of vector instructions|
@@ -89,14 +89,14 @@ Processor abstraction, which is instantiated and used in the `with` statement to
 class Chip(name, debug_mode=False)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input Type|Description|
 |--|--|--|
-|name|String|Processor name. Currently, most data is collected from the Atlas A2 training products/Atlas A2 inference products. You can use `npu-smi info` to view the Ascend AI Processor type of a device.|
+|name|String|Processor name. Currently, most data is collected from the Atlas A2 products. You can use `npu-smi info` to view the Ascend AI Processor type of a device.|
 |debug_mode|Bool|Whether to enable the debug mode. The default value is `False`. After the debug mode is enabled, you can view the instructions that are not properly executed, but no output file is generated.<br>`True`: enabled<br>`False`: disabled|
 
-**Member Description**
+**Members**
 
 |Member|Description|
 |--|--|
@@ -121,8 +121,8 @@ with Chip("Ascendxxxyy") as chip:    # Ascendxxxyy needs to be replaced with the
 ```
 
 > [!NOTE]
-> 
-> For servers other than the Atlas A3 training products/Atlas A3 inference products: Run the `npu-smi info` command on the server where the Ascend AI Processor is installed to obtain the chip name. Note that the actual value is represented by `AscendChip name`. For example, if the chip name is `xxxyy`, the actual value is `Ascendxxxyy`. If `Ascendxxxyy` is the path of the code sample, set this parameter to `ascendxxxyy`.
+>
+> For servers other than the Atlas A3 products: Run the `npu-smi info` command on the server where the Ascend AI Processor is installed to obtain the chip name. Note that the actual value is represented by `AscendChip name`. For example, if the chip name is `xxxyy`, the actual value is `Ascendxxxyy`. If `Ascendxxxyy` is the path of the code sample, set this parameter to `ascendxxxyy`.
 
 **Returns**
 
@@ -140,7 +140,7 @@ AI Core abstraction, which is instantiated and used in the `with` statement to m
 class Core(core_type_name)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input Type|Description|
 |--|--|--|
@@ -175,7 +175,7 @@ On-chip tensor abstraction, in which the memory location, data type, size, and f
 class Tensor(mem_type, dtype=None, size=None, format=None, is_inited=False)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input Type|Description|
 |--|--|--|
@@ -185,7 +185,7 @@ class Tensor(mem_type, dtype=None, size=None, format=None, is_inited=False)
 |format|String|Data layout format. For details, see "Programming Guide" > "Concepts and Terms" > "Neural Networks and Operators" > "Data Layout Format" in *Ascend C Operator Development Guide*.|
 |is_inited|Bool|Switch that indicates whether the tensor class is ready. Once enabled, instructions that utilize the tensors as the input can be initiated.|
 
-**Member Description**
+**Members**
 
 |Member|Description|
 |--|--|
@@ -227,7 +227,7 @@ All data transfer instructions in the msKPP tool are abstracted as the load meth
 Tensor.load(tensor, repeat=1, set_value=-1, expect_value=-1)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input Type|Description|
 |--|--|--|
@@ -252,7 +252,7 @@ None
 
 **Function**
 
-Ensures the synchronization of different instructions between pipelines in a core. After `pipe_src` is scheduled, `pipe_dst` is unblocked. After `set_flag` and `wait_flag` are set, the [Instruction Pipeline Chart (Using MindStudio Insight as an Example)](https://gitcode.com/Ascend/msopprof/blob/master/docs/en/user_guide/msopprof_simulator_user_guide.md) will better meet the user's expectations.
+Ensures the synchronization of different instructions between pipelines in a core. After `pipe_src` is scheduled, `pipe_dst` is unblocked. After `set_flag` and `wait_flag` are set, the [Instruction Pipeline Chart (Using MindStudio Insight as an Example)](https://atomgit.com/Ascend/msopprof/blob/26.2.0/docs/en/user_guide/msopprof_simulator_user_guide.md#instruction-pipeline-chart) will better meet the user's expectations.
 
 **Prototype**
 
@@ -260,7 +260,7 @@ Ensures the synchronization of different instructions between pipelines in a cor
 set_flag(pipe_src, pipe_dst, event_id)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Description|
 |--|--|--|
@@ -310,7 +310,7 @@ Ensures the synchronization of different instructions across pipelines in a core
 wait_flag(pipe_src, pipe_dst, event_id)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Description|
 |--|--|--|
@@ -362,7 +362,7 @@ Performs matrix multiplication and addition.
 class mmad(x, y, b, is_inited=False)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Data Type|Description|
 |--|--|--|
@@ -403,7 +403,7 @@ None
 class vadd(x, y, z)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -444,7 +444,7 @@ Expands the dimensions of the tensors based on the instruction stride. However, 
 class vbrcb(x, y, broadcast_num)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -483,13 +483,13 @@ Currently, the following type conversion is supported: BF16->FP32, FP16->FP32, F
 class vconv(x, y, dtype)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
-|x|Input|Tensor variable|Input `x` vector tensor.|
-|y|Output|Tensor variable|Output `y` vector tensor.|
-|dtype|Input|String|Data type of the target tensor.|
+|x|Input|Tensor variable|Input `x` vector tensor|
+|y|Output|Tensor variable|Output `y` vector tensor|
+|dtype|Input|String|Data type of the target tensor|
 
 **Example**
 
@@ -521,13 +521,13 @@ Currently, conversions from FP16 to INT8 and from INT32 to FP16 are supported.
 class vconv_deq(x, y, dtype)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
-|x|Input|Tensor variable|Input `x` vector tensor.|
-|y|Output|Tensor variable|Output `y` vector tensor.|
-|dtype|Input|String|Data type of the target tensor.|
+|x|Input|Tensor variable|Input `x` vector tensor|
+|y|Output|Tensor variable|Output `y` vector tensor|
+|dtype|Input|String|Data type of the target tensor|
 
 **Example**
 
@@ -559,13 +559,13 @@ Currently, the conversion from INT16 to INT8 is supported.
 class vconv_vdeq(x, y, dtype)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
-|x|Input|Tensor variable|Input `x` vector tensor.|
-|y|Output|Tensor variable|Output `y` vector tensor.|
-|dtype|Input|String|Data type of the target tensor.|
+|x|Input|Tensor variable|Input `x` vector tensor|
+|y|Output|Tensor variable|Output `y` vector tensor|
+|dtype|Input|String|Data type of the target tensor|
 
 **Example**
 
@@ -595,7 +595,7 @@ None
 class vector_dup(x, y, fill_shape)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -634,7 +634,7 @@ None
 class vexp(x, y)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -669,7 +669,7 @@ None
 class vln(x, y)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -705,7 +705,7 @@ None
 class vmax(x, y, z)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -742,7 +742,7 @@ None
 class vmul(x, y, z)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -779,7 +779,7 @@ None
 class vmuls(x, y, z)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -815,7 +815,7 @@ None
 class vsub(x, y, z)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -852,7 +852,7 @@ None
 class vdiv(x, y, z)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -889,7 +889,7 @@ Reduces the tensor dimensions based on the input parameters of the instruction. 
 class vcadd(x, y, reduce_num)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -930,7 +930,7 @@ None
 class vabs(x, y)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -965,7 +965,7 @@ None
 class vaddrelu(x, y, z)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -1004,7 +1004,7 @@ The following conversion types are supported: FP16->INT8, FP32->FP16, and INT16-
 class vaddreluconv(x, y, z)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -1041,7 +1041,7 @@ None
 class vadds(x, y, z)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -1077,7 +1077,7 @@ None
 class vand(x, y, z)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -1114,7 +1114,7 @@ None
 vaxpy(x, y, z, if_mix=False)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -1151,7 +1151,7 @@ Sorts data based on the x input and provides the original index data of the elem
 class vbitsort(x, y, z)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -1188,7 +1188,7 @@ Calculates the sum of elements in each block. There are eight blocks in total. M
 class vcgadd(x, y, reduce_num)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -1229,7 +1229,7 @@ Calculates the maximum element of each block. There are eight blocks in total. M
 class vcgmax(x, y, reduce_num)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -1270,7 +1270,7 @@ Calculates the minimum element of each block. There are eight blocks in total. M
 class vcgmin(x, y, reduce_num)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -1311,7 +1311,7 @@ Calculates the maximum element value in the input vector.
 class vcmax(x, y, reduce_num)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -1352,7 +1352,7 @@ Calculates the minimum element value in the input vector.
 class vcmin(x, y, reduce_num)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -1403,7 +1403,7 @@ None
 class vcmp(x, y)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -1453,7 +1453,7 @@ None
 class vcmpv(x, y, z)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -1504,7 +1504,7 @@ None
 class vcmpvs(x, y, z)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -1545,7 +1545,7 @@ Copies tensors at the source address to the destination address.
 class vcopy(x, y)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -1580,7 +1580,7 @@ Calculates the sum of n and n+1 of the input `x` vector, and writes the result b
 class vcpadd(x, y, reduce_num)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -1615,7 +1615,7 @@ Gathers given input tensors by element to the result tensor based on the offset 
 class vgather(x, y)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -1649,7 +1649,7 @@ Gathers a given input tensor to the result tensor based on the offset address te
 class vgatherb(x, y)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -1685,7 +1685,7 @@ If `x` is greater than or equal to 0, `z` = `x`. If `x` is less than 0, `z=x*y`,
 class vlrelu(x, y, z)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -1722,7 +1722,7 @@ None
 class vmadd(x, y, z)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -1759,7 +1759,7 @@ None
 class vmaddrelu(x, y, z)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -1796,7 +1796,7 @@ Compares each element in the vector with a scalar and returns the larger one.
 class vmaxs(x, y, z)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -1832,7 +1832,7 @@ Compares each element in two vectors with a scalar and returns the smaller one.
 class vmin(x, y, z)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -1869,7 +1869,7 @@ Compares each element in the vector with a scalar and returns the smaller one.
 class vmins(x, y, z)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -1913,7 +1913,7 @@ The value can be:
 class vmla(x, y, z, if_mix=False)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -1953,7 +1953,7 @@ Merges at most four sorted Region Proposal lists into one. The results are sorte
 class vmrgsort(x, y, z)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -1990,7 +1990,7 @@ None
 class vmulconv(x, y, z, dtype)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -2028,7 +2028,7 @@ Performs bitwise NOT on input vectors. Each vector has 8 × 256 bits.
 class vnot(x, y)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -2067,7 +2067,7 @@ Performs bitwise OR on input vectors. Each vector has 8 × 256 bits.
 class vor(x, y, z)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -2108,7 +2108,7 @@ Performs floating-point reciprocal estimation and finds an approximate reciproca
 class vrec(x, y)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -2143,7 +2143,7 @@ Determines which elements of the `x` vector are to be stored in the `z` vector b
 class vreduce(x, y, z, reserve_num)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -2183,7 +2183,7 @@ Determines which block-level elements of the `x` vector are to be stored in the 
 class vreducev2(x, y, z, reserve_num)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -2223,7 +2223,7 @@ Performs the relu operation on each element, which takes 0 if the element is les
 class vrelu(x, y)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -2259,7 +2259,7 @@ Calculates the reciprocal square root of a floating point number.
 class vrsqrt(x, y)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -2295,7 +2295,7 @@ This function is usually used in conjunction with `vcmp`, which selects an eleme
 class vsel(x, y, z)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -2332,7 +2332,7 @@ Performs logical left shift or arithmetic left shift based on the input type.
 class vshl(x, y)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -2367,7 +2367,7 @@ Performs logical right shift or arithmetic right shift based on the input type.
 class vshr(x, y)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -2403,7 +2403,7 @@ None
 class vsqrt(x, y)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -2442,7 +2442,7 @@ None
 class vsubrelu(x, y, z)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -2481,7 +2481,7 @@ The following conversion types are supported: FP16->INT8, FP32->FP16, and INT16-
 class vsubreluconv(x, y, z)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|
@@ -2510,7 +2510,7 @@ None
 
 `vtranspose` instruction abstraction.
 
-Transposes a 16 × 16 matrix starting from the input address `x` (32-Byte aligned). Each element has 16 bits. The result is output to `y`. The input and output are continuous 512-Byte storage spaces.
+Transposes a 16 × 16 matrix starting from the input address `x` (32-byte aligned). Each element has 16 bits. The result is output to `y`. The input and output are continuous 512-byte storage spaces.
 
 **Prototype**
 
@@ -2518,7 +2518,7 @@ Transposes a 16 × 16 matrix starting from the input address `x` (32-Byte aligne
 class vtranspose(x, y)
 ```
 
-**Parameter Description**
+**Parameters**
 
 |Parameter|Input/Output|Data Type|Description|
 |--|--|--|--|

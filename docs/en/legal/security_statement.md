@@ -20,27 +20,27 @@ Enable **address space layout randomization** (ASLR) (level 2) in the system. Ru
 
  2. Proper permission control is essential during installation and use. For details, see the following table.
 
-### File Permission Reference
+    **File Permission Control**
 
-| Type                              | Maximum Linux Permission|
-| ---------------------------------- | ------------------- |
-| Home directory                        | 750 (rwxr-x---)   |
-| Program files (including scripts and library files)    | 550 (r-xr-x---)   |
-| Program file directory                      | 550 (r-xr-x---)   |
-| Configuration files                          | 640 (rw-r-----)   |
-| Configuration file directory                      | 750 (rwxr-x---)   |
-| Log files (recorded or archived)    | 440 (r--r-----)   |
-| Log files (being recorded)                | 640 (rw-r-----)   |
-| Log file directory                      | 750 (rwxr-x---)   |
-| Debug files                         | 640 (rw-r-----)   |
-| Debug file directory                     | 750 (rwxr-x---)   |
-| Temporary file directory                      | 750 (rwxr-x---)   |
-| Maintenance and upgrade file directory                  | 770 (rwxrwx---)   |
-| Service data files                     | 640 (rw-r-----)   |
-| Service data file directory                  | 750 (rwxr-x---)   |
-| Key components, private keys, certificates, and ciphertext file directory| 700 (rwx------)   |
-| Key components, private keys, certificates, and ciphertext files    | 600 (rw-------)   |
-| APIs and scripts for encryption and decryption            | 500 (r-x------)   |
+    | Type                              | Maximum Linux Permission|
+    | ---------------------------------- | ------------------- |
+    | Home directory                        | 750 (rwxr-x---)   |
+    | Program files (including scripts and library files)    | 550 (r-xr-x---)   |
+    | Program file directory                      | 550 (r-xr-x---)   |
+    | Configuration files                          | 640 (rw-r-----)   |
+    | Configuration file directory                      | 750 (rwxr-x---)   |
+    | Log files (recorded or archived)    | 440 (r--r-----)   |
+    | Log files (being recorded)                | 640 (rw-r-----)   |
+    | Log file directory                      | 750 (rwxr-x---)   |
+    | Debug files                         | 640 (rw-r-----)   |
+    | Debug file directory                     | 750 (rwxr-x---)   |
+    | Temporary file directory                      | 750 (rwxr-x---)   |
+    | Maintenance and upgrade file directory                  | 770 (rwxrwx---)   |
+    | Service data files                     | 640 (rw-r-----)   |
+    | Service data file directory                  | 750 (rwxr-x---)   |
+    | Key components, private keys, certificates, and ciphertext file directory| 700 (rwx------)   |
+    | Key components, private keys, certificates, and ciphertext files    | 600 (rw-------)   |
+    | APIs and scripts for encryption and decryption            | 500 (r-x------)   |
 
 ## Vulnerability Security Statement
 
@@ -52,7 +52,9 @@ During tool use, some functions related to code lines may access customer operat
 
 ## Build Security
 
-This project supports building from source. During the build process, the system downloads third-party dependencies, executes shell build scripts, and generates temporary program files and build directories. To reduce security risks, you can perform permission control on files within the source code directory. During the build process, you can modify build scripts as needed to avoid security risks and ensure the security of the build results.
+- This project supports building from source. During the build process, the system downloads third-party dependencies, executes shell build scripts, and generates temporary program files and build directories. To reduce security risks, you can perform permission control on files within the source code directory. During the build process, you can modify build scripts as needed to avoid security risks and ensure the security of the build results.
+
+- This repository provides reference configurations for VS Code and devcontainer to facilitate development and debugging. Use them only to develop and debug this repository in a secure debugging environment. In addition, check the security of the configuration yourself and adjust it based on your actual requirements.
 
 ## Runtime Security
 

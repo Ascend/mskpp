@@ -8,12 +8,12 @@ MindStudio Kernel Performance Prediction (msKPP) is an operator design tool that
 
 ### Environment Requirements
 
-Before developing an operator, install the driver, firmware, CANN Toolkit, and ops operator package. For details, see [CANN Software Installation Guide](https://www.hiascend.com/en/cann/download). No installation example is provided in this section.
+Before developing an operator, install the driver, firmware, CANN Toolkit, and ops operator package. For details, see the [CANN Software Installation Guide](https://www.hiascend.com/en/cann/download). No installation example is provided in this section.
 
 Configure the required environment variables according to the requirements. After the configuration is complete, you can directly use the performance modeling function of the msKPP tool. For details, see [Performance Modeling Functions](#performance-modeling-functions).
 
 > [!NOTE]
-> 
+>
 > If you need the instruction proportion pie chart (`instruction_cycle_consumption.html`), install the third-party Python library `plotly` as it is a dependency for generating the pie chart.
 >
 > ```py
@@ -24,8 +24,8 @@ Configure the required environment variables according to the requirements. Afte
 
 - You can create an operator model based on the msKPP APIs in any directory. Pay attention to the following points during the implementation:
   - Before modeling an operator, you need to import instructions for tensor, chip, and operator implementation (in lowercase).
-  - Use the `with` statement to enable the entry of the operator implementation code. The `enable_trace` and `enable_metrics` APIs can be used to enable the trace dotting and instruction statistics functions. For details, see the `main.py` file in [Peak Performance Analysis](#peak-performance-analysis).
-  - For details about the APIs for operator modeling, see *msKPP_API*.
+  - Use the `with` statement to enable the entry of the operator implementation code. The `enable_trace` and `enable_metrics` APIs can be used to enable the trace dotting function and the instruction statistics function. For details, see the `main.py` file in [Peak Performance Analysis](#peak-performance-analysis).
+  - For details about the instruction APIs for operator modeling, see [msKPP API Reference](../api_reference/mskpp_api_reference.md).
 
 - Ensure that the input data is reliable and secure during secondary development.
 
@@ -43,7 +43,7 @@ To achieve the theoretical performance, msKPP models the performance of computat
 
 - [Operator Feature Modeling](#operator-feature-modeling)
 
-    msKPP supports tensor splitting, debug mode, comparison between theoretical values of pipeline information and values measured by msprof, and modeling of operator features (transfer channel, channel conversion, and cache hit ratio). You can select a function as required.
+    msKPP supports tensor splitting, debug mode, comparison between theoretical values of pipeline information and values measured by msProf, and modeling of operator features (transfer channel, channel conversion, and cache hit ratio). You can select a function as required.
 
 - [Operator Computing and Transferring Specification Analysis](#operator-computing-and-transferring-specification-analysis)
 
@@ -61,7 +61,7 @@ To achieve the theoretical performance, msKPP models the performance of computat
 
 ### Function
 
-msKPP supports tensor splitting, debug mode, comparison between theoretical values of pipeline information and values measured by msprof, and modeling of operator features (transfer channel, channel conversion, and cache hit ratio). You can select a function as required. After the modeling is complete, you can perform [Operator Computing and Transferring Specification Analysis](#operator-computing-and-transferring-specification-analysis), [Peak Performance Analysis](#peak-performance-analysis), and [Operator Tiling Preliminary Design](#operator-tiling-preliminary-design).
+msKPP supports tensor splitting, debug mode, comparison between theoretical values of pipeline information and values measured by msProf, and modeling of operator features (transfer channel, channel conversion, and cache hit ratio). You can select a function as required. After the modeling is complete, you can perform [Operator Computing and Transferring Specification Analysis](#operator-computing-and-transferring-specification-analysis), [Peak Performance Analysis](#peak-performance-analysis), and [Operator Tiling Preliminary Design](#operator-tiling-preliminary-design).
 
 ### Precautions
 
@@ -69,9 +69,9 @@ Replace `Ascendxxxyy` in this document with the actual processor type.
 
 ### Example
 
-- Transfer channel modeling (Atlas A2 training products/Atlas A2 inference products).
+- Transfer channel modeling (Atlas A2 products).
 
-    In the Atlas A2 training products/Atlas A2 inference products, the channels from L1 to the fixpipe buffer (FP) and from L1 to the bias table (BT) are added. The former stores the scale parameter for quantization conversion during `L0C_TO_OUT` channel-based format conversion, and the latter stores one-dimensional bias data. In this tool, the transfer channel is modeled in the sequence of GM -> L1 -> FP/BT.
+    In the Atlas A2 products, the channels from L1 to the fixpipe buffer (FP) and from L1 to the bias table (BT) are added. The former stores the scale parameter for quantization conversion during `L0C_TO_OUT` channel-based format conversion, and the latter stores one-dimensional bias data. In this tool, the transfer channel is modeled in the sequence of GM -> L1 -> FP/BT.
 
     ```py
     in_x = Tensor("GM", "FP16", [64], format="ND")
@@ -87,7 +87,7 @@ Replace `Ascendxxxyy` in this document with the actual processor type.
 
 - Channel conversion modeling
 
-    In the Cube unit of the Ascend AI Processor, the data format for calculation must be a special private NZ format. Generally, data in the GM is in ND format. Therefore, the data format needs to be converted during Cube calculation. In the Atlas A2 training products/Atlas A2 inference products, the transfer channel from the GM to the Cube-related storage unit has the ND-to-NZ format conversion capability.
+    In the Cube unit of the Ascend AI Processor, the data format for calculation must be a special private NZ format. Generally, data in the GM is in ND format. Therefore, the data format needs to be converted during Cube calculation. In the Atlas A2 products, the transfer channel from the GM to the Cube-related storage unit has the ND-to-NZ format conversion capability.
 
     In msKPP, if the user-defined GM tensor is in ND format and the L1 tensor is in NZ format for GM-L1, or if the user-defined L0C tensor is in NZ format and the GM tensor is in ND format for L0C-GM, then enable channel-based format conversion and retrieve relevant empirical data.
 
@@ -127,9 +127,9 @@ Replace `Ascendxxxyy` in this document with the actual processor type.
     with Chip("Ascendxxxyy", debug_mode=True) as chip:
     ```
 
-- Comparison between theoretical values of pipeline information and values measured by msprof
+- Comparison between theoretical values of pipeline information and values measured by msProf
 
-    The following uses an Ascend C operator as an example. You can use the `--application` mode to call msprof, and output the `PipeUtilization.csv` file to the `OPPROF_{timestamp}_XXX` directory.
+    The following uses an Ascend C operator as an example. You can use the `--application` mode to call msProf, and output the `PipeUtilization.csv` file to the `OPPROF_{timestamp}_XXX` directory.
 
     ```py
     with Chip("Ascendxxxyy") as chip:
@@ -141,7 +141,7 @@ Replace `Ascendxxxyy` in this document with the actual processor type.
 
     **Figure 1** Pipe_statistic.csv file
 
-    ![](../figures/Pipe_statistic-csv.png "pipe_statistic_csv_file")
+    ![](../figures/pipe_statistic_csv_file.png "pipe_statistic_csv_file")
 
 ### Output Description
 
@@ -204,7 +204,7 @@ if __name__ == '__main__':
 After the `main.py` script is executed using Python, the `Pipe_statistic.csv` file for pipeline statistics and `Instruction_statistic.csv` file for instruction statistics are generated in the `current path/MSKPP_TIMESTAMP` directory. You can view the msKPP modeling results.
 
 > [!NOTE]
-> 
+>
 > *TIMESTAMP* indicates the current timestamp.
 
 ### Output Description
@@ -219,15 +219,15 @@ The `Pipe_statistic.csv` file collects statistics on the total amount of moved d
 
 The following table describes the key fields.
 
-**Table 1** Field description
+**Table 2** Field description
 
 |Field|Description|
 |--|--|
-|Pipe|Name of a pipe unit in an Ascend NPU.|
-|Duration(us)|Pipeline time consumption (unit: μs).|
-|Cycle|Number of cycles consumed each time an instruction is executed.|
-|Size(Byte)|Transfer volume of a transfer pipeline (unit: Byte).|
-|Ops|Size of a calculation element in pipelines of the calculation class.|
+|Pipe|Name of a pipe unit in an Ascend NPU|
+|Duration(us)|Pipeline time consumption (unit: μs)|
+|Cycle|Number of cycles consumed each time an instruction is executed|
+|Size(Byte)|Transfer volume of a transfer pipeline (unit: Byte)|
+|Ops|Size of a calculation element in pipelines of the calculation class|
 
 For the pipeline that takes the longest time and is clearly a bottleneck in transfer performance, the optimization roadmap is as follows:
 
@@ -244,15 +244,15 @@ The `Instruction_statistic.csv` file collects statistics on the total amount of 
 
 The following table describes the key fields.
 
-**Table 2** Field description
+**Table 3** Field description
 
 |Field|Description|
 |--|--|
-|Instruction|Instruction name.|
-|Duration(us)|Pipeline time consumption (unit: μs).|
-|Cycle|Number of cycles consumed each time an instruction is executed.|
-|Size(B)|Transfer volume of a transfer pipeline (unit: B).|
-|Ops|Size of a calculation element in pipelines of the calculation class.|
+|Instruction|Instruction name|
+|Duration(us)|Pipeline time consumption (unit: μs)|
+|Cycle|Number of cycles consumed each time an instruction is executed|
+|Size(B)|Transfer volume of a transfer pipeline (unit: B)|
+|Ops|Size of a calculation element in pipelines of the calculation class|
 
 ## Peak Performance Analysis
 
@@ -308,10 +308,10 @@ if __name__ == '__main__':
             my_mmad(in_x, in_y, in_z)
 ```
 
-After the `main.py` script is executed using Python, the instruction pipeline chart (`trace.json`) and instruction proportion pie chart (`instruction_cycle_consumption.html`) are generated in the `current path/MSKPP_TIMESTAMP` directory. You can view the msKPP modeling result.
+After the `main.py` script is executed using Python, the instruction pipeline chart (`trace.json`) and instruction proportion pie chart (`instruction_cycle_consumption.html`) files are generated in the `current path/MSKPP_TIMESTAMP` directory. You can view the msKPP modeling result.
 
 > [!NOTE]
-> 
+>
 > *TIMESTAMP* indicates the current timestamp.
 
 ### Output Description
@@ -321,8 +321,8 @@ Instruction pipeline chart
 By examining the `trace.json` file, you can find that in an ideal pipeline, `PIPE-MTE2`, which is a performance bottleneck, needs to operate continuously.
 
 > [!NOTE]
-> 
-> Enter `chrome://tracing` in the address box of Google Chrome, drag the `.json` file to the blank space to open it, and press the shortcut keys (**W**: zoom in; **S**: zoom out; **A**: move left; **D**: move right) on the keyboard to view the file.
+>
+> Enter `chrome://tracing` in the address box of Google Chrome, drag the `.json` file to the blank space to open it, and press the shortcut keys (**W**: zoom in, **S**: zoom out, **A**: move left, **D**: move right) on the keyboard to view the file.
 
 **Figure 4** trace.json
 
@@ -334,7 +334,7 @@ Click the `MOV-GM_TO_L1` instruction in the pipeline to view the number of cycle
 
 ![](../figures/instruction_details.png)
 
-**Instruction proportion pie chart**
+**Instruction Proportion Pie Chart**
 
 From the `instruction_cycle_consumption.html` file, it can be seen that `MOV-GM_TO_L1` is the biggest bottleneck among the operators.
 

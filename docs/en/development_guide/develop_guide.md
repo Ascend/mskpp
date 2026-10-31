@@ -1,82 +1,62 @@
-# Development Environment Setup, Compilation, and UT Methods for MindStudio Kernel Performance Prediction
+# msKPP Development Guide
 
 <br>
 
-## 1. Background Knowledge Required
+This document describes how to set up the development environment for MindStudio Kernel Performance Prediction (msKPP), build the project, and run UT unit tests.
 
-For details about the code framework and core process, see the [msKPP Architecture Design Specifications](./architecture.md).
+## 1. Prerequisites
 
-## 2. Development Environment Setup
+### 1.1 Prerequisite Knowledge
 
-Set up the environment by referring to the [Operator Tool Development Environment Setup Guide](https://gitcode.com/Ascend/msot/blob/master/docs/en/common/dev_env_setup.md).
+Before starting development, read [msKPP Architecture Design Specifications](./architecture.md) to learn about the code framework and core processes.
 
-## 3. Building and Packaging
+### 1.2 Environment Preparation
 
-There are two methods, each with its own advantages and disadvantages:
+Follow [msKPP Installation Guide — Source Installation](../install_guide/mskpp_install_guide.md#231-preparing-the-environment) to set up the build and test environment.
 
-| Method| Application Scenario| Advantages| Disadvantages|
-|------|---------|------|------|
-| One-click script| Initial build and CI/CD pipeline| Zero configuration, one-step setup| Steps cannot be executed independently.|
-| Step-by-step script| Routine development and incremental build| Flexibility and efficiency| Multiple steps are required.|
+> **Note:** The environment image build method and the supporting software versions are maintained by the *MindStudio Unified Build Image Creation Guide* and are not redefined in this repository.
 
-### 3.1 Method 1: One-click Script
+## 2. Build
 
-```shell
-python build.py
+Run the following in the project root directory:
+
+```bash
+python3 build.py
 ```
 
-### 3.2 Method 2: Step-by-Step Script
+### 2.1 Build Artifacts
 
-#### 3.2.1 Building and Packaging
+After a successful build, the output is generated in the `artifacts` directory.
 
-```shell
-mkdir build
-cd build
-cmake ..
-make -j$(nproc) install # -j indicates the number of parallel build jobs, which can be specified as required. If nproc is unavailable, manually enter a number (for example, -j8)
-```
+### 2.2 Build Cleanup
 
-#### 3.2.2 Build Result Description
+To perform a full rebuild, delete the build directory and run the preceding steps again:
 
-The build result is generated in the `output` directory:
-
-```text
-output/
-|-- include                                              # API header file
-|-- lib                                                  # Static library
-|-- lib64                                                # Dynamic library
-|-- mindstudio_kpp-XXX-py3-none-manylinux_2_31_XXX.whl   # Installation package
-```
-
-#### 3.2.3 Cleanup/Rebuild
-
-Delete the build directory and perform operations in [Section 3.2.1](#321-building-and-packaging) again.  
-
-```shell
+```bash
 rm -rf build
 ```
 
-## 4. Running UT
+## 3. Unit Tests
 
-### 4.1 One-click Script
+### 3.1 Running Tests
 
-The Python UT depends on the pytest and coverage tools, which can be installed by running `pip install coverage pytest`.
-
-```shell
-python build.py test
+```bash
+python3 build.py test
 ```
 
-If the number of executed test cases is the same as the number of passed test cases, the test is successful. The output is similar to the following:
+When all tests pass, the output is similar to the following example:
 
 ```text
 [==========] 37 tests from 6 test cases ran. (616 ms total)
 [  PASSED  ] 37 tests.
 ```
 
-### 4.2 Cleanup/Rebuild
+> **Pass criteria:** The tests pass when the number of `ran` test cases matches the number of `PASSED` test cases. If any `FAILED` test cases exist, locate the cause of the failure from the logs.
 
-Delete the build directory and perform operations in [Section 4.1](#41-one-click-script) again.  
+### 3.2 Cleaning the Test Environment
 
-```shell
+Delete the UT build directory and run the tests again:
+
+```bash
 rm -rf build_ut
 ```

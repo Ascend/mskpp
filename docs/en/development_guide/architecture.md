@@ -15,11 +15,11 @@ msKPP is a performance simulation tool that delivers an order-of-magnitude incre
 | Service function| Operator channel conversion modeling                      | Automatically converts the special computing data format to the specific data format of the target storage unit.         | Operator performance modeling -> Operator computing and transferring specification analysis -> Operator transfer instruction modeling|
 | Service function| Cache hit rate modeling                       | Models the hit rate of the high-bandwidth transfer channel between the operator GM space and the Vector Core/Cube Core.| Operator performance modeling -> Operator computing and transferring specification analysis -> Operator transfer instruction modeling|
 | Service function| Tensor splitting                        | Splits tensors and simulates conversion of a large tensor into smaller tensors.                     | Operator performance modeling -> Operator computing and transferring specification analysis -> Operator transfer instruction modeling|
-| Service function| Comparison between theoretical values of pipeline information and values measured by msprof| Compares the modeling data with the theoretical and measured values.                                     | Operator performance modeling -> Operator computing and transferring specification analysis -> Operator transfer pipeline statistics|
+| Service function| Comparison between theoretical values of pipeline information and values measured by msProf| Compares the modeling data with the theoretical and measured values.                                     | Operator performance modeling -> Operator computing and transferring specification analysis -> Operator transfer pipeline statistics|
 | Service function| Instruction statistics                          | Collects statistics on the total amount of transferred data, number of operations, and time consumption across different instruction dimensions.       | Operator performance modeling -> Operator computing and transferring specification analysis -> Operator instruction statistics|
 | Service function| Instruction pipeline chart                            | Uses trace to visualize the pipeline arrangement of instructions executed by an operator.                  | Operator performance modeling -> Operator computing and transferring specification analysis -> Operator instruction pipeline    |
 | Service function| Instruction Proportion Pie Chart                          | Uses a pie chart to visualize the proportion of time consumed by each instruction executed by an operator.               | Operator performance modeling -> Operator computing and transferring specification analysis -> Operator instruction proportion    |
-| DFX      | Debug mode                             | Provides a debugging tool to help users quickly identify the instruction enqueue and dequeue issues in the DSL language, improving the tool's fault identification efficiency.  | Operator performance modeling -> Instruction pipeline -> Instruction scheduling analysis                |
+| DFX      | Debug mode                             | Provides a debugging tool to help users quickly identify the instruction enqueue and dequeue issues in the DSL language, improving the fault identification efficiency of the tool.  | Operator performance modeling -> Instruction pipeline -> Instruction scheduling analysis                |
 | DFX      | Profile data supplementation                          | Supplements profile data for user-defined instructions.                               | Operator performance modeling -> Instruction pipeline -> Instruction supplementation                    |
 
 ### 2.2 Auto Tuning
@@ -31,9 +31,9 @@ msKPP is a performance simulation tool that delivers an order-of-magnitude incre
 | Service function| Automatic generation of operator delivery code with Python interface support| Provides Python interfaces to generate C++ code for delivering operators in the template library. The generated code can be imported and extended by Python, allowing developers to deliver operators in Python. | msKPP supports automatic compilation and running of the template library.      |
 | Service function| Automatic compilation of the template library                  | Provides Python interfaces to compile operators in the template library using the built-in compile option template or custom compile options entered by developers.                                | msKPP supports automatic compilation and running of the template library.      |
 | Service function| Automatic compilation of delivered code                      | Provides Python APIs to compile the automatically generated operator delivery code to implement the operator delivery function.                                                | msKPP supports automatic compilation and running of the template library.      |
-| Service function| Kernel metrics support              | Allows the use of the tuning tool's APIs to collect time consumption data of operators delivered by msKPP.                                                     | msKPP supports automatic compilation and running of the template library.      |
+| Service function| Kernel metrics support              | Allows the use of the APIs of the tuning tool to collect time consumption data of operators delivered by msKPP.                                                     | msKPP supports automatic compilation and running of the template library.      |
 | Service function| Operator tool access and collaborative use                | Allows other operator tools to start the msKPP operator running script normally.                                                                         | msKPP supports automatic compilation and running of the template library.      |
-| Service function| Automatic replacement of specified tunable parameters                | Supports automatic change of template code and collaborates with the compilation module to instantiate the code; supports inputs in KV format and correctly matches the tunable variables identified in the template library.| msKPP operates in conjunction with the template library to enable automatic change of template parameters.|
+| Service function| Automatic replacement of specified tunable parameters                | Supports automatic change of template code and collaborates with the compilation module to instantiate the code. Supports inputs in KV format and correctly matches the tunable variables identified in the template library.| msKPP operates in conjunction with the template library to enable automatic change of template parameters.|
 | Service function| Lightweight scheduling of msOpGen projects                | Supports code generation, compilation, and execution for the tiling function of msOpGen projects, as well as code generation, compilation, and execution for kernel functions.| msKPP supports automatic compilation and running of msOpGen projects.|
 
 ## 3. Implementation Objectives and Key Elements of Software Design
@@ -119,21 +119,18 @@ List of software units:
 
 | Software Unit      | Description                      | External Interface             | Internal Interface    | Relationship Description                                          |
 | -------------- | -------------------------- | --------------------- | ------------ | -------------------------------------------------- |
-| INSTR_TASK     | Instruction task creation module, which is internally implemented.| Tensor, Chip, and Core| RawTask      | Disassembles external input instructions to form a set of instruction tasks.                  |
-| INSTR_SCHEDULE | Instruction scheduling module, which is internally implemented.    |                       | add_task and run| Adds disassembled tasks to form a task queue and simulates chip behavior to schedule instructions.|
-| PROF_DATA      | Instruction profile data calculation, which is internally implemented.|                       | prof_data    | Loads the calculation results of different instructions based on the instruction type.                |
-| TRACE          | Instruction pipeline chart, which is internally implemented.      |                       | Trace        | Generates an instruction pipeline chart based on the instruction scheduling result.                  |
-| METRICS        | Instruction profile data, which is internally implemented.    |                       | Metrics      | Generates multiple types of instruction profile data based on the instruction scheduling result.            |
+| INSTR_TASK     | Instruction task creation module, which is internally implemented| Tensor, Chip, and Core| RawTask      | Disassembles external input instructions to form a set of instruction tasks.                  |
+| INSTR_SCHEDULE | Instruction scheduling module, which is internally implemented    |                       | add_task and run| Adds disassembled tasks to form a task queue and simulates chip behavior to schedule instructions.|
+| PROF_DATA      | Instruction profile data calculation, which is internally implemented|                       | prof_data    | Loads the calculation results of different instructions based on the instruction type.                |
+| TRACE          | Instruction pipeline chart, which is internally implemented      |                       | Trace        | Generates an instruction pipeline chart based on the instruction scheduling result.                  |
+| METRICS        | Instruction profile data, which is internally implemented    |                       | Metrics      | Generates multiple types of instruction profile data based on the instruction scheduling result.            |
 
 ##### 4.1.1.4 Software Implementation Unit Design
 
 According to the software unit list, the main software modules involved in msKPP are the instruction task creation module (`INSTR_TASK`), instruction task scheduling module (`INSTR_SCHEDULE`), instruction profile data
-calculation module (`PROF_DATA`), and msKPP profile data parsing modules (`TRACE` and `METRICS`). For details about the instruction task scheduling module, see the algorithm implementation section. The msKPP profile data analysis module provides
-a foundational public method for recording and parsing scheduling instructions. Its primary function is to generate a visualized instruction pipeline trace (`trace.json`) along with corresponding statistical charts and tables. This section presents a static block diagram for the instruction task creation module and the instruction task profile data
-calculation module.
+calculation module (`PROF_DATA`), and msKPP profile data parsing modules (`TRACE` and `METRICS`). For the design of the instruction task scheduling module, see the algorithm implementation section. The msKPP profile data analysis module provides a foundational public method for recording and parsing scheduling instructions. Its primary function is to generate a visualized instruction pipeline trace (`trace.json`) along with corresponding statistical charts and tables. This section presents a static block diagram for the instruction task creation module and the instruction task profile data calculation module.
 
-The following figure shows the static structure of the `INSTR_TASK` instruction task creation module. Instruction tasks include `ComputationInstruction` and `MemoryInstruction`. Among them, `ComputationInstruction` is registered using the factory
-pattern.
+The following figure shows the static structure of the `INSTR_TASK` instruction task creation module. Instruction tasks include `ComputationInstruction` and `MemoryInstruction`. Among them, `ComputationInstruction` is registered using the factory pattern.
 
 ```plantuml
 @startuml
@@ -299,7 +296,7 @@ MovFactory -[hidden]left-> MmadFactory
 class DataFactory {
 - map<string,function<shared_ptr<T>(Args...)>> creator_
 + void Register(const string name, function<shared_ptr<T>(Args...)> creator)
-+ shared_ptr<T> Create(const string name, , Args... args)
++ shared_ptr<T> Create(const string name, Args... args)
 }
 class DataRegister {
 void DataRegister(const std::string &name)
@@ -391,7 +388,7 @@ List of software units
 
 | Software Unit| Description                                            | External Interface | Internal Interface| Relationship Description                                                                                |
 | -------- | ------------------------------------------------ | --------- | -------- | ---------------------------------------------------------------------------------------- |
-| Code generation| Generates operator delivery code.                                | code\_gen | /        | Implements the <code>code_gen</code> interface for external systems and the auto tuning module to update the context module.                             |
+| Code generation| Generates operator delivery code.                                | code_gen | /        | Implements the <code>code_gen</code> interface for external systems and the auto tuning module to update the context module.                             |
 | Compiling    | Compiles and delivers the operator code to generate an executable binary.          | compile   | /        | Implements the <code>compile</code> interface for external systems and the auto tuning module to update the context module.                               |
 | Running    | Implements stream creation, device management, and operator delivery.                  | launch    | /        | Implements the <code>launch</code> interface for external systems and the auto tuning module to update the context module.                                |
 | Auto tuning| Searches for the optimal parameter combination in the search space.              | autotune  | /        | Implements the <code>autotune</code> interface for external use, obtains operator information using the context module, and calls the code generation, compilation, and execution interfaces.|
@@ -446,7 +443,7 @@ KPP provides a Python-based DSL, but in practice, the large number of instructio
     Instruction scheduling unit: receives external instruction data and models chip behavior to generate scheduled start and end times for each instruction.
 
     ```Python
-    # Instructions are accumulated and then dispatched with a single unified trigger.
+    # Instructions are accumulated and then dispatched with a single unified trigger
     for i in range("Number of instructions"):
         task_schedule.add_task(task)
     duration = task_schedule.run()
@@ -455,7 +452,7 @@ KPP provides a Python-based DSL, but in practice, the large number of instructio
     Profile data processing unit: Prior to instruction scheduling, the profile data of the current instruction is used as part of the instruction task and provided to the instruction scheduling unit.
 
     ```Python
-    # Here uses the Vadd instruction as an example. The scheduling time of the Vadd instruction is obtained through the profile data calculation module.
+    # Here uses the Vadd instruction as an example. The scheduling time of the Vadd instruction is obtained through the profile data calculation module
     def time(self):
         real_perf = prof_data.VaddData().get(tile_size, instr_type)
         cycles = ceil(dtype_size * tile_size / real_perf)
@@ -568,7 +565,7 @@ Option 2 exposes fewer interfaces, lacks atomic separation of configuration, com
 
 ##### 4.2.2.5 Software Unit - Code Generation Submodule
 
-In the code generation submodule, the externally provided struct object, along with its scenario association, is passed to the Launcher's constructor to construct the code generator for the current scenario. To extend to other potential scenarios, simply define and pass a new structure to the Launcher to construct a code generator object for the target scenario, without changing the code generation interface.
+In the code generation submodule, the externally provided struct object, along with its scenario association, is passed to the constructor of the Launcher to construct the code generator for the current scenario. To extend to other potential scenarios, simply define and pass a new structure to the Launcher to construct a code generator object for the target scenario, without changing the code generation interface.
 
 Template library scenario: `KernelInvokeConfig`
 
@@ -671,10 +668,10 @@ Parameter description:
 | Parameter  | Data Type| Required (Yes/No)| Description                                                       |
 | -------- | -------- | ---- | ----------------------------------------------------------- |
 | op_type| str      | Y    | Operator name|
-| inputs | list      | Y    | List of input tensors of the operator.|
-| outputs | str      | Y    | List of output tensors of the operator.|
-| inputs_info| str      | N    | Details about the input tensors of the operator.|
-| outputs_info| str      | N    | Details about the output tensors of the operator.|
+| inputs | list      | Y    | List of input tensors of the operator|
+| outputs | str      | Y    | List of output tensors of the operator|
+| inputs_info| str      | N    | Details about the input tensors of the operator|
+| outputs_info| str      | N    | Details about the output tensors of the operator|
 | attr | str      | N   | Operator tiling attributes|
 | lib_path | str      | N    | Dynamic library where the operator tiling function is located|
 | soc_version | str      | N    | Information of hardware that runs operators|
@@ -697,8 +694,8 @@ tiling_output = mskpp.tiling_func(
 )
 blockdim = tiling_output.blockdim
 workspace_size = tiling_output.workspace_size
-tiling_data = tiling_output.tiling_data # Returned as a NumPy array.
-workspace = np.zeros(workspace_size).astype(np.uint8) # The workspace needs to be allocated by the user.
+tiling_data = tiling_output.tiling_data # Returned as a NumPy array
+workspace = np.zeros(workspace_size).astype(np.uint8) # The workspace needs to be allocated by the user
 ```
 
 Remarks: related class/structure definition
@@ -728,7 +725,7 @@ Parameter description:
 
 | Parameter  | Data Type| Required (Yes/No)| Description                                                       |
 | -------- | -------- | ---- | ----------------------------------------------------------- |
-| kernel_binary_file| str      | Y    | Path of the operator .o file|
+| kernel_binary_file| str      | Y    | Path of the operator `.o` file|
 | kernel_type| str      | N    | Operator type|
 | tiling_key| int      | N    | Operator Tilingkey|
 
@@ -737,7 +734,7 @@ Return: `CompiledKernel`
 Example:
 
 ```Python
-# This function's input arguments must exactly match the kernel function.
+# The input arguments of this function must exactly match the kernel function
 def run_kernel(input_a, input_b, input_bias, output, workspace, tiling_data):
     kernel_binary_file = "MatmulLeakyreluCustom_97ef75830e63ebe749e7c029d8d403c5.o"
     kernel = mskpp.get_kernel_from_binary(kernel_binary_file)
@@ -897,8 +894,8 @@ Parameter description:
 | Parameter    | Data Type  | Required (Yes/No)| Description                                                                                               |
 | ---------- | ---------- | ---- | --------------------------------------------------------------------------------------------------- |
 | configs    | list[dict] | Y    | Search space definition, in key-value format. During tuning, the value is used to replace the code line corresponding to the key marked with `// tunable` in the kernel code.|
-| warmup     | int        | N    | Preheating time before performance collection, in μs. Default value: `300` μs.                                                |
-| repeat     | int        | N    | Number of repeat times. The average running duration of multiple repeats is used as the operator duration. Default value: `1`.                                |
+| warmup     | int        | N    | Preheating time before performance collection, in μs. Default value: 300 μs.                                                |
+| repeat     | int        | N    | Number of repeat times. The average running duration of multiple repeats is used as the operator duration. Default value: 1.                                |
 | device_ids | list[int]  | N    | Device ID list. Currently, only the single-device mode is supported. If multiple device IDs are entered, only the first one takes effect. Default value: `[0]`.|
 
 Return: None
@@ -934,7 +931,7 @@ Parameter description:
 | Parameter    | Data Type  | Required (Yes/No)| Description                                                                                               |
 | ---------- | ---------- | ---- | --------------------------------------------------------------------------------------------------- |
 | configs    | list[dict] | Y    | Search space definition, in key-value format. During tuning, the value is used to replace the code line corresponding to the key marked with `// tunable` in the kernel code.|
-| warmup_times     | int        | N    | Number of device preheating times before performance collection. Default value: `5`.                                                |
+| warmup_times     | int        | N    | Number of device preheating times before performance collection. Default value: 5.                                                |
 
 Return: None
 
@@ -950,7 +947,7 @@ Example:
 ], warmup_times=10)
 def run_executable(m, n, k, device_id):
     src_file = "./basic_matmul.cpp"
-    build_script = "./jit_build_executable.sh" # executable compile script
+    build_script = "./jit_build_executable.sh" # Executable compile script
     executable = mskpp.compile_executable(build_script=build_script, src_file=src_file, use_cache=False)
     return executable(m, n, k, device_id)
 ```
@@ -966,9 +963,9 @@ For the UML class diagram, see the `Instructions_Data` class diagram in section 
 
 ##### 4.3.1.2 Design Constraints
 
-1. With msKPP's evolving support for diverse user commands and chip platforms, enabling easy expansion of baseline data is a key design focus.
+1. With the evolving support of msKPP for diverse user commands and chip platforms, enabling easy expansion of baseline data is a key design focus.
 
-2. Modeling data relies on real-time computation of existing data, so design should account for increased overall time consumption due to computational overhead.
+2. Modeling data relies on real-time computation of existing data. Therefore, design should account for increased overall time consumption due to computational overhead.
 
 ##### 4.3.1.3 Design Selection
 
@@ -1012,8 +1009,8 @@ Instruction time is derived from existing profile data, enabling zero-wait trans
 3. Abstract modeling of instruction scheduling, using priority queues for modeling.
 Analyze the mathematical model, problem type, data, algorithm performance, and algorithm application results to select the most appropriate algorithm and document the decision-making basis.
 The core of instruction scheduling is to issue ready instructions, stall those not ready, and upon completion, record execution duration and pass on readiness downstream.
-The ready states for instructions are categorized as follows: (1) the initial state—where GM-resident tensors acting as the source memory for data transfer and computation default to ready; (2) UB-type instructions—used as intermediate memory
-—default to invalid; (3) after scheduling, output tensors within an instruction task must be ready; and (4) for instruction splitting, child tensors inherit the state of the parent tensor.
+The ready states for instructions are categorized as follows: (1) the initial state—where GM-resident tensors acting as the source memory for data transfer and computation default to ready, (2) UB-type instructions—used as intermediate memory
+—default to invalid, (3) after scheduling, output tensors within an instruction task must be ready, and (4) for instruction splitting, child tensors inherit the state of the parent tensor.
 
 For case (2), while the existing third-party discrete scheduling library offers simple and understandable logic, its low Python runtime efficiency under large-scale instruction scheduling fails to meet the second-level performance modeling requirements. Therefore, it should be excluded first.  
 
@@ -1025,7 +1022,6 @@ multi-pipe parallelism, each pipe is isolated by name and maintains its own time
 ##### 4.4.1.4 Algorithm Implementation
 
 The algorithm implementation is described following technology selection:
-
 1. Instruction tasks from the Python are added to task queues that are distinguished by pipe names, until all scheduling instructions are added.
 2. The scheduling task is started. The first schedulable task queue is obtained. Active and blocked queues are distinguished prior to this operation.
 3. The first task is popped from the active queue for execution. The task sets time range for executing the scheduling instruction and the last update time of the queue, and transparently updates the ready status of the instruction.
@@ -1074,13 +1070,13 @@ Note: This section usually discusses the threat modeling information generated d
 
 Security hardening for high-risk modules
 
-**1. Error handling**  
+**1. Error Handling**  
 Design proper error-handling strategies to prevent software crashes.
 Define exception-handling policies for modules based on component context, including programming framework and operating system.
 
 Security hardening for high-risk APIs
 
-**1. Input validation**  
+**1. Input Validation**  
 Strictly validate parameters in API requests to ensure data integrity and prevent malicious attacks.
 Input validation ensures the API receives only expected, properly formatted data. It mitigates issues caused data corruption, crashes, or unpredictable behaviors. Specific risks prevented include injection attacks and malicious file uploads.
 
@@ -1097,7 +1093,7 @@ Error and exception capture and handling and fault recovery can be implemented i
 
 - Decision-making and trade-offs in error and exception handling policies: Explain why a specific error and exception handling policy is chosen, including alternative solutions and trade-offs.
 - Error message design: In API design, further explain how to clearly convey error causes to users without disclosing sensitive information.
-- Expected API behavior and exception handling process: The design document should provide detailed descriptions and diagrams to help readers understand the API's handling process when errors and exceptions occur.
+- Expected API behavior and exception handling process: The design document should provide detailed descriptions and diagrams to help readers understand the handling process of the API when errors and exceptions occur.
 
 The design document should record the following:
 
@@ -1133,7 +1129,7 @@ The auto tuning interface should ensure that user code is not modified and preve
 
 ##### 4.5.2.4 Code Security Protection
 
-**1. Input validation**  
+**1. Input Validation**  
 
 Strictly validate parameters in API requests to ensure data integrity and prevent malicious attacks.
 Input validation ensures the API receives only expected, properly formatted data. It mitigates issues caused data corruption, crashes, or unpredictable behaviors. Specific risks prevented include injection attacks and malicious file uploads.
@@ -1187,9 +1183,9 @@ component MSKPP {
 
 | Layer| Test Type| Test Object        | Test Value                        |
 | ---- | -------- | ---------------- | -------------------------------- |
-| IT   | Component testing| `instr_schedule` | Verify the core workflow from command creation to scheduling.|
-| UT   | Unit testing| `prof_data`      | Verify that the data building process is correct.        |
-| UT   | Unit testing| `metric`         | Verify that the profile data generation function is correct.        |
+| IT   | Component testing| instr_schedule | Verify the core workflow from command creation to scheduling.|
+| UT   | Unit testing| prof_data      | Verify that the data building process is correct.        |
+| UT   | Unit testing| metric         | Verify that the profile data generation function is correct.        |
 
 ##### 4.6.1.5 Key Testing Solutions
 
@@ -1418,14 +1414,14 @@ msKPP performs instruction-level modeling for operators running on Ascend AI Pro
 
 ##### 5.2.1.2 Design Constraints
 
-msKPP only needs to model the parallel characteristics of instruction scheduling; it does not actually require parallelism. When designing parallelism for instruction scheduling, ensure that CPU and memory constraints are taken into account in accordance with the software concurrency requirements to prevent service failures. If the purpose is only concurrency
+msKPP only needs to model the parallel characteristics of instruction scheduling. It does not actually require parallelism. When designing parallelism for instruction scheduling, ensure that CPU and memory constraints are taken into account in accordance with the software concurrency requirements to prevent service failures. If the purpose is only concurrency
 simulation, the validity and reliability of the scheduling results must be taken into consideration.
 
 ##### 5.2.1.3 Concurrency Model Design
 
 1. Instruction scheduling concurrency model
 
-    It is recommended to employ scheduling concurrency simulation to model individual pipe instructions separately. The resulting output should explicitly illustrate the concurrent instruction scheduling behavior.
+    You are advised to employ scheduling concurrency simulation to model individual pipe instructions separately. The resulting output should explicitly illustrate the concurrent instruction scheduling behavior.
 
 2. (Optional) Alternative solution
 
@@ -1504,7 +1500,7 @@ The different kernels generated after compilation are placed in a queue. When th
 ```text
 ├── docs  // Project documentation 
 ├── mskpp // Python code directory 
-│      ├──\_\_init\_\_.py  
+│      ├──__init__.py  
 │      └── ....  
 ├── csrc  // CPP source code directory 
 │     └── CMakeList.txt  // CMake used for C code 

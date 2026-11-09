@@ -6,7 +6,7 @@
 
 The msKPP tool is used for performance modeling design before operator development. Developers can compile operator expressions based on the domain-specific language (DSL) and the mathematical logic of operators, and obtain performance prediction results within seconds. This modeling depends only on the input/output scale and does not require actual computation, allowing for efficient verification of operator implementation solutions. This document demonstrates the core functions of msKPP based on the simple addition operator developed in the introductory tutorial. It helps beginners intuitively experience the efficiency and convenience the tool brings to the operator development process.
 
-This section assumes that you have completed all the operations in <a href="https://atomgit.com/Ascend/msot/blob/26.2.0/docs/en/quick_start/op_tool_quick_start.md" target="_blank">Quick Start of the Operator Development Toolchain</a>. If you have not, you are advised to complete this guide first to obtain a better learning effect.
+This section assumes that you have completed all the operations in <a href="https://gitcode.com/Ascend/msot/blob/26.2.0/docs/en/quick_start/op_tool_quick_start.md" target="_blank">Quick Start of the Operator Development Toolchain</a>. If you have not, you are advised to complete this guide first to obtain a better learning effect.
 
 ## 2. Procedure
 
@@ -18,7 +18,7 @@ This tutorial **only supports** the standard CANN container environment and is n
 #### 2.1.1 Installing the CANN Container Environment
 
 ✅ **Strictly follow the guide to complete the environment installation:**  
-👉 **<a href="https://atomgit.com/Ascend/msot/blob/26.2.0/docs/en/quick_start/installation_guide.md" target="_blank">Ascend AI Operator Development Toolchain Learning Environment Installation Guide</a>**
+👉 **<a href="https://gitcode.com/Ascend/msot/blob/26.2.0/docs/en/quick_start/installation_guide.md" target="_blank">Ascend AI Operator Development Toolchain Learning Environment Installation Guide</a>**
 
 > ⏱️ **Estimated time in a network-reachable environment: about 3 minutes**  
 > After the installation, you will obtain a standard container environment preinstalled with all operator tools, sample code, and dependent libraries.

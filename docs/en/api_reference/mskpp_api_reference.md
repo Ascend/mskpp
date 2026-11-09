@@ -252,7 +252,7 @@ None
 
 **Function**
 
-Ensures the synchronization of different instructions between pipelines in a core. After `pipe_src` is scheduled, `pipe_dst` is unblocked. After `set_flag` and `wait_flag` are set, the [Instruction Pipeline Chart (Using MindStudio Insight as an Example)](https://atomgit.com/Ascend/msopprof/blob/26.2.0/docs/en/user_guide/msopprof_simulator_user_guide.md#instruction-pipeline-chart) will better meet the user's expectations.
+Ensures the synchronization of different instructions between pipelines in a core. After `pipe_src` is scheduled, `pipe_dst` is unblocked. After `set_flag` and `wait_flag` are set, the [Instruction Pipeline Chart (Using MindStudio Insight as an Example)](https://gitcode.com/Ascend/msopprof/blob/26.2.0/docs/en/user_guide/msopprof_simulator_user_guide.md#instruction-pipeline-chart) will better meet the user's expectations.
 
 **Prototype**
 

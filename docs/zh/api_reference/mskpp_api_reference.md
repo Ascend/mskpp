@@ -4,7 +4,7 @@
 
 msKPP工具分为基础功能接口和指令接口两种接口类型。基础功能接口用于模拟算子计算中芯片平台、基础数据等。指令接口用于模拟特定的算子指令操作，包括Vector类计算指令和Cube类计算指令。
 
-**表 1**  msKPP工具接口列表
+**表 1** msKPP工具接口列表
 
 |接口名称|接口简介|
 |--|--|
@@ -264,8 +264,8 @@ set_flag(pipe_src, pipe_dst, event_id)
 
 |参数名|输入/输出|说明|
 |--|--|--|
-|pipe_src|输入|源PIPE，在pipe_src调度后设置event_id。<br>输入格式为aicore_PIPE，例如："aic0_PIPE-MTE1"。其中aicore的取值范围参见基础功能接口Core，PIPE取值范围为"PIPE-MTE1"、"PIPE-MTE2"、 "PIPE-MTE3"、"PIPE-FIX"、"PIPE-M"、"PIPE-V"、 "PIPE-S"。不指定aicore时，可直接输入PIPE取值。<br/>数据类型：string。<br/>必选参数。|
-|pipe_dst|输入|目的PIPE，在pipe_src调度之后，pipe_dst将会解除阻塞状态。<br/>输入格式为aicore_PIPE，例如："aic0_PIPE-MTE1"。其中aicore的取值范围参见基础功能接口Core，PIPE取值范围为"PIPE-MTE1"、"PIPE-MTE2"、 "PIPE-MTE3"、"PIPE-FIX"、"PIPE-M"、"PIPE-V"、 "PIPE-S"。不指定aicore时，可直接输入PIPE取值。<br/>数据类型：string。<br/>必选参数。|
+|pipe_src|输入|源PIPE，在pipe_src调度后设置event_id。<br>输入格式为aicore_PIPE，例如："aic0_PIPE-MTE1"。其中aicore的取值范围参见基础功能接口Core，PIPE取值范围为"PIPE-MTE1"、"PIPE-MTE2"、"PIPE-MTE3"、"PIPE-FIX"、"PIPE-M"、"PIPE-V"、"PIPE-S"。不指定aicore时，可直接输入PIPE取值。<br/>数据类型：string。<br/>必选参数。|
+|pipe_dst|输入|目的PIPE，在pipe_src调度之后，pipe_dst将会解除阻塞状态。<br/>输入格式为aicore_PIPE，例如："aic0_PIPE-MTE1"。其中aicore的取值范围参见基础功能接口Core，PIPE取值范围为"PIPE-MTE1"、"PIPE-MTE2"、"PIPE-MTE3"、"PIPE-FIX"、"PIPE-M"、"PIPE-V"、"PIPE-S"。不指定aicore时，可直接输入PIPE取值。<br/>数据类型：string。<br/>必选参数。|
 |event_id|输入|同步指令之间依赖的唯一值。<br/>取值范围[0, 65535]。<br/>数据类型：int。<br/>必选参数。|
 
 **约束说明**
@@ -314,8 +314,8 @@ wait_flag(pipe_src, pipe_dst, event_id)
 
 |参数名|输入/输出|说明|
 |--|--|--|
-|pipe_src|输入|源PIPE，在pipe_src调度后设置event_id。<br/>输入格式为aicore_PIPE，例如："aic0_PIPE-MTE1"。其中aicore的取值范围参见基础功能接口Core，PIPE取值范围为"PIPE-MTE1"、"PIPE-MTE2"、 "PIPE-MTE3"、"PIPE-FIX"、"PIPE-M"、"PIPE-V"、 "PIPE-S"。不指定aicore时，可直接输入PIPE取值。<br/>数据类型：string。<br/>必选参数。|
-|pipe_dst|输入|目的PIPE，在pipe_src调度之后，pipe_dst将会解除阻塞状态。<br/>输入格式为aicore_PIPE，例如："aic0_PIPE-MTE1"。其中aicore的取值范围参见基础功能接口Core，PIPE取值范围为"PIPE-MTE1"、"PIPE-MTE2"、 "PIPE-MTE3"、"PIPE-FIX"、"PIPE-M"、"PIPE-V"、 "PIPE-S"。不指定aicore时，可直接输入PIPE取值。<br/>数据类型：string。<br/>必选参数。|
+|pipe_src|输入|源PIPE，在pipe_src调度后设置event_id。<br/>输入格式为aicore_PIPE，例如："aic0_PIPE-MTE1"。其中aicore的取值范围参见基础功能接口Core，PIPE取值范围为"PIPE-MTE1"、"PIPE-MTE2"、"PIPE-MTE3"、"PIPE-FIX"、"PIPE-M"、"PIPE-V"、"PIPE-S"。不指定aicore时，可直接输入PIPE取值。<br/>数据类型：string。<br/>必选参数。|
+|pipe_dst|输入|目的PIPE，在pipe_src调度之后，pipe_dst将会解除阻塞状态。<br/>输入格式为aicore_PIPE，例如："aic0_PIPE-MTE1"。其中aicore的取值范围参见基础功能接口Core，PIPE取值范围为"PIPE-MTE1"、"PIPE-MTE2"、"PIPE-MTE3"、"PIPE-FIX"、"PIPE-M"、"PIPE-V"、"PIPE-S"。不指定aicore时，可直接输入PIPE取值。<br/>数据类型：string。<br/>必选参数。|
 |event_id|输入|同步指令之间依赖的唯一值。<br/>取值范围[0, 65535]。<br/>数据类型：int。<br/>必选参数。|
 
 **约束说明**
@@ -413,7 +413,7 @@ class vadd(x, y, z)
 
 **约束说明**
 
-Vector指令所有输入输出数据的Tensor均在“UB“空间中，shape需保持一致。
+Vector指令所有输入输出数据的Tensor均在“UB”空间中，shape需保持一致。
 
 **使用示例**
 
@@ -587,7 +587,7 @@ out = vconv_vdeq(ub_x, ub_y, "FP32")
 
 vector_dup指令抽象。
 
-y = vector_dup(x)，x、 y按元素进行填充。
+y = vector_dup(x)，x、y按元素进行填充。
 
 **接口原型**
 
@@ -646,6 +646,7 @@ class vexp(x, y)
 ```python
 from mskpp import vexp, Tensor
 ub_x = Tensor("UB")
+gm_x = Tensor("GM")
 ub_x.load(gm_x)
 ub_y = Tensor("UB")
 out = vexp(ub_x, ub_y)
@@ -1412,7 +1413,7 @@ class vcmp(x, y)
 
 **约束说明**
 
-Vector指令所有输入输出数据的Tensor均在“UB“空间中，shape需保持一致。
+Vector指令所有输入输出数据的Tensor均在“UB”空间中，shape需保持一致。
 
 **使用示例**
 
@@ -1463,7 +1464,7 @@ class vcmpv(x, y, z)
 
 **约束说明**
 
-Vector指令所有输入输出数据的Tensor均在“UB“空间中，shape需保持一致。
+Vector指令所有输入输出数据的Tensor均在“UB”空间中，shape需保持一致。
 
 **使用示例**
 
@@ -1514,7 +1515,7 @@ class vcmpvs(x, y, z)
 
 **约束说明**
 
-Vector指令所有输入输出数据的Tensor均在“UB“空间中，shape需保持一致。
+Vector指令所有输入输出数据的Tensor均在“UB”空间中，shape需保持一致。
 
 **使用示例**
 
@@ -1549,8 +1550,8 @@ class vcopy(x, y)
 
 |参数名|输入/输出|数据类型|说明|
 |--|--|--|--|
-|x|输入|Tensor变量|输入向量Tensor。支持int16、int32、uint16、uint32。|
-|y|输出|Tensor变量|输出向量Tensor。支持int16、int32、uint16、uint32。|
+|x|输入|Tensor变量|输入向量Tensor。支持INT16、INT32、UINT16、UINT32。|
+|y|输出|Tensor变量|输出向量Tensor。支持INT16、INT32、UINT16、UINT32。|
 
 **使用示例**
 
@@ -1584,8 +1585,8 @@ class vcpadd(x, y, reduce_num)
 
 |参数名|输入/输出|数据类型|说明|
 |--|--|--|--|
-|x|输入|Tensor变量|输入x向量Tensor。支持fp16、fp32。|
-|y|输出|Tensor变量|输出y向量Tensor。支持fp16、fp32。|
+|x|输入|Tensor变量|输入x向量Tensor。支持FP16、FP32。|
+|y|输出|Tensor变量|输出y向量Tensor。支持FP16、FP32。|
 |reduce_num|输入|int|shape指定的缩减倍数。|
 
 **使用示例**
@@ -1677,7 +1678,7 @@ out = vgatherb(ub_x, ub_y)
 
 vlrelu指令抽象。
 
-若x大于等于0，则z=x；若x小于0，则z=x*y，x按元素与标量y相乘。
+若x大于等于0，则z=x；若x小于0，则z=x * y，x按元素与标量y相乘。
 
 **接口原型**
 
@@ -1824,7 +1825,7 @@ out = vmaxs(ub_x, 5, ub_z)
 
 vmin指令抽象。
 
-对两个向量中的每个元素和标量进行比较，返回较小者。
+对两个向量中的每个元素进行比较，返回较小者。
 
 **接口原型**
 
@@ -1905,7 +1906,7 @@ type = f16，f16 = f16 * f16 + f16。
 
 type = f32，f32 = f32 * f32 + f32。
 
-if_mix = True时，f32 = f16 * f16 + f32。其中x、y向量使用64个元素的f16数据用于计算，源向量仅使用低4个block，4个高block被忽略。Xd是64个元素的包含8个block的f32数据，同时作为目标向量和第三个源向量。
+if_mix = True时，f32 = f16 * f16 + f32，其中x、y向量使用64个元素的f16数据用于计算，源向量仅使用低4个block，4个高block被忽略。Xd是64个元素的包含8个block的f32数据，同时作为目标向量和第三个源向量。
 
 **接口原型**
 
@@ -1924,7 +1925,7 @@ class vmla(x, y, z, if_mix=False)
 
 **约束说明**
 
-Vector指令输入输出数据的Tensor均在“UB“空间中。
+Vector指令输入输出数据的Tensor均在“UB”空间中。
 
 **使用示例**
 
@@ -2020,7 +2021,7 @@ out = vmulconv(ub_x, ub_y, ub_z, 'UINT8')
 
 vnot指令抽象。
 
-vnot指令对输入向量按位取反，每个向量为8*256bits。
+vnot指令对输入向量按位取反，每个向量为8*256bit。
 
 **接口原型**
 
@@ -2059,7 +2060,7 @@ out = vnot(ub_x, ub_y)
 
 vor指令抽象。
 
-vor指令对输入向量按位取或，每个向量为8*256bits。
+vor指令对输入向量按位取或，每个向量为8*256bit。
 
 **接口原型**
 
@@ -2071,7 +2072,7 @@ class vor(x, y, z)
 
 |参数名|输入/输出|数据类型|说明|
 |--|--|--|--|
-|x|输入|Tensor变量|输入x向量Tensor，支持INT16、 UINT16。|
+|x|输入|Tensor变量|输入x向量Tensor，支持INT16、UINT16。|
 |y|输入|Tensor变量|输入y向量Tensor，支持INT16、UINT16。|
 |z|输出|Tensor变量|输出z向量Tensor，支持INT16、UINT16。|
 
@@ -2287,7 +2288,7 @@ out = vrsqrt(ub_x, ub_y)
 
 vsel指令抽象。
 
-通常与vcmp合用，根据获得的cmp_mask来选取x，y中对应位置的某个元素。
+通常与vcmp合用，根据获得的cmp_mask来选取x、y中对应位置的某个元素。
 
 **接口原型**
 
@@ -2510,7 +2511,7 @@ out = vsubreluconv(ub_x, ub_y, ub_z)
 
 vtranspose指令抽象。
 
-从输入地址x（32字节对齐）开始转置一个16x16矩阵，每个元素为16位，结果输出到y中，输入输出都是连续的512B存储空间。
+从输入地址x（32字节对齐）开始转置一个16x16矩阵，每个元素为16位，结果输出到y中，输入输出都是连续的512字节存储空间。
 
 **接口原型**
 

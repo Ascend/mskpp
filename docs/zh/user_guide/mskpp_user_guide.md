@@ -1,4 +1,4 @@
-# MindStudio Kernel Performance Prediction 用户指南
+# MindStudio Kernel Performance Prediction用户指南
 
 ## 1. 简介
 
@@ -13,10 +13,10 @@ MindStudio Kernel Performance Prediction（算子设计工具，msKPP）具有�
 请参考环境要求完成相关环境变量的配置，完成后可直接使用msKPP工具的[性能建模功能](#3-性能建模功能介绍)。
 
 > [!NOTE]
-> 
+>
 > 如果需要指令占比饼图（instruction_cycle_consumption.html），则需要安装生成饼图所依赖的Python三方库plotly。
-> 
-> ```py
+>
+> ```bash
 > pip3 install plotly
 > ```
 
@@ -31,9 +31,9 @@ MindStudio Kernel Performance Prediction（算子设计工具，msKPP）具有�
 
 ## 3. 性能建模功能介绍
 
-msKPP为了达到理论性能的目标，基于如下[表1](#111)对实际处理器的计算和搬运类指令进行性能建模。
+msKPP为了达到理论性能的目标，基于如下[表 1](#111)对实际处理器的计算和搬运类指令进行性能建模。
 
-**表 1**  msKPP建模假设性能<a name="111"></a>
+**表 1** msKPP建模假设性能<a name="111"></a>
 
 |性能假设|说明|
 |--|--|
@@ -43,7 +43,7 @@ msKPP为了达到理论性能的目标，基于如下[表1](#111)对实际处理
 
 - [算子特性建模功能](#4-算子特性建模功能介绍)
 
-    msKPP支持tensor拆分使用、debug模式和pipe信息的理论值与msprof实测值比对的功能，也支持对算子特性进行建模（搬运通路建模、随路转换建模和cache命中率建模），用户需根据实际需求进行选择。
+    msKPP支持tensor拆分使用、debug模式和Pipe信息的理论值与msProf实测值比对的功能，也支持对算子特性进行建模（搬运通路建模、随路转换建模和cache命中率建模），用户需根据实际需求进行选择。
 
 - [算子计算搬运规格分析功能](#5-算子计算搬运规格分析功能介绍)
 
@@ -61,7 +61,7 @@ msKPP为了达到理论性能的目标，基于如下[表1](#111)对实际处理
 
 ### 4.1 功能说明
 
-msKPP支持tensor拆分使用、debug模式和pipe信息的理论值与msprof实测值比对的功能，也支持对算子特性进行建模（搬运通路建模、随路转换建模和cache命中率建模），用户需根据实际需求进行选择，完成后可实现[算子计算搬运规格分析功能介绍](#5-算子计算搬运规格分析功能介绍)、[极限性能分析功能介绍](#6-极限性能分析功能介绍)以及[算子tiling初步设计功能介绍](#7-算子tiling初步设计功能介绍)。
+msKPP支持Tensor拆分使用、debug模式和Pipe信息的理论值与msProf实测值比对的功能，也支持对算子特性进行建模（搬运通路建模、随路转换建模和cache命中率建模），用户需根据实际需求进行选择，完成后可实现[算子计算搬运规格分析功能介绍](#5-算子计算搬运规格分析功能介绍)、[极限性能分析功能介绍](#6-极限性能分析功能介绍)以及[算子tiling初步设计功能介绍](#7-算子tiling初步设计功能介绍)。
 
 ### 4.2 注意事项
 
@@ -71,7 +71,7 @@ msKPP支持tensor拆分使用、debug模式和pipe信息的理论值与msprof实
 
 - 支持搬运通路建模（Atlas A2系列产品）
 
-    在Atlas A2系列产品中，新增了L1到fixpipe buffer(FP)的通路以及L1到Bias table(BT)的通路。前者用于L0C_TO_OUT随路转换时存储量化转换的scale参数，后者用于存储一维的bias数据。在本工具中对该搬运通路建模只需按照GM->L1->FP/BT的顺序即可。
+    在Atlas A2系列产品中，新增了L1到Fixpipe buffer(FP)的通路以及L1到Bias table(BT)的通路。前者用于L0C_TO_OUT随路转换时存储量化转换的scale参数，后者用于存储一维的bias数据。在本工具中对该搬运通路建模只需按照GM->L1->FP/BT的顺序即可。
 
     ```py
     in_x = Tensor("GM", "FP16", [64], format="ND")
@@ -101,7 +101,7 @@ msKPP支持tensor拆分使用、debug模式和pipe信息的理论值与msprof实
 
 - 支持Cache命中率建模
 
-    L2Cache是指部分GM空间与Vectorcore和cubecore之间存在高带宽的搬运通路，当L2Cache命中率接近100%与L2Cache命中率接近0%时，带宽能有两倍以上的差距。msKPP工具目前支持用户手动调整L2Cache命中率。
+    L2 Cache是指部分GM空间与Vector Core和Cube Core之间存在高带宽的搬运通路，当L2Cache命中率接近100%与L2Cache命中率接近0%时，带宽能有两倍以上的差距。msKPP工具目前支持用户手动调整L2Cache命中率。
 
     ```py
     with Chip("Ascendxxxyy") as chip:
@@ -127,9 +127,9 @@ msKPP支持tensor拆分使用、debug模式和pipe信息的理论值与msprof实
     with Chip("Ascendxxxyy", debug_mode=True) as chip:
     ```
 
-- 支持PIPE信息的理论值与msprof实测值比对
+- 支持PIPE信息的理论值与msProf实测值比对
 
-    以Ascend C算子为例，通过--application方式调用msprof，在`OPPROF_{timestamp}_XXX`目录中输出PipeUtilization.csv文件，并在脚本中使能：
+    以Ascend C算子为例，通过--application方式调用msProf，在`OPPROF_{timestamp}_XXX`目录中输出PipeUtilization.csv文件，并在脚本中使能：
 
     ```py
     with Chip("Ascendxxxyy") as chip:
@@ -137,9 +137,9 @@ msKPP支持tensor拆分使用、debug模式和pipe信息的理论值与msprof实
         chip.set_prof_summary_path("/home/xx/OPPROF_{timestamp}_XXX/PipeUtilization.csv")
     ```
 
-    生成的Pipe_statistic.csv文件包含“ProfDuration(us)_0“和“ProfRatio_0“两列，其中ProfDuration(us)_0列的取值和PipeUtilization.csv文件中对应的值一致，ProfRatio_0为实测值跟理论值的比值。ProfRatio是实测值相对理论值的倍数，倍数越大，优化空间越大。
+    生成的Pipe_statistic.csv文件包含“ProfDuration(us)_0”和“ProfRatio_0”两列，其中ProfDuration(us)_0列的取值和PipeUtilization.csv文件中对应的值一致，ProfRatio_0为实测值跟理论值的比值。ProfRatio是实测值相对理论值的倍数，倍数越大，优化空间越大。
 
-    **图 1**  Pipe_statistic.csv文件
+    **图 1** Pipe_statistic.csv文件
 
     ![](../figures/Pipe_statistic-csv文件.png "Pipe_statistic-csv文件")
 
@@ -213,18 +213,18 @@ if __name__ == '__main__':
 
 搬运流水统计文件**Pipe_statistic.csv**，该文件统计了不同PIPE的总搬运数据量大小、操作数个数以及耗时信息。
 
-**图 2**  Pipe_statistic.csv
+**图 2** Pipe_statistic.csv
 
 ![](../figures/Pipe_statistic-csv.png "Pipe_statistic-csv")
 
-关键字段说明如下。
+关键字段说明如下：
 
-**表 2**  字段说明
+**表 2** 字段说明
 
 |字段名|字段解释|
 |--|--|
 |Pipe|表示昇腾处理器中不同PIPE单元的名称。|
-|Duration(us)|PIPE耗时，单位us。|
+|Duration(us)|PIPE耗时，单位μs。|
 |Cycle|各个指令每次执行时消耗的cycle数。|
 |Size(B)|表示搬运类PIPE的搬运量大小，单位Byte。|
 |Ops|表示计算类PIPE的计算元素大小。|
@@ -238,20 +238,20 @@ if __name__ == '__main__':
 
 指令信息统计文件**Instruction_statistic.csv**，该文件统计了不同指令维度的总搬运数据量大小、操作数个数以及耗时信息，能够发现指令层面上的瓶颈主要在MOV-GM_TO_L1（属于PIPE-MTE2），从指令层面找到了性能瓶颈处。
 
-**图 3**  Instruction_statistic.csv
+**图 3** Instruction_statistic.csv
 
 ![](../figures/Instruction_statistic-csv.png "Instruction_statistic-csv")
 
-关键字段说明如下。
+关键字段说明如下：
 
-**表 3**  字段说明
+**表 3** 字段说明
 
 |字段名|字段解释|
 |--|--|
 |Instruction|指令名称。|
-|Duration(us)|PIPE耗时，单位us。|
+|Duration(us)|PIPE耗时，单位μs。|
 |Cycle|各个指令每次执行时消耗的cycle数。|
-|Size(B)|表示搬运类PIPE的搬运量大小，单位B。|
+|Size(B)|表示搬运类PIPE的搬运量大小，单位Byte。|
 |Ops|表示计算类PIPE的计算元素大小。|
 
 ## 6. 极限性能分析功能介绍
@@ -322,15 +322,15 @@ if __name__ == '__main__':
 
 > [!NOTE]
 > 
-> 在Chrome浏览器中输入“chrome://tracing“地址，将**.json**文件拖到空白处并打开，通过键盘上的快捷键（W：放大，S：缩小，A：左移，D：右移）进行查看。
+> 在Chrome浏览器中输入“chrome://tracing”地址，将**.json**文件拖到空白处并打开，通过键盘上的快捷键（W：放大，S：缩小，A：左移，D：右移）进行查看。
 
-**图 4**  trace.json
+**图 4** trace.json
 
 ![](../figures/trace-json.png "trace-json")
 
-单击流水图中的“MOV-GM_TO_L1“单指令，可查看该指令在当前搬运量及计算量下的cycle数和带宽，如[图5](#222)所示。
+单击流水图中的“MOV-GM_TO_L1”单指令，可查看该指令在当前搬运量及计算量下的cycle数和带宽，如[图 5](#222)所示。
 
-**图 5**  指令详细信息<a name="222"></a>
+**图 5** 指令详细信息<a name="222"></a>
 
 ![](../figures/指令详细信息.png "指令详细信息")
 
@@ -338,7 +338,7 @@ if __name__ == '__main__':
 
 生成了指令占比饼图**instruction_cycle_consumption.html**，从中可以发现MOV-GM_TO_L1是算子里的最大瓶颈。
 
-**图 6**  指令耗时统计
+**图 6** 指令耗时统计
 
 ![](../figures/快照3.png)
 
